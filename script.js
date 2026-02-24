@@ -150,37 +150,37 @@ document.addEventListener("DOMContentLoaded", () => {
         popups.config.classList.remove("active");
     });
 
-    // --- MERCADO (V11) - IMÁGENES DE COCHES "CHULAS" COMO FALLBACK ---
+    // --- MERCADO (V12) - NOMBRES ORIGINALES, FOTOS ORIGINALES Y DESCRIPCIONES BÁSICAS ---
     const fallbackImage = "https://placehold.co/600x400/111111/7ab317?text=Articulo+Tactico";
 
     const productosBase = [
-        { id: 1, nombre: "Motor V8", nombreEn: "V8 Engine", tipo: "Mecánica", tipoEn: "Mechanics", precio: 4500, vendedor: "Tactical HQ", 
-          imagen: "https://images.pexels.com/photos/3802510/pexels-photo-3802510.jpeg?auto=compress&cs=tinysrgb&w=600", 
+        { id: 1, nombre: "Motor V8 Blindado", nombreEn: "Armored V8 Engine", tipo: "Mecánica Pesada", tipoEn: "Heavy Mechanics", precio: 4500, vendedor: "Tactical HQ", 
+          imagen: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", 
           descripcion: "Motor de alta potencia para máxima velocidad.", descripcionEn: "High power engine for maximum speed." },
         
-        { id: 2, nombre: "Neumáticos Off-Road", nombreEn: "Off-Road Tires", tipo: "Movilidad", tipoEn: "Mobility", precio: 800, vendedor: "Tactical HQ", 
-          imagen: "https://images.pexels.com/photos/3729464/pexels-photo-3729464.jpeg?auto=compress&cs=tinysrgb&w=600", 
+        { id: 2, nombre: "Neumáticos Tácticos Off-Road", nombreEn: "Tactical Off-Road Tires", tipo: "Movilidad", tipoEn: "Mobility", precio: 800, vendedor: "Tactical HQ", 
+          imagen: "https://images.unsplash.com/photo-1600661653561-629509216228?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", 
           descripcion: "Ruedas para terrenos difíciles y barro.", descripcionEn: "Tires for difficult terrain and mud." },
         
-        { id: 3, nombre: "Kit de Suspensión", nombreEn: "Suspension Kit", tipo: "Modificación", tipoEn: "Upgrades", precio: 1200, vendedor: "Tactical HQ", 
-          imagen: "https://images.pexels.com/photos/1035108/pexels-photo-1035108.jpeg?auto=compress&cs=tinysrgb&w=600", 
+        { id: 3, nombre: "Kit de Suspensión Reforzada", nombreEn: "Reinforced Suspension Kit", tipo: "Modificación", tipoEn: "Upgrades", precio: 1200, vendedor: "Tactical HQ", 
+          imagen: "https://images.pexels.com/photos/190539/pexels-photo-190539.jpeg?auto=compress&cs=tinysrgb&w=400", 
           descripcion: "Amortiguadores resistentes a impactos fuertes.", descripcionEn: "Heavy-duty shock absorbers." },
         
-        { id: 4, nombre: "Pintura Mate", nombreEn: "Matte Paint", tipo: "Estética", tipoEn: "Aesthetics", precio: 1500, vendedor: "Tactical HQ", 
-          imagen: "https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=600", 
+        { id: 4, nombre: "Pintura Absorbe-Radar (Mate)", nombreEn: "Radar-Absorbent Paint (Matte)", tipo: "Estética / Camuflaje", tipoEn: "Aesthetics / Camo", precio: 1500, vendedor: "Tactical HQ", 
+          imagen: "https://images.unsplash.com/photo-1542362567-b07e54358753?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", 
           descripcion: "Pintura oscura y opaca que no refleja la luz.", descripcionEn: "Dark opaque non-reflective paint." },
         
-        { id: 5, nombre: "Placas de Blindaje", nombreEn: "Armor Plates", tipo: "Defensa", tipoEn: "Defense", precio: 2100, vendedor: "Tactical HQ", 
-          imagen: "https://images.pexels.com/photos/244206/pexels-photo-244206.jpeg?auto=compress&cs=tinysrgb&w=600", 
+        { id: 5, nombre: "Blindaje Ligero de Puertas", nombreEn: "Light Door Armor", tipo: "Defensa", tipoEn: "Defense", precio: 2100, vendedor: "Tactical HQ", 
+          imagen: "https://images.unsplash.com/photo-1592853625601-bb9d23da12fc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", 
           descripcion: "Placas de metal grueso para protección extra.", descripcionEn: "Thick metal plates for extra protection." },
         
-        { id: 6, nombre: "Faros LED", nombreEn: "LED Headlights", tipo: "Visión", tipoEn: "Vision", precio: 450, vendedor: "Tactical HQ", 
-          imagen: "https://images.pexels.com/photos/926987/pexels-photo-926987.jpeg?auto=compress&cs=tinysrgb&w=600", 
+        { id: 6, nombre: "Luces LED de Alta Intensidad", nombreEn: "High-Intensity LED Lights", tipo: "Visión", tipoEn: "Vision", precio: 450, vendedor: "Tactical HQ", 
+          imagen: "https://images.unsplash.com/photo-1551952237-954a0e68786c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", 
           descripcion: "Faros muy brillantes para iluminar la noche.", descripcionEn: "Very bright headlights for the night." }
     ];
     
-    // Versión 11 (V11) para forzar la recarga de las nuevas imágenes
-    let mercadoActual = JSON.parse(localStorage.getItem("tactical_mercado_v11")) || productosBase;
+    // Versión 12 para forzar la recarga
+    let mercadoActual = JSON.parse(localStorage.getItem("tactical_mercado_v12")) || productosBase;
     const formatearPrecio = (p) => p.toLocaleString(currentLang === 'es' ? "es-ES" : "en-US") + (currentLang === 'es' ? "€" : "$");
 
     const renderizarMercado = () => {
@@ -229,7 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 id: Date.now(), nombre: nombre, tipo: tipo, precio: precio, 
                 vendedor: usuarioActual.user, imagen: imagen, descripcion: descripcion 
             });
-            localStorage.setItem("tactical_mercado_v11", JSON.stringify(mercadoActual));
+            localStorage.setItem("tactical_mercado_v12", JSON.stringify(mercadoActual));
             renderizarMercado(); popups.uploadItem.classList.remove("active");
             
             document.getElementById("new-item-name").value = "";
@@ -291,16 +291,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- GALERÍA (V11 - FOTOS NUEVAS Y FIABLES DE COCHES) ---
+    // --- GALERÍA ---
     const galeriaBase = [
-        "https://images.pexels.com/photos/3972755/pexels-photo-3972755.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "https://images.pexels.com/photos/2526128/pexels-photo-2526128.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "https://images.pexels.com/photos/3802510/pexels-photo-3802510.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "https://images.pexels.com/photos/13625465/pexels-photo-13625465.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "https://images.pexels.com/photos/1035108/pexels-photo-1035108.jpeg?auto=compress&cs=tinysrgb&w=800"
+        "https://images.pexels.com/photos/3354648/pexels-photo-3354648.jpeg?auto=compress&cs=tinysrgb&w=800",
+        "https://images.pexels.com/photos/120049/pexels-photo-120049.jpeg?auto=compress&cs=tinysrgb&w=800",
+        "https://images.pexels.com/photos/3752194/pexels-photo-3752194.jpeg?auto=compress&cs=tinysrgb&w=800",
+        "https://images.pexels.com/photos/164634/pexels-photo-164634.jpeg?auto=compress&cs=tinysrgb&w=800",
+        "https://images.pexels.com/photos/244206/pexels-photo-244206.jpeg?auto=compress&cs=tinysrgb&w=800"
     ];
-    // Versión 11 (V11) para la galería
-    let galeriaActual = JSON.parse(localStorage.getItem("tactical_galeria_v11")) || galeriaBase;
+    let galeriaActual = JSON.parse(localStorage.getItem("tactical_galeria_v12")) || galeriaBase;
     let swiper;
     
     const renderizarGaleria = () => {
@@ -311,7 +310,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     
     document.getElementById("btn-open-upload-photo")?.addEventListener("click", () => { if(!usuarioActual) { alert("⚠️ Inicia sesión."); popups.login.classList.add("active"); return; } popups.uploadPhoto.classList.add("active"); });
-    document.getElementById("btn-submit-photo")?.addEventListener("click", () => { const url = document.getElementById("new-photo-url").value; if(url) { galeriaActual.push(url); localStorage.setItem("tactical_galeria_v11", JSON.stringify(galeriaActual)); renderizarGaleria(); popups.uploadPhoto.classList.remove("active"); }});
+    document.getElementById("btn-submit-photo")?.addEventListener("click", () => { const url = document.getElementById("new-photo-url").value; if(url) { galeriaActual.push(url); localStorage.setItem("tactical_galeria_v12", JSON.stringify(galeriaActual)); renderizarGaleria(); popups.uploadPhoto.classList.remove("active"); }});
 
     // --- FORMULARIO TALLER ---
     document.getElementById("form-servicio")?.addEventListener("submit", (e) => { 
