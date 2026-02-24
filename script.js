@@ -150,34 +150,34 @@ document.addEventListener("DOMContentLoaded", () => {
         popups.config.classList.remove("active");
     });
 
-    // --- MERCADO (V7) - IMÁGENES REALISTAS 100% ESTABLES Y DESCRIPCIONES ---
+    // --- MERCADO (V8) - IMÁGENES EXACTAS Y DESCRIPCIONES BÁSICAS ---
     const productosBase = [
-        { id: 1, nombre: "Motor V8 Blindado", nombreEn: "Armored V8 Engine", tipo: "Mecánica", tipoEn: "Mechanics", precio: 4500, vendedor: "Tactical HQ", 
-          imagen: "https://images.unsplash.com/photo-1486262715619-679df11f6966?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", 
-          descripcion: "Bloque motor V8 de 6.2L forjado con juntas balísticas. Aumenta la potencia y resiste impactos directos.", descripcionEn: "Forged 6.2L V8 engine block with ballistic seals. Increases power and resists direct impacts." },
+        { id: 1, nombre: "Motor V8", nombreEn: "V8 Engine", tipo: "Mecánica", tipoEn: "Mechanics", precio: 4500, vendedor: "Tactical HQ", 
+          imagen: "https://images.pexels.com/photos/3807277/pexels-photo-3807277.jpeg?auto=compress&cs=tinysrgb&w=400", 
+          descripcion: "Motor de alta potencia.", descripcionEn: "High power engine." },
         
         { id: 2, nombre: "Neumáticos Off-Road", nombreEn: "Off-Road Tires", tipo: "Movilidad", tipoEn: "Mobility", precio: 800, vendedor: "Tactical HQ", 
-          imagen: "https://images.unsplash.com/photo-1585011664466-b7bbe92f34ee?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", 
-          descripcion: "Goma reforzada antipinchazos con compuesto de kevlar. Agarre extremo en barro, nieve y asfalto roto.", descripcionEn: "Run-flat reinforced rubber with kevlar compound. Extreme grip in mud, snow, and broken asphalt." },
+          imagen: "https://images.pexels.com/photos/1637859/pexels-photo-1637859.jpeg?auto=compress&cs=tinysrgb&w=400", 
+          descripcion: "Ruedas para terrenos difíciles.", descripcionEn: "Tires for difficult terrain." },
         
         { id: 3, nombre: "Kit de Suspensión Reforzada", nombreEn: "Reinforced Suspension", tipo: "Modificación", tipoEn: "Upgrades", precio: 1200, vendedor: "Tactical HQ", 
           imagen: "https://images.unsplash.com/photo-1610647752706-3bb12232b3ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", 
           descripcion: "Amortiguadores de gas a alta presión con resortes de aleación de titanio para cargas extra pesadas.", descripcionEn: "High-pressure gas shock absorbers with titanium alloy springs for extra heavy loads." },
         
-        { id: 4, nombre: "Pintura Absorbe-Radar", nombreEn: "Radar-Absorbent Paint", tipo: "Estética", tipoEn: "Aesthetics", precio: 1500, vendedor: "Tactical HQ", 
-          imagen: "https://images.unsplash.com/photo-1510903117032-416035fce028?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", 
-          descripcion: "Revestimiento de nano-polímero negro mate que anula firmas térmicas y reduce la visibilidad de radar.", descripcionEn: "Matte black nano-polymer coating that nullifies thermal signatures and reduces radar visibility." },
+        { id: 4, nombre: "Pintura Mate", nombreEn: "Matte Paint", tipo: "Estética", tipoEn: "Aesthetics", precio: 1500, vendedor: "Tactical HQ", 
+          imagen: "https://images.pexels.com/photos/1616403/pexels-photo-1616403.jpeg?auto=compress&cs=tinysrgb&w=400", 
+          descripcion: "Pintura oscura antirreflejos.", descripcionEn: "Dark anti-glare paint." },
         
-        { id: 5, nombre: "Blindaje Ligero Modular", nombreEn: "Modular Light Armor", tipo: "Defensa", tipoEn: "Defense", precio: 2100, vendedor: "Tactical HQ", 
-          imagen: "https://images.unsplash.com/photo-1544829728-e5cb9eedc20e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", 
-          descripcion: "Placas modulares de acero templado y carbono adaptables al chasis interno. Nivel de protección B4.", descripcionEn: "Modular tempered steel and carbon plates adaptable to internal chassis. B4 protection level." },
+        { id: 5, nombre: "Placas de Blindaje", nombreEn: "Armor Plates", tipo: "Defensa", tipoEn: "Defense", precio: 2100, vendedor: "Tactical HQ", 
+          imagen: "https://images.pexels.com/photos/2086622/pexels-photo-2086622.jpeg?auto=compress&cs=tinysrgb&w=400", 
+          descripcion: "Placas de metal para protección.", descripcionEn: "Metal plates for protection." },
         
-        { id: 6, nombre: "Faros LED Cegadores", nombreEn: "Blinding LED Headlights", tipo: "Visión", tipoEn: "Vision", precio: 450, vendedor: "Tactical HQ", 
-          imagen: "https://images.unsplash.com/photo-1550565866-508b5e5dc815?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", 
-          descripcion: "Focos halógenos/LED de 12,000 lúmenes. Incorporan filtro estroboscópico de desorientación óptica.", descripcionEn: "12,000 lumen halogen/LED spotlights. Includes optical disorientation strobe filter." }
+        { id: 6, nombre: "Faros LED", nombreEn: "LED Headlights", tipo: "Visión", tipoEn: "Vision", precio: 450, vendedor: "Tactical HQ", 
+          imagen: "https://images.pexels.com/photos/119435/pexels-photo-119435.jpeg?auto=compress&cs=tinysrgb&w=400", 
+          descripcion: "Faros de luz de gran potencia.", descripcionEn: "High power headlights." }
     ];
-    // Se cambia la llave a v7 para borrar las fotos rotas anteriores de la memoria
-    let mercadoActual = JSON.parse(localStorage.getItem("tactical_mercado_v7")) || productosBase;
+    // Se cambia la llave a v8 para borrar los datos viejos
+    let mercadoActual = JSON.parse(localStorage.getItem("tactical_mercado_v8")) || productosBase;
     const formatearPrecio = (p) => p.toLocaleString(currentLang === 'es' ? "es-ES" : "en-US") + (currentLang === 'es' ? "€" : "$");
 
     const renderizarMercado = () => {
@@ -191,13 +191,12 @@ document.addEventListener("DOMContentLoaded", () => {
         mercadoActual.forEach(p => {
             const nombre = currentLang === 'en' && p.nombreEn ? p.nombreEn : p.nombre;
             const tipo = currentLang === 'en' && p.tipoEn ? p.tipoEn : p.tipo;
-            // Manejar la descripción bilingüe (o mostrar una por defecto)
             const desc = currentLang === 'en' && p.descripcionEn ? p.descripcionEn : (p.descripcion || (currentLang === 'es' ? "Sin descripción detallada." : "No detailed description."));
             
             contenedor.innerHTML += `
             <div class="card">
                 <div class="img-container">
-                    <img src="${p.imagen}" onerror="this.src='https://via.placeholder.com/400?text=Cargando...'">
+                    <img src="${p.imagen}" onerror="this.src='https://via.placeholder.com/400?text=Imagen+Rota'">
                     <div class="product-overlay">${desc}</div>
                 </div>
                 <h3 style="margin-top:10px;">${nombre}</h3>
@@ -220,17 +219,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const tipo = document.getElementById("new-item-type").value; 
         const precio = parseFloat(document.getElementById("new-item-price").value); 
         const imagen = document.getElementById("new-item-img").value;
-        const descripcion = document.getElementById("new-item-desc").value; // Leemos la descripción nueva
+        const descripcion = document.getElementById("new-item-desc").value; 
         
         if(nombre && precio && imagen) {
             mercadoActual.push({ 
                 id: Date.now(), nombre: nombre, tipo: tipo, precio: precio, 
                 vendedor: usuarioActual.user, imagen: imagen, descripcion: descripcion 
             });
-            localStorage.setItem("tactical_mercado_v7", JSON.stringify(mercadoActual));
+            localStorage.setItem("tactical_mercado_v8", JSON.stringify(mercadoActual));
             renderizarMercado(); popups.uploadItem.classList.remove("active");
             
-            // Limpiar
+            // Limpiar inputs tras subir
             document.getElementById("new-item-name").value = "";
             document.getElementById("new-item-type").value = "";
             document.getElementById("new-item-price").value = "";
@@ -290,15 +289,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- GALERÍA (V7 - FOTOS MUY ESTABLES Y DE CALIDAD) ---
+    // --- GALERÍA (V8 - FOTOS SÚPER ESTABLES DE COCHES TÁCTICOS) ---
     const galeriaBase = [
-        "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1503376763066-2067ee4e9b69?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1616422285623-13ff0162193c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1583121274602-3e2820c69888?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+        "https://images.pexels.com/photos/3354648/pexels-photo-3354648.jpeg?auto=compress&cs=tinysrgb&w=800",
+        "https://images.pexels.com/photos/120049/pexels-photo-120049.jpeg?auto=compress&cs=tinysrgb&w=800",
+        "https://images.pexels.com/photos/3752194/pexels-photo-3752194.jpeg?auto=compress&cs=tinysrgb&w=800",
+        "https://images.pexels.com/photos/164634/pexels-photo-164634.jpeg?auto=compress&cs=tinysrgb&w=800",
+        "https://images.pexels.com/photos/244206/pexels-photo-244206.jpeg?auto=compress&cs=tinysrgb&w=800"
     ];
-    let galeriaActual = JSON.parse(localStorage.getItem("tactical_galeria_v7")) || galeriaBase;
+    let galeriaActual = JSON.parse(localStorage.getItem("tactical_galeria_v8")) || galeriaBase;
     let swiper;
     
     const renderizarGaleria = () => {
@@ -309,7 +308,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     
     document.getElementById("btn-open-upload-photo")?.addEventListener("click", () => { if(!usuarioActual) { alert("⚠️ Inicia sesión."); popups.login.classList.add("active"); return; } popups.uploadPhoto.classList.add("active"); });
-    document.getElementById("btn-submit-photo")?.addEventListener("click", () => { const url = document.getElementById("new-photo-url").value; if(url) { galeriaActual.push(url); localStorage.setItem("tactical_galeria_v7", JSON.stringify(galeriaActual)); renderizarGaleria(); popups.uploadPhoto.classList.remove("active"); }});
+    document.getElementById("btn-submit-photo")?.addEventListener("click", () => { const url = document.getElementById("new-photo-url").value; if(url) { galeriaActual.push(url); localStorage.setItem("tactical_galeria_v8", JSON.stringify(galeriaActual)); renderizarGaleria(); popups.uploadPhoto.classList.remove("active"); }});
 
     // --- FORMULARIO TALLER ---
     document.getElementById("form-servicio")?.addEventListener("submit", (e) => { 
