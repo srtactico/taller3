@@ -160,9 +160,9 @@ document.addEventListener("DOMContentLoaded", () => {
           imagen: "https://images.pexels.com/photos/1637859/pexels-photo-1637859.jpeg?auto=compress&cs=tinysrgb&w=400", 
           descripcion: "Ruedas para terrenos difíciles.", descripcionEn: "Tires for difficult terrain." },
         
-        { id: 3, nombre: "Kit de Suspensión Reforzada", nombreEn: "Reinforced Suspension", tipo: "Modificación", tipoEn: "Upgrades", precio: 1200, vendedor: "Tactical HQ", 
-          imagen: "https://images.unsplash.com/photo-1610647752706-3bb12232b3ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", 
-          descripcion: "Amortiguadores de gas a alta presión con resortes de aleación de titanio para cargas extra pesadas.", descripcionEn: "High-pressure gas shock absorbers with titanium alloy springs for extra heavy loads." },
+        { id: 3, nombre: "Kit de Suspensión", nombreEn: "Suspension Kit", tipo: "Modificación", tipoEn: "Upgrades", precio: 1200, vendedor: "Tactical HQ", 
+          imagen: "https://images.pexels.com/photos/190539/pexels-photo-190539.jpeg?auto=compress&cs=tinysrgb&w=400", 
+          descripcion: "Amortiguadores más resistentes.", descripcionEn: "Stronger shock absorbers." },
         
         { id: 4, nombre: "Pintura Mate", nombreEn: "Matte Paint", tipo: "Estética", tipoEn: "Aesthetics", precio: 1500, vendedor: "Tactical HQ", 
           imagen: "https://images.pexels.com/photos/1616403/pexels-photo-1616403.jpeg?auto=compress&cs=tinysrgb&w=400", 
