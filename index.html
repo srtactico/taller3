@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tactical Reparations</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div id="cookie-popup" class="overlay active">
+        <div class="popup-box">
+            <h2 data-i18n="cookiesTitle">Aviso Táctico (Cookies)</h2>
+            <p data-i18n="cookiesText">Utilizamos cookies para rastrear la telemetría y mejorar la precisión de nuestros servicios en la web. Consulta nuestros Protocolos de Privacidad. ¿Aceptas los términos?</p>
+            <button id="btn-accept-cookies" class="btn-primary" data-i18n="cookiesAccept">Afirmativo, aceptar</button>
+        </div>
+    </div>
+
+    <div id="privacy-popup" class="overlay">
+        <div class="popup-box modal-box">
+            <h2 data-i18n="privacyTitle">Protocolos de Privacidad y Términos</h2>
+            <p><strong>1. Tratamiento de Datos:</strong> La información recopilada está clasificada.</p>
+            <p><strong>2. Mercado:</strong> La Empresa actúa como intermediario.</p>
+            <p><strong>3. Modificaciones:</strong> Las "Operaciones Especiales" son responsabilidad del Cliente.</p>
+            <button class="btn-secondary btn-close-popup" data-i18n="closeBtn">Cerrar</button>
+        </div>
+    </div>
+
+    <div id="login-popup" class="overlay">
+        <div class="popup-box">
+            <div class="logo-text">TACTICAL <span>REPARATIONS</span></div>
+            
+            <div id="login-form-container">
+                <h2 style="margin-top: 10px;" data-i18n="loginTitle">Acceso Restringido</h2>
+                <input type="text" id="username" placeholder="Usuario" data-i18n-placeholder="userHolder" class="input-field">
+                <input type="password" id="password" placeholder="Contraseña" data-i18n-placeholder="passHolder" class="input-field">
+                <button id="btn-login" class="btn-primary" data-i18n="loginBtn">Iniciar Sesión</button>
+                <button class="btn-secondary btn-close-popup" style="width: 100%;" data-i18n="cancelBtn">Cancelar</button>
+                <p style="margin-top: 15px; font-size: 0.9rem; color: var(--text-muted);"><span data-i18n="noAccount">¿No tienes cuenta?</span> <a href="#" id="link-to-register" style="color: var(--primary-color);" data-i18n="registerHere">Regístrate aquí</a></p>
+            </div>
+
+            <div id="register-form-container" style="display: none;">
+                <h2 style="margin-top: 10px;" data-i18n="registerTitle">Nuevo Recluta</h2>
+                <input type="text" id="reg-username" placeholder="Usuario" data-i18n-placeholder="userHolder" class="input-field">
+                <input type="email" id="reg-email" placeholder="Email (Obligatorio)" data-i18n-placeholder="emailHolder" class="input-field" required>
+                <input type="password" id="reg-password" placeholder="Contraseña" data-i18n-placeholder="passHolder" class="input-field">
+                <button id="btn-register" class="btn-primary" data-i18n="registerBtn">Registrar Cuenta</button>
+                <button class="btn-secondary btn-close-popup" style="width: 100%;" data-i18n="cancelBtn">Cancelar</button>
+                <p style="margin-top: 15px; font-size: 0.9rem; color: var(--text-muted);"><span data-i18n="hasAccount">¿Ya tienes cuenta?</span> <a href="#" id="link-to-login" style="color: var(--primary-color);" data-i18n="loginBtn">Iniciar Sesión</a></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="edit-profile-popup" class="overlay">
+        <div class="popup-box">
+            <h2 data-i18n="profileTitle">Editar Perfil</h2>
+            <p style="font-size: 0.9rem; color: var(--text-muted);" data-i18n="profileDesc">Actualiza tus credenciales de acceso.</p>
+            
+            <label style="display:block; text-align:left; color:var(--primary-color); margin-bottom:5px;" data-i18n="newEmailLabel">Nuevo Email:</label>
+            <input type="email" id="edit-email" class="input-field">
+            
+            <label style="display:block; text-align:left; color:var(--primary-color); margin-bottom:5px;" data-i18n="newPassLabel">Nueva Contraseña (Opcional):</label>
+            <input type="password" id="edit-new-pass" class="input-field">
+            
+            <hr style="border: 0; border-top: 1px solid #333; margin: 20px 0;">
+            <label style="display:block; text-align:left; color:#ff4c4c; margin-bottom:5px;" data-i18n="currentPassLabel">* Contraseña ACTUAL (Requerida):</label>
+            <input type="password" id="edit-current-pass" class="input-field" style="border-color: #ff4c4c;">
+
+            <button id="btn-save-profile" class="btn-primary" data-i18n="saveChanges">Guardar Cambios</button>
+            <button class="btn-secondary btn-close-popup" style="width: 100%;" data-i18n="cancelBtn">Cancelar</button>
+        </div>
+    </div>
+
+    <div id="config-popup" class="overlay">
+        <div class="popup-box">
+            <h2 data-i18n="configTitle">Configuración</h2>
+            <p data-i18n="configDesc">Selecciona el idioma de la interfaz.</p>
+            
+            <select id="language-selector" class="input-field" style="cursor: pointer; text-align: center;">
+                <option value="es">🇪🇸 Español (ES)</option>
+                <option value="en">🇺🇸 English (EN)</option>
+            </select>
+
+            <button id="btn-save-config" class="btn-primary" data-i18n="applyBtn">Aplicar</button>
+            <button class="btn-secondary btn-close-popup" style="width: 100%;" data-i18n="closeBtn">Cerrar</button>
+        </div>
+    </div>
+
+    <div id="upload-item-popup" class="overlay">
+        <div class="popup-box">
+            <h2 data-i18n="uploadItemTitle">Añadir al Mercado</h2>
+            <input type="text" id="new-item-name" placeholder="Nombre" data-i18n-placeholder="itemNameHolder" class="input-field">
+            <input type="text" id="new-item-type" placeholder="Categoría" data-i18n-placeholder="itemCatHolder" class="input-field">
+            <input type="number" id="new-item-price" placeholder="Precio (€)" data-i18n-placeholder="itemPriceHolder" class="input-field">
+            <input type="text" id="new-item-img" placeholder="URL Imagen" data-i18n-placeholder="itemImgHolder" class="input-field">
+            <textarea id="new-item-desc" placeholder="Descripción del artículo..." data-i18n-placeholder="itemDescHolder" class="input-field" style="resize: vertical; min-height: 80px;"></textarea>
+            
+            <button id="btn-submit-item" class="btn-primary" data-i18n="publishBtn">Publicar</button>
+            <button class="btn-secondary btn-close-popup" style="width: 100%;" data-i18n="cancelBtn">Cancelar</button>
+        </div>
+    </div>
+
+    <div id="upload-photo-popup" class="overlay">
+        <div class="popup-box">
+            <h2 data-i18n="uploadPhotoTitle">Añadir Foto</h2>
+            <input type="text" id="new-photo-url" placeholder="URL Imagen" data-i18n-placeholder="itemImgHolder" class="input-field">
+            <button id="btn-submit-photo" class="btn-primary" data-i18n="addBtn">Añadir</button>
+            <button class="btn-secondary btn-close-popup" style="width: 100%;" data-i18n="cancelBtn">Cancelar</button>
+        </div>
+    </div>
+
+    <div id="cart-popup" class="overlay">
+        <div class="popup-box modal-box" style="max-width: 600px;">
+            <h2 data-i18n="cartTitle">Carrito</h2>
+            <div id="cart-items-container" style="max-height: 250px; overflow-y: auto; text-align: left; margin: 20px 0;"></div>
+            <div style="text-align: right; font-size: 1.3rem; margin-bottom: 20px; border-top: 1px solid #333; padding-top: 10px;">
+                Total: <span id="cart-total-price" style="color: var(--primary-color); font-weight: bold;">0€</span>
+            </div>
+            
+            <div id="payment-section" style="text-align: left; margin-bottom: 20px; display: none;">
+                <h4 style="margin-bottom: 10px; color: var(--text-main);" data-i18n="payMethod">Método de Pago:</h4>
+                <select id="payment-method" class="input-field">
+                    <option value="tarjeta">💳 Tarjeta</option>
+                    <option value="paypal">🅿️ PayPal</option>
+                    <option value="cripto">🪙 Cripto</option>
+                </select>
+                <div id="card-details" style="display: block; margin-top: 10px;">
+                    <input type="text" placeholder="Número Tarjeta" data-i18n-placeholder="cardNum" class="input-field" maxlength="16">
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" placeholder="MM/AA" class="input-field" style="width: 50%;" maxlength="5">
+                        <input type="password" placeholder="CVC" class="input-field" style="width: 50%;" maxlength="3">
+                    </div>
+                </div>
+            </div>
+
+            <button id="btn-checkout" class="btn-primary" style="display: none; margin-bottom: 10px;" data-i18n="checkoutBtn">Confirmar Transacción</button>
+            <button class="btn-secondary btn-close-popup" data-i18n="continueBtn" style="width: 100%;">Seguir Comprando</button>
+        </div>
+    </div>
+
+    <div id="main-content" style="display: none;">
+        
+        <header>
+            <div class="container header-content">
+                <div class="logo-text">TACTICAL <span>REPARATIONS</span></div>
+                <nav style="display: flex; align-items: center; gap: 25px;">
+                    <a href="#hero" class="nav-link" data-i18n="navHome">Inicio</a>
+                    <a href="#mercado" class="nav-link" data-i18n="navMarket">Mercado</a>
+                    <a href="#reparacion" class="nav-link" data-i18n="navRepair">Taller</a>
+                    <a href="#galeria" class="nav-link" data-i18n="navGallery">Galería</a>
+                    
+                    <button id="btn-nav-login" class="btn-secondary" style="padding: 8px 15px; font-size: 0.9rem;" data-i18n="loginBtn">Iniciar Sesión</button>
+                    
+                    <div id="user-controls" style="display: none; position: relative;">
+                        <button id="btn-user-menu-trigger" class="btn-secondary" style="padding: 8px 15px; font-size: 0.9rem; border-color: var(--primary-color); color: var(--primary-color);">Agente</button>
+                        <div id="user-dropdown-content" class="dropdown-content">
+                            <a href="#" id="btn-menu-profile" data-i18n="profileBtn">Mi Perfil</a>
+                            <a href="#" id="btn-menu-config" data-i18n="configBtn">Configuración</a>
+                            <hr style="border:0; border-top:1px solid #333; margin: 5px 0;">
+                            <a href="#" id="btn-menu-logout" style="color: #ff4c4c;" data-i18n="logoutBtn">Cerrar Sesión</a>
+                        </div>
+                    </div>
+
+                    <button id="btn-open-cart" class="btn-secondary" style="padding: 8px 15px; font-size: 0.9rem; background: var(--primary-color); color: #000; border: none;">
+                        <span data-i18n="cartTitle">Carrito</span> (<span id="cart-count" style="font-weight: bold;">0</span>)
+                    </button>
+                </nav>
+            </div>
+        </header>
+
+        <section id="hero">
+            <div class="hero-content">
+                <h1 data-i18n="heroTitle">Precisión absoluta. Rendimiento táctico.</h1>
+                <p data-i18n="heroText">Tu vehículo no es solo un transporte; es tu mejor herramienta.</p>
+                <a href="#reparacion" class="btn-primary" style="display: inline-block; width: auto; text-decoration: none;" data-i18n="heroBtn">Solicitar Despliegue</a>
+            </div>
+        </section>
+
+        <div class="container main-sections-container">
+
+            <section id="mercado">
+                <h2 data-i18n="marketTitle">1. Mercado Negro</h2>
+                <div class="controls" style="margin-top: 20px;">
+                    <button class="btn-secondary" id="btn-open-upload-item" data-i18n="uploadItemBtn">+ Subir Artículo</button>
+                </div>
+                <div class="grid" id="productos-db"></div>
+            </section>
+
+            <section id="reparacion">
+                <h2 data-i18n="repairTitle">2. Unidad de Reparación / Modificación</h2>
+                <form class="tactical-form" id="form-servicio">
+                    <select id="tipo-servicio" class="input-field" required>
+                        <option value="" disabled selected data-i18n="selectService">-- Selecciona el Servicio --</option>
+                        <option value="Reparación" data-i18n="optRepair">Reparación Técnica</option>
+                        <option value="Modificación" data-i18n="optMod">Modificación y Mejoras</option>
+                    </select>
+                    <input type="text" placeholder="Vehículo (Marca y Modelo)" data-i18n-placeholder="vehicleHolder" required>
+                    <textarea placeholder="Describe el daño o las modificaciones requeridas..." data-i18n-placeholder="descHolder" required></textarea>
+                    <button type="submit" class="btn-primary" data-i18n="sendBtn">Enviar Solicitud</button>
+                </form>
+            </section>
+            
+            <section id="galeria">
+                <h2 data-i18n="galleryTitle">Operaciones (Galería)</h2>
+                <div class="swiper mySwiper">
+                    <div class="swiper-wrapper" id="gallery-wrapper"></div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-pagination"></div>
+                </div>
+                 <div class="controls" style="margin-top: 30px;">
+                    <button class="btn-secondary" id="btn-open-upload-photo" data-i18n="uploadPhotoBtn">+ Añadir Foto</button>
+                </div>
+            </section>
+
+        </div>
+        <footer><div class="container"><p>&copy; 2026 Tactical Reparations.</p></div></footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
