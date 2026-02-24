@@ -94,22 +94,21 @@ section { padding: 100px 0 50px 0; text-align: center; }
     line-height: 1.5;
     text-align: center;
     border: 1px solid var(--primary-color);
-    overflow-y: auto; /* Permite scroll si el texto es muy largo */
+    overflow-y: auto; 
     scrollbar-width: none;
 }
 .img-container:hover .product-overlay {
     opacity: 1;
 }
 .img-container:hover img {
-    transform: scale(1.1); /* Efecto zoom al pasar el ratón */
+    transform: scale(1.1); 
 }
 
-/* FORMULARIOS */
 .tactical-form { max-width: 600px; margin: 30px auto 0 auto; display: flex; flex-direction: column; gap: 15px; text-align: left; }
 .tactical-form input, .tactical-form textarea, .tactical-form select { padding: 15px; background: var(--bg-panel); border: 1px solid #333; color: white; border-radius: 4px; font-size: 1rem; }
 .tactical-form textarea { resize: vertical; min-height: 150px; }
 
-/* CARRUSEL ARREGLADO CON ANIMACIÓN DE CARGA (SPINNER) */
+/* CARRUSEL ARREGLADO (Para que las fotos no se pongan azules) */
 .swiper { width: 100%; padding-top: 30px; padding-bottom: 50px; }
 .swiper-slide { 
     width: 300px; 
@@ -117,11 +116,17 @@ section { padding: 100px 0 50px 0; text-align: center; }
     border-radius: 12px; 
     border: 2px solid #333; 
     overflow: hidden; 
-    /* El SVG es el circulito verde que gira mientras carga la imagen */
     background: #111 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" fill="none" stroke="%237ab317" stroke-width="8" r="35" stroke-dasharray="164 56"><animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;360 50 50"/></circle></svg>') center/40px no-repeat; 
     user-select: none; 
 }
-.swiper-slide img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.swiper-slide img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    /* ESTO EVITA QUE SE PONGA AZUL AL ARRASTRAR O CLICAR */
+    -webkit-user-drag: none; 
+    user-select: none;
+}
 .swiper-button-next, .swiper-button-prev { color: var(--primary-color) !important; }
 .swiper-pagination-bullet-active { background: var(--primary-color) !important; }
 .swiper-pagination-bullet { background: #555; opacity: 1; }
