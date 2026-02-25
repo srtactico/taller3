@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tactical Reparations</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=final">
 </head>
 <body>
 
@@ -95,7 +95,6 @@
             <input type="number" id="new-item-price" placeholder="Precio (€)" data-i18n-placeholder="itemPriceHolder" class="input-field">
             <input type="text" id="new-item-img" placeholder="URL Imagen" data-i18n-placeholder="itemImgHolder" class="input-field">
             <textarea id="new-item-desc" placeholder="Descripción del artículo..." data-i18n-placeholder="itemDescHolder" class="input-field" style="resize: vertical; min-height: 80px;"></textarea>
-            
             <button id="btn-submit-item" class="btn-primary" data-i18n="publishBtn">Publicar</button>
             <button class="btn-secondary btn-close-popup" style="width: 100%;" data-i18n="cancelBtn">Cancelar</button>
         </div>
@@ -146,7 +145,7 @@
                 <div class="logo-text">TACTICAL <span>REPARATIONS</span></div>
                 <nav style="display: flex; align-items: center; gap: 25px;">
                     <a href="#hero" class="nav-link" data-i18n="navHome">Inicio</a>
-                    <a href="#mercado" class="nav-link" data-i18n="navMarket">Mercado</a>
+                    <a href="#mercado" class="nav-link" data-i18n="navMarket">Compra/Venta</a>
                     <a href="#reparacion" class="nav-link" data-i18n="navRepair">Taller</a>
                     <a href="#galeria" class="nav-link" data-i18n="navGallery">Galería</a>
                     
@@ -173,14 +172,14 @@
             <div class="hero-content">
                 <h1 data-i18n="heroTitle">Precisión absoluta. Rendimiento táctico.</h1>
                 <p data-i18n="heroText">Tu vehículo no es solo un transporte; es tu mejor herramienta.</p>
-                <a href="#reparacion" class="btn-primary" style="display: inline-block; width: auto; text-decoration: none;" data-i18n="heroBtn">Solicitar Despliegue</a>
+                <a href="#reparacion" class="btn-primary" style="display: inline-block; width: auto; text-decoration: none;" data-i18n="heroBtn">Solicitar cita previa</a>
             </div>
         </section>
 
         <div class="container main-sections-container">
 
             <section id="mercado">
-                <h2 data-i18n="marketTitle">1. Compra/Venta de artículos</h2>
+                <h2 data-i18n="marketTitle">1. Compra/Venta</h2>
                 <div class="controls" style="margin-top: 20px;">
                     <button class="btn-secondary" id="btn-open-upload-item" data-i18n="uploadItemBtn">+ Subir Artículo</button>
                 </div>
@@ -202,7 +201,7 @@
             </section>
             
             <section id="galeria">
-                <h2 data-i18n="galleryTitle">Obras tácticas terminadas</h2>
+                <h2 data-i18n="galleryTitle">Operaciones (Galería)</h2>
                 <div class="swiper mySwiper">
                     <div class="swiper-wrapper" id="gallery-wrapper"></div>
                     <div class="swiper-button-next"></div>
@@ -219,6 +218,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="script.js"></script>
+    <script src="script.js?v=final"></script>
 </body>
 </html>
