@@ -1,4 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
+    
+    // --- LIMPIEZA NUCLEAR DE MEMORIA (Solo se ejecuta una vez para matar a los pájaros y plantas) ---
+    if (!localStorage.getItem("limpieza_nuclear_v25")) {
+        Object.keys(localStorage).forEach(key => {
+            if (key.includes("galeria") || key.includes("mercado") || key.includes("photos")) {
+                localStorage.removeItem(key);
+                console.log("Basura eliminada: " + key);
+            }
+        });
+        localStorage.setItem("limpieza_nuclear_v25", "true");
+    }
+
     // --- REFERENCIAS DOM ---
     const popups = {
         cookie: document.getElementById("cookie-popup"),
@@ -195,7 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
         popups.config.classList.remove("active");
     });
 
-    // --- MERCADO (V17 - Sin cambios aquí) ---
+    // --- MERCADO (Base de Datos Blindada) ---
     const fallbackImage = "https://placehold.co/600x400/111111/7ab317?text=Articulo+Tactico";
 
     const productosBase = [
@@ -210,7 +222,7 @@ document.addEventListener("DOMContentLoaded", () => {
           descripcionEn: "Set of 4 military compound tires with aggressive tread design for mud and rock. 10-ply Kevlar reinforced sidewalls. Includes internal run-flat system." },
         
         { id: 3, nombre: "Kit de Suspensión Reforzada", nombreEn: "Reinforced Suspension Kit", tipo: "Modificación", tipoEn: "Upgrades", precio: 1200, vendedor: "Tactical HQ", 
-          imagen: "https://images.pexels.com/photos/190539/pexels-photo-190539.jpeg?auto=compress&cs=tinysrgb&w=400", 
+          imagen: "https://images.unsplash.com/photo-1486262715619-67081010dd13?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", 
           descripcion: "Sistema de suspensión de largo recorrido con amortiguadores de nitrógeno presurizado y muelles helicoidales de alta resistencia. Proporciona una elevación de 4 pulgadas y una capacidad de carga superior.", 
           descripcionEn: "Long-travel suspension system with pressurized nitrogen shocks and heavy-duty coil springs. Provides a 4-inch lift and superior load capacity." },
         
@@ -230,7 +242,7 @@ document.addEventListener("DOMContentLoaded", () => {
           descripcionEn: "Tactical-grade LED light bar with a combined output of 30,000 lumens. IP68 waterproof aluminum housing and unbreakable polycarbonate lenses. Mixed beam pattern (flood/spot)." }
     ];
     
-    let mercadoActual = JSON.parse(localStorage.getItem("tactical_mercado_v17")) || productosBase;
+    let mercadoActual = JSON.parse(localStorage.getItem("tactical_mercado_db")) || productosBase;
     const formatearPrecio = (p) => p.toLocaleString(currentLang === 'es' ? "es-ES" : "en-US") + (currentLang === 'es' ? "€" : "$");
 
     const renderizarMercado = () => {
@@ -282,7 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 id: Date.now(), nombre: nombre, tipo: tipo, precio: precio, 
                 vendedor: usuarioActual.user, imagen: imagen, descripcion: descripcion 
             });
-            localStorage.setItem("tactical_mercado_v17", JSON.stringify(mercadoActual));
+            localStorage.setItem("tactical_mercado_db", JSON.stringify(mercadoActual));
             renderizarMercado(); popups.uploadItem.classList.remove("active");
             
             document.getElementById("new-item-name").value = "";
@@ -344,31 +356,26 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- GALERÍA (V22) - FUERZA BRUTA: COCHES MODIFICADOS ---
+    // --- GALERÍA (COCHES COMPLETOS MUY MODIFICADOS) ---
+    // Enlaces de Unsplash directos super estables de coches potentes
     const galeriaBase = [
-        // 1. Widebody agresivo (tipo GT-R/Supra)
-        "https://images.pexels.com/photos/14297701/pexels-photo-14297701.jpeg?auto=compress&cs=tinysrgb&w=800",
-        // 2. Coche de Drift quemando rueda
-        "https://images.pexels.com/photos/16384597/pexels-photo-16384597.jpeg?auto=compress&cs=tinysrgb&w=800",
-        // 3. Todoterreno monstruoso muy modificado
-        "https://images.pexels.com/photos/19287793/pexels-photo-19287793.jpeg?auto=compress&cs=tinysrgb&w=800",
-        // 4. Clásico americano "Restomod" bajo y ancho
-        "https://images.pexels.com/photos/3972755/pexels-photo-3972755.jpeg?auto=compress&cs=tinysrgb&w=800",
-        // 5. Deportivo japonés oscuro estilo time attack
-        "https://images.unsplash.com/photo-1605515298946-d062f2e9da53?auto=format&fit=crop&w=800"
+        // 1. Coche deportivo negro mate modificado
+        "https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?auto=format&fit=crop&w=800",
+        // 2. Coche tuner azul agresivo en garaje
+        "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=800",
+        // 3. Porsche oscuro con kit aerodinámico
+        "https://images.unsplash.com/photo-1603503352756-32d8471c26da?auto=format&fit=crop&w=800",
+        // 4. Mustang Widebody azul de carreras
+        "https://images.unsplash.com/photo-1588127333419-b9d758c11e35?auto=format&fit=crop&w=800",
+        // 5. Muscle car oscuro con ruedas grandes y bajo
+        "https://images.unsplash.com/photo-1550508126-17b5f13c6a0c?auto=format&fit=crop&w=800"
     ];
     
-    // --- CAMBIO IMPORTANTE: FORZAMOS LA CARGA DE LAS NUEVAS FOTOS ---
-    // En lugar de mirar si ya existe en memoria, le obligamos a usar las nuevas.
-    // (Usamos v22 para forzar el cambio y luego concatenamos si el usuario sube fotos nuevas)
-    let galeriaActual = [...galeriaBase]; 
-    const userUploadedPhotos = JSON.parse(localStorage.getItem("tactical_user_photos_v22")) || [];
-    galeriaActual = galeriaActual.concat(userUploadedPhotos);
-    // Guardamos la versión combinada
-    localStorage.setItem("tactical_galeria_v22", JSON.stringify(galeriaActual));
+    // Solo cogemos las fotos extras que haya subido el usuario, las originales SIEMPRE serán las de arriba
+    let fotosUsuario = JSON.parse(localStorage.getItem("tactical_user_photos_db")) || [];
+    let galeriaActual = [...galeriaBase, ...fotosUsuario];
 
     let swiper;
-    
     const renderizarGaleria = () => {
         const wrapper = document.getElementById("gallery-wrapper"); if(!wrapper) return; wrapper.innerHTML = "";
         galeriaActual.forEach(url => wrapper.innerHTML += `<div class="swiper-slide"><img src="${url}" onerror="this.src='${fallbackImage}'"></div>`);
@@ -377,15 +384,12 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     
     document.getElementById("btn-open-upload-photo")?.addEventListener("click", () => { if(!usuarioActual) { alert("⚠️ Inicia sesión."); popups.login.classList.add("active"); return; } popups.uploadPhoto.classList.add("active"); });
+    
     document.getElementById("btn-submit-photo")?.addEventListener("click", () => { 
         const url = document.getElementById("new-photo-url").value; 
         if(url) { 
-            // Guardamos las fotos del usuario en un lugar separado para no perderlas
-            const userPhotos = JSON.parse(localStorage.getItem("tactical_user_photos_v22")) || [];
-            userPhotos.push(url);
-            localStorage.setItem("tactical_user_photos_v22", JSON.stringify(userPhotos));
-            
-            // Actualizamos la galería actual
+            fotosUsuario.push(url);
+            localStorage.setItem("tactical_user_photos_db", JSON.stringify(fotosUsuario));
             galeriaActual.push(url); 
             renderizarGaleria(); 
             popups.uploadPhoto.classList.remove("active"); 
