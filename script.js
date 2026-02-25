@@ -1,15 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
     
-    // --- LIMPIEZA NUCLEAR DE MEMORIA (Solo se ejecuta una vez para matar a los pájaros y plantas) ---
-    if (!localStorage.getItem("limpieza_nuclear_v25")) {
-        Object.keys(localStorage).forEach(key => {
-            if (key.includes("galeria") || key.includes("mercado") || key.includes("photos")) {
-                localStorage.removeItem(key);
-                console.log("Basura eliminada: " + key);
-            }
-        });
-        localStorage.setItem("limpieza_nuclear_v25", "true");
-    }
+    // --- DESTRUCCIÓN TOTAL DE GALERÍAS ANTERIORES ---
+    // Esto fuerza a tu navegador a olvidar los pájaros y las plantas para siempre.
+    Object.keys(localStorage).forEach(key => {
+        if (key.includes("galeria") || key.includes("photos")) {
+            localStorage.removeItem(key);
+            console.log("Memoria de galería antigua destruida: " + key);
+        }
+    });
 
     // --- REFERENCIAS DOM ---
     const popups = {
@@ -207,7 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
         popups.config.classList.remove("active");
     });
 
-    // --- MERCADO (Base de Datos Blindada) ---
+    // --- MERCADO (SE MANTIENE INTACTO) ---
     const fallbackImage = "https://placehold.co/600x400/111111/7ab317?text=Articulo+Tactico";
 
     const productosBase = [
@@ -356,24 +354,24 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- GALERÍA (COCHES COMPLETOS MUY MODIFICADOS) ---
-    // Enlaces de Unsplash directos super estables de coches potentes
+    // --- LA NUEVA GALERÍA 100% COCHES (V30) ---
+    // Enlaces directos a coches de alta calidad y muy modificados
     const galeriaBase = [
-        // 1. Coche deportivo negro mate modificado
-        "https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?auto=format&fit=crop&w=800",
-        // 2. Coche tuner azul agresivo en garaje
-        "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=800",
-        // 3. Porsche oscuro con kit aerodinámico
-        "https://images.unsplash.com/photo-1603503352756-32d8471c26da?auto=format&fit=crop&w=800",
-        // 4. Mustang Widebody azul de carreras
-        "https://images.unsplash.com/photo-1588127333419-b9d758c11e35?auto=format&fit=crop&w=800",
-        // 5. Muscle car oscuro con ruedas grandes y bajo
-        "https://images.unsplash.com/photo-1550508126-17b5f13c6a0c?auto=format&fit=crop&w=800"
+        // 1. Nissan GT-R R35 Oscuro y modificado
+        "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?auto=format&fit=crop&w=800&q=80",
+        // 2. Coche deportivo agresivo y oscuro (estilo táctico)
+        "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80",
+        // 3. Coche clásico/tuner muy modificado
+        "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=800&q=80",
+        // 4. Deportivo negro en garaje (muy bajado)
+        "https://images.unsplash.com/photo-1503376763066-2067ee4e9b69?auto=format&fit=crop&w=800&q=80",
+        // 5. Trasera de un Muscle car/Deportivo agresivo
+        "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=800&q=80"
     ];
     
-    // Solo cogemos las fotos extras que haya subido el usuario, las originales SIEMPRE serán las de arriba
-    let fotosUsuario = JSON.parse(localStorage.getItem("tactical_user_photos_db")) || [];
-    let galeriaActual = [...galeriaBase, ...fotosUsuario];
+    // Forzamos a que galeriaActual sea SIEMPRE la lista nueva
+    let galeriaActual = [...galeriaBase];
+    localStorage.setItem("tactical_galeria_v30", JSON.stringify(galeriaActual));
 
     let swiper;
     const renderizarGaleria = () => {
@@ -388,9 +386,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("btn-submit-photo")?.addEventListener("click", () => { 
         const url = document.getElementById("new-photo-url").value; 
         if(url) { 
-            fotosUsuario.push(url);
-            localStorage.setItem("tactical_user_photos_db", JSON.stringify(fotosUsuario));
             galeriaActual.push(url); 
+            localStorage.setItem("tactical_galeria_v30", JSON.stringify(galeriaActual));
             renderizarGaleria(); 
             popups.uploadPhoto.classList.remove("active"); 
         }
