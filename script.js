@@ -1,13 +1,14 @@
+// --- FORMATEO TOTAL DE MEMORIA ---
+// Esto elimina toda la basura rota que he generado, manteniendo solo tus usuarios.
+const usuariosGuardados = localStorage.getItem("tactical_users");
+const idiomaGuardado = localStorage.getItem("tactical_lang");
+localStorage.clear();
+if (usuariosGuardados) localStorage.setItem("tactical_users", usuariosGuardados);
+if (idiomaGuardado) localStorage.setItem("tactical_lang", idiomaGuardado);
+// ---------------------------------
+
 document.addEventListener("DOMContentLoaded", () => {
     
-    // --- LIMPIEZA TOTAL DE ENLACES ROTOS ---
-    // Borramos cualquier rastro de los enlaces bloqueados para que cargue los originales.
-    Object.keys(localStorage).forEach(key => {
-        if(key.includes("tactical_mercado") || key.includes("tactical_galeria") || key.includes("tactical_user_photos")) {
-           localStorage.removeItem(key);
-        }
-    });
-
     // --- REFERENCIAS DOM ---
     const popups = {
         cookie: document.getElementById("cookie-popup"),
@@ -204,50 +205,50 @@ document.addEventListener("DOMContentLoaded", () => {
         popups.config.classList.remove("active");
     });
 
-    // --- MERCADO (V_ORIGINAL - LOS ENLACES DEL PRIMER DÍA) ---
+    // --- MERCADO (V_ORIGINAL_EXACTA) ---
     const fallbackImage = "https://placehold.co/600x400/111111/7ab317?text=Articulo+Tactico";
 
     const productosBase = [
-        // FOTO 1: El BMW
+        // 1. EL BMW AZUL ORIGINAL
         { id: 1, nombre: "Motor V8 Blindado", nombreEn: "Armored V8 Engine", tipo: "Mecánica Pesada", tipoEn: "Heavy Mechanics", precio: 4500, vendedor: "Tactical HQ", 
           imagen: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", 
           descripcion: "Motor de bloque grande con pistones forjados, cigüeñal reforzado y culatas de alto flujo. Optimizado para resistir impactos y mantener el rendimiento en condiciones extremas. Potencia estimada: 850 HP.", 
           descripcionEn: "Big block engine with forged pistons, reinforced crankshaft, and high-flow cylinder heads. Optimized to withstand impacts and maintain performance in extreme conditions. Estimated power: 850 HP." },
         
-        // FOTO 2: El Tesla blanco en la tierra
+        // 2. EL TESLA BLANCO ORIGINAL
         { id: 2, nombre: "Neumáticos Tácticos Off-Road", nombreEn: "Tactical Off-Road Tires", tipo: "Movilidad", tipoEn: "Mobility", precio: 800, vendedor: "Tactical HQ", 
           imagen: "https://images.unsplash.com/photo-1600661653561-629509216228?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", 
           descripcion: "Juego de 4 neumáticos de compuesto militar con diseño de banda de rodadura agresivo para barro y roca. Paredes laterales reforzadas con Kevlar de 10 capas. Incluye sistema run-flat interno.", 
           descripcionEn: "Set of 4 military compound tires with aggressive tread design for mud and rock. 10-ply Kevlar reinforced sidewalls. Includes internal run-flat system." },
         
-        // FOTO 3: Los pistones / Kit de suspensión
+        // 3. LOS PISTONES ORIGINALES
         { id: 3, nombre: "Kit de Suspensión Reforzada", nombreEn: "Reinforced Suspension Kit", tipo: "Modificación", tipoEn: "Upgrades", precio: 1200, vendedor: "Tactical HQ", 
           imagen: "https://images.pexels.com/photos/190539/pexels-photo-190539.jpeg?auto=compress&cs=tinysrgb&w=400", 
           descripcion: "Sistema de suspensión de largo recorrido con amortiguadores de nitrógeno presurizado y muelles helicoidales de alta resistencia. Proporciona una elevación de 4 pulgadas y una capacidad de carga superior.", 
           descripcionEn: "Long-travel suspension system with pressurized nitrogen shocks and heavy-duty coil springs. Provides a 4-inch lift and superior load capacity." },
         
-        // FOTO 4: El McLaren blanco
+        // 4. EL MCLAREN BLANCO ORIGINAL
         { id: 4, nombre: "Pintura Absorbe-Radar (Mate)", nombreEn: "Radar-Absorbent Paint (Matte)", tipo: "Estética / Camuflaje", tipoEn: "Aesthetics / Camo", precio: 1500, vendedor: "Tactical HQ", 
           imagen: "https://images.unsplash.com/photo-1542362567-b07e54358753?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", 
           descripcion: "Recubrimiento cerámico avanzado con propiedades de absorción de ondas de radar y reducción de firma infrarroja. Acabado negro mate ultraplano para minimizar reflejos visuales nocturnos.", 
           descripcionEn: "Advanced ceramic coating with radar wave absorption properties and infrared signature reduction. Ultra-flat matte black finish to minimize nighttime visual reflections." },
         
-        // FOTO 5: El Porsche gris
+        // 5. EL PORSCHE GRIS ORIGINAL
         { id: 5, nombre: "Blindaje Ligero de Puertas", nombreEn: "Light Door Armor", tipo: "Defensa", tipoEn: "Defense", precio: 2100, vendedor: "Tactical HQ", 
           imagen: "https://images.unsplash.com/photo-1592853625601-bb9d23da12fc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", 
           descripcion: "Paneles de blindaje compuesto de nivel III+ para instalación interna en puertas de vehículos estándar. Detiene calibres de rifle comunes sin añadir un peso excesivo al chasis del coche.", 
           descripcionEn: "Level III+ composite armor panels for internal installation in standard vehicle doors. Stops common rifle calibers without adding excessive weight to the chassis." },
         
-        // FOTO 6: El Prius plateado / carretera
+        // 6. EL PRIUS GRIS ORIGINAL
         { id: 6, nombre: "Luces LED de Alta Intensidad", nombreEn: "High-Intensity LED Lights", tipo: "Visión", tipoEn: "Vision", precio: 450, vendedor: "Tactical HQ", 
           imagen: "https://images.unsplash.com/photo-1551952237-954a0e68786c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", 
           descripcion: "Barra de luz LED de grado táctico con una salida combinada de 30,000 lúmenes. Carcasa de aluminio impermeable IP68 y lentes de policarbonato irrompibles. Patrón de haz mixto (inundación/punto).", 
           descripcionEn: "Tactical-grade LED light bar with a combined output of 30,000 lumens. IP68 waterproof aluminum housing and unbreakable polycarbonate lenses. Mixed beam pattern (flood/spot)." }
     ];
     
-    let mercadoActual = JSON.parse(localStorage.getItem("tactical_mercado_ORIGINAL_URLS")) || productosBase;
-    if (!localStorage.getItem("tactical_mercado_ORIGINAL_URLS")) {
-         localStorage.setItem("tactical_mercado_ORIGINAL_URLS", JSON.stringify(productosBase));
+    let mercadoActual = JSON.parse(localStorage.getItem("tactical_mercado_100")) || productosBase;
+    if (!localStorage.getItem("tactical_mercado_100")) {
+         localStorage.setItem("tactical_mercado_100", JSON.stringify(productosBase));
     }
     
     const formatearPrecio = (p) => p.toLocaleString(currentLang === 'es' ? "es-ES" : "en-US") + (currentLang === 'es' ? "€" : "$");
@@ -301,7 +302,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 id: Date.now(), nombre: nombre, tipo: tipo, precio: precio, 
                 vendedor: usuarioActual.user, imagen: imagen, descripcion: descripcion 
             });
-            localStorage.setItem("tactical_mercado_ORIGINAL_URLS", JSON.stringify(mercadoActual));
+            localStorage.setItem("tactical_mercado_100", JSON.stringify(mercadoActual));
             renderizarMercado(); popups.uploadItem.classList.remove("active");
             
             document.getElementById("new-item-name").value = "";
@@ -363,7 +364,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- GALERÍA (LOS 5 ENLACES DEL PRIMER DÍA) ---
+    // --- GALERÍA (LAS 5 FOTOS EXACTAS DEL PRIMER DÍA) ---
     const galeriaBase = [
         "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800",
         "https://images.unsplash.com/photo-1503376763066-2067ee4e9b69?auto=format&fit=crop&w=800",
@@ -372,9 +373,9 @@ document.addEventListener("DOMContentLoaded", () => {
         "https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=800"
     ];
     
-    let galeriaActual = JSON.parse(localStorage.getItem("tactical_galeria_ORIGINAL_URLS")) || galeriaBase;
-    if (!localStorage.getItem("tactical_galeria_ORIGINAL_URLS")) {
-        localStorage.setItem("tactical_galeria_ORIGINAL_URLS", JSON.stringify(galeriaActual));
+    let galeriaActual = JSON.parse(localStorage.getItem("tactical_galeria_100")) || galeriaBase;
+    if (!localStorage.getItem("tactical_galeria_100")) {
+        localStorage.setItem("tactical_galeria_100", JSON.stringify(galeriaActual));
     }
 
     let swiper;
@@ -393,7 +394,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const url = document.getElementById("new-photo-url").value; 
         if(url) { 
             galeriaActual.push(url); 
-            localStorage.setItem("tactical_galeria_ORIGINAL_URLS", JSON.stringify(galeriaActual));
+            localStorage.setItem("tactical_galeria_100", JSON.stringify(galeriaActual));
             renderizarGaleria(); 
             popups.uploadPhoto.classList.remove("active"); 
         }
