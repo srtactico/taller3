@@ -1,10 +1,52 @@
 document.addEventListener("DOMContentLoaded", () => {
     
-    // --- CORRECCIÓN FORZOSA DEL MERCADO (V39) ---
-    // Borramos específicamente la memoria del mercado anterior para obligar
-    // a que se cargue la nueva lista con las fotos de producto correctas.
-    localStorage.removeItem("tactical_mercado_vFinal");
-    localStorage.removeItem("tactical_mercado_v37");
+    // =================================================================
+    // --- ZONA DE CORRECCIÓN FORZOSA DE IMÁGENES (El "Robot Corrector") ---
+    // =================================================================
+    // Este bloque se ejecuta SIEMPRE al inicio. Comprueba si las imágenes en la memoria
+    // son las de "coches enteros" y las sustituye a la fuerza por las de "producto real".
+    
+    // 1. Recuperamos la memoria actual del mercado
+    const mercadoMemoriaKey = "tactical_mercado_vFinal_R2"; // Nueva clave para forzar reseteo
+    let mercadoStorage = JSON.parse(localStorage.getItem(mercadoMemoriaKey));
+
+    // 2. Definimos las URLs CORRECTAS (fotos de producto)
+    const imagenesCorrectas = {
+        1: "https://images.pexels.com/photos/1915149/pexels-photo-1915149.jpeg?auto=compress&cs=tinysrgb&w=400", // Motor V8 Real
+        // ID 2 (Ruedas) y ID 3 (Suspensión) NO las tocamos porque te gustan.
+        4: "https://images.unsplash.com/photo-1535556202692-7ed262bb8d0e?auto=format&fit=crop&w=400&q=80", // Textura Pintura Mate
+        5: "https://images.unsplash.com/photo-1513595921978-8312e09d5d37?auto=format&fit=crop&w=400&q=80", // Textura Placa Blindaje
+        6: "https://images.unsplash.com/photo-1601087396390-22742f612998?auto=format&fit=crop&w=400&q=80"  // Foco LED primer plano
+    };
+
+    let huboCorrecciones = false;
+
+    // Si hay datos en memoria, los revisamos y corregimos
+    if (mercadoStorage && mercadoStorage.length > 0) {
+        mercadoStorage.forEach(prod => {
+            // Si el producto está en nuestra lista de "imágenes a corregir"
+            if (imagenesCorrectas[prod.id]) {
+                // Si la imagen que tiene NO es la correcta, la cambiamos.
+                if (prod.imagen !== imagenesCorrectas[prod.id]) {
+                    prod.imagen = imagenesCorrectas[prod.id];
+                    huboCorrecciones = true;
+                }
+            }
+        });
+    } else {
+        // Si no había memoria, forzamos la carga de la base correcta más abajo
+        huboCorrecciones = true; 
+        mercadoStorage = null;
+    }
+
+    // 3. Si el robot hizo correcciones, guardamos la memoria corregida.
+    if (huboCorrecciones && mercadoStorage) {
+        localStorage.setItem(mercadoMemoriaKey, JSON.stringify(mercadoStorage));
+        console.log("✅ El sistema ha corregido las fotos de producto automáticamente.");
+    }
+    // =================================================================
+    // FIN DE LA ZONA DE CORRECCIÓN
+    // =================================================================
 
 
     // --- REFERENCIAS DOM ---
@@ -203,51 +245,53 @@ document.addEventListener("DOMContentLoaded", () => {
         popups.config.classList.remove("active");
     });
 
-    // --- MERCADO (V39 - FOTOS DE PRODUCTO CORRECTAS) ---
+    // --- MERCADO (BASE DE DATOS CON FOTOS DE PRODUCTO CORRECTAS) ---
     const fallbackImage = "https://placehold.co/600x400/111111/7ab317?text=Articulo+Tactico";
 
     const productosBase = [
-        // FOTO CORREGIDA: Primer plano de MOTOR V8 real
+        // FOTO: Motor V8 Real
         { id: 1, nombre: "Motor V8 Blindado", nombreEn: "Armored V8 Engine", tipo: "Mecánica Pesada", tipoEn: "Heavy Mechanics", precio: 4500, vendedor: "Tactical HQ", 
           imagen: "https://images.pexels.com/photos/1915149/pexels-photo-1915149.jpeg?auto=compress&cs=tinysrgb&w=400", 
           descripcion: "Motor de bloque grande con pistones forjados, cigüeñal reforzado y culatas de alto flujo. Optimizado para resistir impactos y mantener el rendimiento en condiciones extremas. Potencia estimada: 850 HP.", 
           descripcionEn: "Big block engine with forged pistons, reinforced crankshaft, and high-flow cylinder heads. Optimized to withstand impacts and maintain performance in extreme conditions. Estimated power: 850 HP." },
         
-        // FOTO CORRECTA (MANTENIDA): Rueda de tacos
+        // FOTO: Rueda de tacos (La que te gusta)
         { id: 2, nombre: "Neumáticos Tácticos Off-Road", nombreEn: "Tactical Off-Road Tires", tipo: "Movilidad", tipoEn: "Mobility", precio: 800, vendedor: "Tactical HQ", 
           imagen: "https://images.pexels.com/photos/1592261/pexels-photo-1592261.jpeg?auto=compress&cs=tinysrgb&w=400", 
           descripcion: "Juego de 4 neumáticos de compuesto militar con diseño de banda de rodadura agresivo para barro y roca. Paredes laterales reforzadas con Kevlar de 10 capas. Incluye sistema run-flat interno.", 
           descripcionEn: "Set of 4 military compound tires with aggressive tread design for mud and rock. 10-ply Kevlar reinforced sidewalls. Includes internal run-flat system." },
         
-        // FOTO CORRECTA (MANTENIDA): Kit de suspensión azul/gris
+        // FOTO: Kit de suspensión azul/gris (La que te gusta)
         { id: 3, nombre: "Kit de Suspensión Reforzada", nombreEn: "Reinforced Suspension Kit", tipo: "Modificación", tipoEn: "Upgrades", precio: 1200, vendedor: "Tactical HQ", 
           imagen: "https://images.pexels.com/photos/190539/pexels-photo-190539.jpeg?auto=compress&cs=tinysrgb&w=400", 
           descripcion: "Sistema de suspensión de largo recorrido con amortiguadores de nitrógeno presurizado y muelles helicoidales de alta resistencia. Proporciona una elevación de 4 pulgadas y una capacidad de carga superior.", 
           descripcionEn: "Long-travel suspension system with pressurized nitrogen shocks and heavy-duty coil springs. Provides a 4-inch lift and superior load capacity." },
         
-        // FOTO CORREGIDA: Primer plano de TEXTURA de pintura mate
+        // FOTO: Textura Pintura Mate
         { id: 4, nombre: "Pintura Absorbe-Radar (Mate)", nombreEn: "Radar-Absorbent Paint (Matte)", tipo: "Estética / Camuflaje", tipoEn: "Aesthetics / Camo", precio: 1500, vendedor: "Tactical HQ", 
-          imagen: "https://images.pexels.com/photos/3311574/pexels-photo-3311574.jpeg?auto=compress&cs=tinysrgb&w=400", 
+          imagen: "https://images.unsplash.com/photo-1535556202692-7ed262bb8d0e?auto=format&fit=crop&w=400&q=80", 
           descripcion: "Recubrimiento cerámico avanzado con propiedades de absorción de ondas de radar y reducción de firma infrarroja. Acabado negro mate ultraplano para minimizar reflejos visuales nocturnos.", 
           descripcionEn: "Advanced ceramic coating with radar wave absorption properties and infrared signature reduction. Ultra-flat matte black finish to minimize nighttime visual reflections." },
         
-        // FOTO CORREGIDA: Primer plano de TEXTURA de metal blindado
+        // FOTO: Textura Placa Blindaje
         { id: 5, nombre: "Blindaje Ligero de Puertas", nombreEn: "Light Door Armor", tipo: "Defensa", tipoEn: "Defense", precio: 2100, vendedor: "Tactical HQ", 
           imagen: "https://images.unsplash.com/photo-1513595921978-8312e09d5d37?auto=format&fit=crop&w=400&q=80", 
           descripcion: "Paneles de blindaje compuesto de nivel III+ para instalación interna en puertas de vehículos estándar. Detiene calibres de rifle comunes sin añadir un peso excesivo al chasis del coche.", 
           descripcionEn: "Level III+ composite armor panels for internal installation in standard vehicle doors. Stops common rifle calibers without adding excessive weight to the chassis." },
         
-        // FOTO CORREGIDA: Primer plano del foco LED en sí
+        // FOTO: Foco LED primer plano
         { id: 6, nombre: "Luces LED de Alta Intensidad", nombreEn: "High-Intensity LED Lights", tipo: "Visión", tipoEn: "Vision", precio: 450, vendedor: "Tactical HQ", 
-          imagen: "https://images.pexels.com/photos/1693666/pexels-photo-1693666.jpeg?auto=compress&cs=tinysrgb&w=400", 
+          imagen: "https://images.unsplash.com/photo-1601087396390-22742f612998?auto=format&fit=crop&w=400&q=80", 
           descripcion: "Barra de luz LED de grado táctico con una salida combinada de 30,000 lúmenes. Carcasa de aluminio impermeable IP68 y lentes de policarbonato irrompibles. Patrón de haz mixto (inundación/punto).", 
           descripcionEn: "Tactical-grade LED light bar with a combined output of 30,000 lumens. IP68 waterproof aluminum housing and unbreakable polycarbonate lenses. Mixed beam pattern (flood/spot)." }
     ];
     
-    // Usamos v39 para el mercado y forzamos la carga si no existe
-    let mercadoActual = JSON.parse(localStorage.getItem("tactical_mercado_v39")) || productosBase;
-    if (!localStorage.getItem("tactical_mercado_v39")) {
-         localStorage.setItem("tactical_mercado_v39", JSON.stringify(productosBase));
+    // Usamos la clave nueva R2. Si el bloque corrector hizo su trabajo, esto ya estará actualizado.
+    let mercadoActual = JSON.parse(localStorage.getItem(mercadoMemoriaKey)) || productosBase;
+    // Si por alguna razón no había memoria, inicializamos con la base correcta
+    if (!localStorage.getItem(mercadoMemoriaKey)) {
+         localStorage.setItem(mercadoMemoriaKey, JSON.stringify(productosBase));
+         mercadoActual = productosBase;
     }
     
     const formatearPrecio = (p) => p.toLocaleString(currentLang === 'es' ? "es-ES" : "en-US") + (currentLang === 'es' ? "€" : "$");
@@ -301,7 +345,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 id: Date.now(), nombre: nombre, tipo: tipo, precio: precio, 
                 vendedor: usuarioActual.user, imagen: imagen, descripcion: descripcion 
             });
-            localStorage.setItem("tactical_mercado_v39", JSON.stringify(mercadoActual));
+            localStorage.setItem(mercadoMemoriaKey, JSON.stringify(mercadoActual));
             renderizarMercado(); popups.uploadItem.classList.remove("active");
             
             document.getElementById("new-item-name").value = "";
@@ -363,7 +407,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- GALERÍA (SE MANTIENE IGUAL QUE ANTES) ---
+    // --- GALERÍA (V37) ---
     const galeriaBase = [
         "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?auto=format&fit=crop&w=800&q=80",
         "https://images.unsplash.com/photo-1603503352756-32d8471c26da?auto=format&fit=crop&w=800&q=80",
