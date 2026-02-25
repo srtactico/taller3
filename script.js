@@ -1,13 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // --- LIMPIEZA FORZOSA DE GALERÍAS ANTIGUAS ---
-    // Esto borra cualquier rastro de versiones anteriores de la galería para asegurar que carguen las nuevas fotos.
-    Object.keys(localStorage).forEach(key => {
-        if (key.startsWith("tactical_galeria_") && key !== "tactical_galeria_v20") {
-            localStorage.removeItem(key);
-            console.log("Galería antigua borrada: " + key);
-        }
-    });
-
     // --- REFERENCIAS DOM ---
     const popups = {
         cookie: document.getElementById("cookie-popup"),
@@ -204,7 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
         popups.config.classList.remove("active");
     });
 
-    // --- MERCADO (V17) ---
+    // --- MERCADO (V17 - Sin cambios aquí) ---
     const fallbackImage = "https://placehold.co/600x400/111111/7ab317?text=Articulo+Tactico";
 
     const productosBase = [
@@ -353,22 +344,29 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- GALERÍA (V20) - COCHES COMPLETOS MUY MODIFICADOS ---
+    // --- GALERÍA (V22) - FUERZA BRUTA: COCHES MODIFICADOS ---
     const galeriaBase = [
-        // 1. Nissan GT-R R35 muy ancho y agresivo (Liberty Walk style)
-        "https://images.pexels.com/photos/15127331/pexels-photo-15127331.jpeg?auto=compress&cs=tinysrgb&w=800",
-        // 2. Mustang clásico restomod muy bajo y oscuro
-        "https://images.pexels.com/photos/3972755/pexels-photo-3972755.jpeg?auto=compress&cs=tinysrgb&w=800",
-        // 3. Coche de drift japonés muy modificado y colorido en acción
+        // 1. Widebody agresivo (tipo GT-R/Supra)
+        "https://images.pexels.com/photos/14297701/pexels-photo-14297701.jpeg?auto=compress&cs=tinysrgb&w=800",
+        // 2. Coche de Drift quemando rueda
         "https://images.pexels.com/photos/16384597/pexels-photo-16384597.jpeg?auto=compress&cs=tinysrgb&w=800",
-        // 4. Todoterreno Jeep Wrangler extremadamente modificado (ruedas gigantes, luces, suspensión)
+        // 3. Todoterreno monstruoso muy modificado
         "https://images.pexels.com/photos/19287793/pexels-photo-19287793.jpeg?auto=compress&cs=tinysrgb&w=800",
-        // 5. Deportivo moderno (tipo Supra/BMW) con kit de carrocería completo y alerón gigante
-        "https://images.pexels.com/photos/14297701/pexels-photo-14297701.jpeg?auto=compress&cs=tinysrgb&w=800"
+        // 4. Clásico americano "Restomod" bajo y ancho
+        "https://images.pexels.com/photos/3972755/pexels-photo-3972755.jpeg?auto=compress&cs=tinysrgb&w=800",
+        // 5. Deportivo japonés oscuro estilo time attack
+        "https://images.unsplash.com/photo-1605515298946-d062f2e9da53?auto=format&fit=crop&w=800"
     ];
     
-    // Versión 20 + Limpieza automática al inicio
-    let galeriaActual = JSON.parse(localStorage.getItem("tactical_galeria_v20")) || galeriaBase;
+    // --- CAMBIO IMPORTANTE: FORZAMOS LA CARGA DE LAS NUEVAS FOTOS ---
+    // En lugar de mirar si ya existe en memoria, le obligamos a usar las nuevas.
+    // (Usamos v22 para forzar el cambio y luego concatenamos si el usuario sube fotos nuevas)
+    let galeriaActual = [...galeriaBase]; 
+    const userUploadedPhotos = JSON.parse(localStorage.getItem("tactical_user_photos_v22")) || [];
+    galeriaActual = galeriaActual.concat(userUploadedPhotos);
+    // Guardamos la versión combinada
+    localStorage.setItem("tactical_galeria_v22", JSON.stringify(galeriaActual));
+
     let swiper;
     
     const renderizarGaleria = () => {
@@ -379,7 +377,20 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     
     document.getElementById("btn-open-upload-photo")?.addEventListener("click", () => { if(!usuarioActual) { alert("⚠️ Inicia sesión."); popups.login.classList.add("active"); return; } popups.uploadPhoto.classList.add("active"); });
-    document.getElementById("btn-submit-photo")?.addEventListener("click", () => { const url = document.getElementById("new-photo-url").value; if(url) { galeriaActual.push(url); localStorage.setItem("tactical_galeria_v20", JSON.stringify(galeriaActual)); renderizarGaleria(); popups.uploadPhoto.classList.remove("active"); }});
+    document.getElementById("btn-submit-photo")?.addEventListener("click", () => { 
+        const url = document.getElementById("new-photo-url").value; 
+        if(url) { 
+            // Guardamos las fotos del usuario en un lugar separado para no perderlas
+            const userPhotos = JSON.parse(localStorage.getItem("tactical_user_photos_v22")) || [];
+            userPhotos.push(url);
+            localStorage.setItem("tactical_user_photos_v22", JSON.stringify(userPhotos));
+            
+            // Actualizamos la galería actual
+            galeriaActual.push(url); 
+            renderizarGaleria(); 
+            popups.uploadPhoto.classList.remove("active"); 
+        }
+    });
 
     // --- FORMULARIO TALLER ---
     document.getElementById("form-servicio")?.addEventListener("submit", (e) => { 
