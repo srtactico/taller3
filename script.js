@@ -1,16 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
     
-    // --- LIMPIEZA NUCLEAR V37 (Para asegurar las nuevas fotos del mercado) ---
-    if (!localStorage.getItem("limpieza_nuclear_v37")) {
-        Object.keys(localStorage).forEach(key => {
-            // Borramos cualquier rastro de galerias o mercados anteriores
-            if (key.includes("galeria") || key.includes("mercado") || key.includes("photos")) {
-                localStorage.removeItem(key);
-            }
-        });
-        // Marcamos que ya hemos hecho la limpieza de esta versión
-        localStorage.setItem("limpieza_nuclear_v37", "true");
-    }
+    // --- DESTRUCCIÓN DE MEMORIA SIN PIEDAD ---
+    // Esto borra la memoria del mercado y la galería CADA VEZ que cargas la página.
+    // Así es imposible que el navegador te ponga fotos viejas.
+    Object.keys(localStorage).forEach(key => {
+        if (key.includes("mercado") || key.includes("galeria") || key.includes("photos")) {
+            localStorage.removeItem(key);
+        }
+    });
 
     // --- REFERENCIAS DOM ---
     const popups = {
@@ -208,47 +205,46 @@ document.addEventListener("DOMContentLoaded", () => {
         popups.config.classList.remove("active");
     });
 
-    // --- MERCADO (V37 - FOTOS NUEVAS) ---
-    // Definimos una imagen de reserva global por si acaso
+    // --- MERCADO (FOTOS 100% NUEVAS Y ASEGURADAS) ---
     const fallbackImage = "https://placehold.co/600x400/111111/7ab317?text=Articulo+Tactico";
 
     const productosBase = [
-        // 1. FOTO NUEVA: MOTOR V8 IMPRESIONANTE
+        // FOTO 1: MOTOR V8 REAL
         { id: 1, nombre: "Motor V8 Blindado", nombreEn: "Armored V8 Engine", tipo: "Mecánica Pesada", tipoEn: "Heavy Mechanics", precio: 4500, vendedor: "Tactical HQ", 
-          imagen: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=400&q=80", 
+          imagen: "https://images.pexels.com/photos/1915149/pexels-photo-1915149.jpeg?auto=compress&cs=tinysrgb&w=400", 
           descripcion: "Motor de bloque grande con pistones forjados, cigüeñal reforzado y culatas de alto flujo. Optimizado para resistir impactos y mantener el rendimiento en condiciones extremas. Potencia estimada: 850 HP.", 
           descripcionEn: "Big block engine with forged pistons, reinforced crankshaft, and high-flow cylinder heads. Optimized to withstand impacts and maintain performance in extreme conditions. Estimated power: 850 HP." },
         
-        // 2. FOTO NUEVA: NEUMÁTICOS TÁCTICOS "TO GUAPOS"
+        // FOTO 2: RUEDA/NEUMÁTICO OFF-ROAD AGRESIVO
         { id: 2, nombre: "Neumáticos Tácticos Off-Road", nombreEn: "Tactical Off-Road Tires", tipo: "Movilidad", tipoEn: "Mobility", precio: 800, vendedor: "Tactical HQ", 
-          imagen: "https://images.unsplash.com/photo-1569397288884-4d43d6738fbd?auto=format&fit=crop&w=400&q=80", 
+          imagen: "https://images.pexels.com/photos/1592261/pexels-photo-1592261.jpeg?auto=compress&cs=tinysrgb&w=400", 
           descripcion: "Juego de 4 neumáticos de compuesto militar con diseño de banda de rodadura agresivo para barro y roca. Paredes laterales reforzadas con Kevlar de 10 capas. Incluye sistema run-flat interno.", 
           descripcionEn: "Set of 4 military compound tires with aggressive tread design for mud and rock. 10-ply Kevlar reinforced sidewalls. Includes internal run-flat system." },
         
-        // 3. FOTO RESTAURADA: KIT DE SUSPENSIÓN ORIGINAL
+        // FOTO 3: KIT DE SUSPENSIÓN (LA ORIGINAL QUE TE GUSTABA)
         { id: 3, nombre: "Kit de Suspensión Reforzada", nombreEn: "Reinforced Suspension Kit", tipo: "Modificación", tipoEn: "Upgrades", precio: 1200, vendedor: "Tactical HQ", 
           imagen: "https://images.pexels.com/photos/190539/pexels-photo-190539.jpeg?auto=compress&cs=tinysrgb&w=400", 
           descripcion: "Sistema de suspensión de largo recorrido con amortiguadores de nitrógeno presurizado y muelles helicoidales de alta resistencia. Proporciona una elevación de 4 pulgadas y una capacidad de carga superior.", 
           descripcionEn: "Long-travel suspension system with pressurized nitrogen shocks and heavy-duty coil springs. Provides a 4-inch lift and superior load capacity." },
         
         { id: 4, nombre: "Pintura Absorbe-Radar (Mate)", nombreEn: "Radar-Absorbent Paint (Matte)", tipo: "Estética / Camuflaje", tipoEn: "Aesthetics / Camo", precio: 1500, vendedor: "Tactical HQ", 
-          imagen: "https://images.unsplash.com/photo-1542362567-b07e54358753?auto=format&fit=crop&w=400&q=80", 
+          imagen: "https://images.pexels.com/photos/1616403/pexels-photo-1616403.jpeg?auto=compress&cs=tinysrgb&w=400", 
           descripcion: "Recubrimiento cerámico avanzado con propiedades de absorción de ondas de radar y reducción de firma infrarroja. Acabado negro mate ultraplano para minimizar reflejos visuales nocturnos.", 
           descripcionEn: "Advanced ceramic coating with radar wave absorption properties and infrared signature reduction. Ultra-flat matte black finish to minimize nighttime visual reflections." },
         
         { id: 5, nombre: "Blindaje Ligero de Puertas", nombreEn: "Light Door Armor", tipo: "Defensa", tipoEn: "Defense", precio: 2100, vendedor: "Tactical HQ", 
-          imagen: "https://images.unsplash.com/photo-1592853625601-bb9d23da12fc?auto=format&fit=crop&w=400&q=80", 
+          imagen: "https://images.pexels.com/photos/2086622/pexels-photo-2086622.jpeg?auto=compress&cs=tinysrgb&w=400", 
           descripcion: "Paneles de blindaje compuesto de nivel III+ para instalación interna en puertas de vehículos estándar. Detiene calibres de rifle comunes sin añadir un peso excesivo al chasis del coche.", 
           descripcionEn: "Level III+ composite armor panels for internal installation in standard vehicle doors. Stops common rifle calibers without adding excessive weight to the chassis." },
         
         { id: 6, nombre: "Luces LED de Alta Intensidad", nombreEn: "High-Intensity LED Lights", tipo: "Visión", tipoEn: "Vision", precio: 450, vendedor: "Tactical HQ", 
-          imagen: "https://images.unsplash.com/photo-1551952237-954a0e68786c?auto=format&fit=crop&w=400&q=80", 
+          imagen: "https://images.pexels.com/photos/119435/pexels-photo-119435.jpeg?auto=compress&cs=tinysrgb&w=400", 
           descripcion: "Barra de luz LED de grado táctico con una salida combinada de 30,000 lúmenes. Carcasa de aluminio impermeable IP68 y lentes de policarbonato irrompibles. Patrón de haz mixto (inundación/punto).", 
           descripcionEn: "Tactical-grade LED light bar with a combined output of 30,000 lumens. IP68 waterproof aluminum housing and unbreakable polycarbonate lenses. Mixed beam pattern (flood/spot)." }
     ];
     
-    // Usamos v37 para el mercado
-    let mercadoActual = JSON.parse(localStorage.getItem("tactical_mercado_v37")) || productosBase;
+    // Al haber borrado arriba la memoria, esto cargará los productos nuevos sí o sí
+    let mercadoActual = JSON.parse(localStorage.getItem("tactical_mercado_vFinal")) || productosBase;
     const formatearPrecio = (p) => p.toLocaleString(currentLang === 'es' ? "es-ES" : "en-US") + (currentLang === 'es' ? "€" : "$");
 
     const renderizarMercado = () => {
@@ -264,7 +260,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const tipo = currentLang === 'en' && p.tipoEn ? p.tipoEn : p.tipo;
             const desc = currentLang === 'en' && p.descripcionEn ? p.descripcionEn : (p.descripcion || (currentLang === 'es' ? "Sin descripción detallada." : "No detailed description."));
             
-            // Añadimos onerror para que si falla, ponga la imagen de reserva
             contenedor.innerHTML += `
             <div class="card">
                 <div class="img-container">
@@ -301,8 +296,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 id: Date.now(), nombre: nombre, tipo: tipo, precio: precio, 
                 vendedor: usuarioActual.user, imagen: imagen, descripcion: descripcion 
             });
-            // Guardamos en v37
-            localStorage.setItem("tactical_mercado_v37", JSON.stringify(mercadoActual));
+            localStorage.setItem("tactical_mercado_vFinal", JSON.stringify(mercadoActual));
             renderizarMercado(); popups.uploadItem.classList.remove("active");
             
             document.getElementById("new-item-name").value = "";
@@ -364,33 +358,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- GALERÍA (V37) ---
+    // --- GALERÍA (5 COCHES NUEVOS DE PEXELS PARA NO FALLAR) ---
     const galeriaBase = [
-        // 1. Nissan GT-R R35 Oscuro
-        "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?auto=format&fit=crop&w=800&q=80",
-        
-        // 2. Deportivo oscuro agresivo
-        "https://images.unsplash.com/photo-1603503352756-32d8471c26da?auto=format&fit=crop&w=800&q=80",
-        
-        // 3. Mustang Rojo
-        "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=800&q=80",
-        
-        // 4. Camaro Blanco
-        "https://images.unsplash.com/photo-1503376763066-2067ee4e9b69?auto=format&fit=crop&w=800&q=80",
-        
-        // 5. SUV Blanco
-        "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=800&q=80"
+        "https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=800", // BMW M3 Azul
+        "https://images.pexels.com/photos/3729464/pexels-photo-3729464.jpeg?auto=compress&cs=tinysrgb&w=800", // Mustang Oscuro
+        "https://images.pexels.com/photos/244206/pexels-photo-244206.jpeg?auto=compress&cs=tinysrgb&w=800", // Audi R8
+        "https://images.pexels.com/photos/1152077/pexels-photo-1152077.jpeg?auto=compress&cs=tinysrgb&w=800", // Muscle car
+        "https://images.pexels.com/photos/3311574/pexels-photo-3311574.jpeg?auto=compress&cs=tinysrgb&w=800"  // Deportivo negro
     ];
     
-    // Forzamos la carga de la lista base en v37
-    let galeriaActual = [...galeriaBase];
-    localStorage.setItem("tactical_galeria_v37", JSON.stringify(galeriaActual));
-
+    let galeriaActual = JSON.parse(localStorage.getItem("tactical_galeria_vFinal")) || galeriaBase;
     let swiper;
+    
     const renderizarGaleria = () => {
         const wrapper = document.getElementById("gallery-wrapper"); if(!wrapper) return; wrapper.innerHTML = "";
         galeriaActual.forEach(url => {
-            // Si la imagen falla, ocultamos el slide
             wrapper.innerHTML += `<div class="swiper-slide"><img src="${url}" onerror="this.parentElement.style.display='none';"></div>`;
         });
         if(swiper) swiper.destroy(true, true);
@@ -403,8 +385,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const url = document.getElementById("new-photo-url").value; 
         if(url) { 
             galeriaActual.push(url); 
-            // Guardamos en v37
-            localStorage.setItem("tactical_galeria_v37", JSON.stringify(galeriaActual));
+            localStorage.setItem("tactical_galeria_vFinal", JSON.stringify(galeriaActual));
             renderizarGaleria(); 
             popups.uploadPhoto.classList.remove("active"); 
         }
