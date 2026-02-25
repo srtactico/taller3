@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tactical Reparations</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="styles.css?v=final">
+    <link rel="stylesheet" href="styles.css?v=ultimafinal">
 </head>
 <body>
 
@@ -37,7 +37,7 @@
                 <input type="password" id="password" placeholder="Contraseña" data-i18n-placeholder="passHolder" class="input-field">
                 <button id="btn-login" class="btn-primary" data-i18n="loginBtn">Iniciar Sesión</button>
                 <button class="btn-secondary btn-close-popup" style="width: 100%;" data-i18n="cancelBtn">Cancelar</button>
-                <p style="margin-top: 15px; font-size: 0.9rem; color: var(--text-muted);"><span data-i18n="noAccount">¿No tienes cuenta?</span> <a href="#" id="link-to-register" style="color: var(--primary-color);" data-i18n="registerHere">Regístrate aquí</a></p>
+                <p style="margin-top: 15px; font-size: 0.9rem; color: var(--text-muted);"><span data-i18n="noAccount">¿No tienes cuenta?</span> <a href="#" id="link-to-register-start" style="color: var(--primary-color);" data-i18n="registerHere">Regístrate aquí</a></p>
             </div>
 
             <div id="register-form-container" style="display: none;">
@@ -49,6 +49,37 @@
                 <button class="btn-secondary btn-close-popup" style="width: 100%;" data-i18n="cancelBtn">Cancelar</button>
                 <p style="margin-top: 15px; font-size: 0.9rem; color: var(--text-muted);"><span data-i18n="hasAccount">¿Ya tienes cuenta?</span> <a href="#" id="link-to-login" style="color: var(--primary-color);" data-i18n="loginBtn">Iniciar Sesión</a></p>
             </div>
+        </div>
+    </div>
+
+    <div id="account-benefits-popup" class="overlay">
+        <div class="popup-box">
+            <h2 data-i18n="benefitsTitle">Ventajas de Unirte</h2>
+            <ul style="text-align: left; color: var(--text-muted); margin-bottom: 20px; padding-left: 20px;">
+                <li data-i18n="benefit1" style="margin-bottom: 10px;">Vender tus propios artículos en el Mercado.</li>
+                <li data-i18n="benefit2" style="margin-bottom: 10px;">Comprar equipamiento exclusivo.</li>
+                <li data-i18n="benefit3" style="margin-bottom: 10px;">Subir fotos de tus modificaciones a la Galería.</li>
+                <li data-i18n="benefit4" style="margin-bottom: 10px;">Acceso a descuentos exclusivos para miembros.</li>
+            </ul>
+            <button id="btn-continue-register" class="btn-primary" data-i18n="continueRegisterBtn">Continuar al Registro</button>
+            <button class="btn-secondary btn-close-popup" style="width: 100%;" data-i18n="cancelBtn">Cancelar</button>
+        </div>
+    </div>
+
+    <div id="privacy-policy-popup" class="overlay">
+        <div class="popup-box modal-box">
+            <h2 data-i18n="policyTitle">Política de Privacidad y Cookies</h2>
+            <div style="text-align: left; color: var(--text-muted);">
+                <h3 style="color: var(--primary-color);">1. Uso de Datos</h3>
+                <p>Recopilamos información necesaria para gestionar tu cuenta, procesar pedidos y mejorar tu experiencia en la plataforma.</p>
+                <h3 style="color: var(--primary-color); margin-top: 15px;">2. Cookies</h3>
+                <p>Utilizamos cookies propias y de terceros para analizar el tráfico, recordar tus preferencias y ofrecerte contenido personalizado.</p>
+                <h3 style="color: var(--primary-color); margin-top: 15px;">3. Compartir Información</h3>
+                <p>No vendemos ni compartimos tus datos personales con terceros, salvo que sea necesario para prestar el servicio (ej. procesamiento de pagos) o por obligación legal.</p>
+                <h3 style="color: var(--primary-color); margin-top: 15px;">4. Tus Derechos</h3>
+                <p>Tienes derecho a acceder, rectificar o eliminar tus datos personales en cualquier momento desde tu perfil.</p>
+            </div>
+            <button class="btn-secondary btn-close-popup" data-i18n="closeBtn" style="margin-top: 20px;">Cerrar</button>
         </div>
     </div>
 
@@ -156,6 +187,7 @@
                         <div id="user-dropdown-content" class="dropdown-content">
                             <a href="#" id="btn-menu-profile" data-i18n="profileBtn">Mi Perfil</a>
                             <a href="#" id="btn-menu-config" data-i18n="configBtn">Configuración</a>
+                            <a href="#" id="btn-menu-privacy" data-i18n="privacyMenuBtn">Condiciones de Privacidad</a>
                             <hr style="border:0; border-top:1px solid #333; margin: 5px 0;">
                             <a href="#" id="btn-menu-logout" style="color: #ff4c4c;" data-i18n="logoutBtn">Cerrar Sesión</a>
                         </div>
@@ -218,6 +250,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="script.js?v=final"></script>
+    <script src="script.js?v=ultimafinal"></script>
 </body>
 </html>

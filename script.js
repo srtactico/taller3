@@ -7,7 +7,10 @@ document.addEventListener("DOMContentLoaded", () => {
         uploadItem: document.getElementById("upload-item-popup"),
         uploadPhoto: document.getElementById("upload-photo-popup"),
         editProfile: document.getElementById("edit-profile-popup"),
-        config: document.getElementById("config-popup")
+        config: document.getElementById("config-popup"),
+        // NUEVOS POPUPS
+        benefits: document.getElementById("account-benefits-popup"),
+        privacyPolicy: document.getElementById("privacy-policy-popup")
     };
     const mainContent = document.getElementById("main-content");
     const authForms = {
@@ -24,24 +27,40 @@ document.addEventListener("DOMContentLoaded", () => {
     let usuariosRegistrados = JSON.parse(localStorage.getItem("tactical_users")) || [];
     let usuarioActual = null;
 
-    // --- SISTEMA DE TRADUCCIÓN ---
+    // --- SISTEMA DE TRADUCCIÓN (ACTUALIZADO CON NUEVOS TEXTOS) ---
     let currentLang = localStorage.getItem("tactical_lang") || "es";
     const translations = {
         es: {
-            navHome: "Inicio", navMarket: "Compra/Venta", navRepair: "Taller", navGallery: "Galería", loginBtn: "Iniciar Sesión", registerBtn: "Registrar Cuenta", logoutBtn: "Cerrar Sesión", profileBtn: "Mi Perfil", configBtn: "Configuración", heroTitle: "Precisión absoluta. Rendimiento táctico.", heroText: "Tu vehículo no es solo un transporte; es tu mejor herramienta.", 
+            navHome: "Inicio", navMarket: "Compra/Venta", navRepair: "Taller", navGallery: "Galería", loginBtn: "Iniciar Sesión", registerBtn: "Registrar Cuenta", logoutBtn: "Cerrar Sesión", profileBtn: "Mi Perfil", configBtn: "Configuración", privacyMenuBtn: "Condiciones de Privacidad", heroTitle: "Precisión absoluta. Rendimiento táctico.", heroText: "Tu vehículo no es solo un transporte; es tu mejor herramienta.", 
             heroBtn: "Solicitar cita previa", 
             marketTitle: "1. Compra/Venta", 
             uploadItemBtn: "+ Subir Artículo", repairTitle: "2. Unidad de Reparación / Modificación", sendBtn: "Enviar Solicitud", galleryTitle: "Operaciones (Galería)", uploadPhotoBtn: "+ Añadir Foto", cookiesTitle: "Aviso Táctico (Cookies)", cookiesText: "Utilizamos cookies para mejorar la precisión de nuestros servicios. ¿Aceptas?", cookiesAccept: "Afirmativo, aceptar", loginTitle: "Acceso Restringido", noAccount: "¿No tienes cuenta?", registerHere: "Regístrate aquí", registerTitle: "Nuevo Recluta", hasAccount: "¿Ya tienes cuenta?", profileTitle: "Editar Perfil", profileDesc: "Actualiza tus credenciales.", saveChanges: "Guardar Cambios", configTitle: "Configuración", configDesc: "Selecciona el idioma.", applyBtn: "Aplicar", closeBtn: "Cerrar", cancelBtn: "Cancelar", uploadItemTitle: "Añadir al Mercado", publishBtn: "Publicar", uploadPhotoTitle: "Añadir Foto", addBtn: "Añadir", cartTitle: "Carrito", checkoutBtn: "Confirmar Transacción", continueBtn: "Seguir Comprando", privacyTitle: "Protocolos de Privacidad y Términos",
             selectService: "-- Selecciona el Servicio --", optRepair: "Reparación Técnica", optMod: "Modificación y Mejoras", payMethod: "Método de Pago:", newEmailLabel: "Nuevo Email:", newPassLabel: "Nueva Contraseña (Opcional):", currentPassLabel: "* Contraseña ACTUAL (Requerida):", sellerLabel: "Vendedor", catLabel: "Categoría", emptyCart: "Tu carrito está vacío.",
-            userHolder: "Usuario", passHolder: "Contraseña", emailHolder: "Email (Obligatorio)", itemNameHolder: "Nombre", itemCatHolder: "Categoría", itemPriceHolder: "Precio (€)", itemImgHolder: "URL Imagen", itemDescHolder: "Descripción del artículo...", cardNum: "Número Tarjeta", vehicleHolder: "Vehículo (Marca y Modelo)", descHolder: "Describe el daño o las modificaciones requeridas..."
+            userHolder: "Usuario", passHolder: "Contraseña", emailHolder: "Email (Obligatorio)", itemNameHolder: "Nombre", itemCatHolder: "Categoría", itemPriceHolder: "Precio (€)", itemImgHolder: "URL Imagen", itemDescHolder: "Descripción del artículo...", cardNum: "Número Tarjeta", vehicleHolder: "Vehículo (Marca y Modelo)", descHolder: "Describe el daño o las modificaciones requeridas...",
+            // NUEVOS TEXTOS PARA LOS MODALES
+            benefitsTitle: "Ventajas de Unirte",
+            benefit1: "Vender tus propios artículos en el Mercado.",
+            benefit2: "Comprar equipamiento exclusivo.",
+            benefit3: "Subir fotos de tus modificaciones a la Galería.",
+            benefit4: "Acceso a descuentos exclusivos para miembros.",
+            continueRegisterBtn: "Continuar al Registro",
+            policyTitle: "Política de Privacidad y Cookies"
         },
         en: {
-            navHome: "Home", navMarket: "Buy/Sell", navRepair: "Workshop", navGallery: "Gallery", loginBtn: "Login", registerBtn: "Register", logoutBtn: "Logout", profileBtn: "My Profile", configBtn: "Settings", heroTitle: "Absolute precision. Tactical performance.", heroText: "Your vehicle is a tool. We prepare it for any mission.", 
+            navHome: "Home", navMarket: "Buy/Sell", navRepair: "Workshop", navGallery: "Gallery", loginBtn: "Login", registerBtn: "Register", logoutBtn: "Logout", profileBtn: "My Profile", configBtn: "Settings", privacyMenuBtn: "Privacy Conditions", heroTitle: "Absolute precision. Tactical performance.", heroText: "Your vehicle is a tool. We prepare it for any mission.", 
             heroBtn: "Request appointment", 
             marketTitle: "1. Buy/Sell", 
             uploadItemBtn: "+ Upload Item", repairTitle: "2. Repair / Modification Unit", sendBtn: "Send Request", galleryTitle: "Operations (Gallery)", uploadPhotoBtn: "+ Add Photo", cookiesTitle: "Tactical Notice (Cookies)", cookiesText: "We use cookies to improve our services accuracy. Accept?", cookiesAccept: "Affirmative, accept", loginTitle: "Restricted Access", noAccount: "No account?", registerHere: "Register here", registerTitle: "New Recruit", hasAccount: "Already have an account?", profileTitle: "Edit Profile", profileDesc: "Update your credentials.", saveChanges: "Save Changes", configTitle: "Settings", configDesc: "Select interface language.", applyBtn: "Apply", closeBtn: "Close", cancelBtn: "Cancel", uploadItemTitle: "Add to Market", publishBtn: "Publish", uploadPhotoTitle: "Add Photo", addBtn: "Add", cartTitle: "Cart", checkoutBtn: "Confirm Checkout", continueBtn: "Continue Shopping", privacyTitle: "Privacy Protocols & Terms",
             selectService: "-- Select Service --", optRepair: "Technical Repair", optMod: "Modification & Upgrades", payMethod: "Payment Method:", newEmailLabel: "New Email:", newPassLabel: "New Password (Optional):", currentPassLabel: "* CURRENT Password (Required):", sellerLabel: "Seller", catLabel: "Category", emptyCart: "Your cart is empty.",
-            userHolder: "Username", passHolder: "Password", emailHolder: "Email (Required)", itemNameHolder: "Name", itemCatHolder: "Category", itemPriceHolder: "Price", itemImgHolder: "Image URL", itemDescHolder: "Item description...", cardNum: "Card Number", vehicleHolder: "Vehicle (Brand & Model)", descHolder: "Describe the damage or required modifications..."
+            userHolder: "Username", passHolder: "Password", emailHolder: "Email (Required)", itemNameHolder: "Name", itemCatHolder: "Category", itemPriceHolder: "Price", itemImgHolder: "Image URL", itemDescHolder: "Item description...", cardNum: "Card Number", vehicleHolder: "Vehicle (Brand & Model)", descHolder: "Describe the damage or required modifications...",
+            // NEW TEXTS FOR MODALS
+            benefitsTitle: "Join Advantages",
+            benefit1: "Sell your own items in the Market.",
+            benefit2: "Buy exclusive equipment.",
+            benefit3: "Upload photos of your mods to the Gallery.",
+            benefit4: "Access to exclusive member discounts.",
+            continueRegisterBtn: "Continue to Registration",
+            policyTitle: "Privacy Policy & Cookies"
         }
     };
 
@@ -82,12 +101,28 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("edit-email").value = usuarioActual.email;
     });
     document.getElementById("btn-menu-config")?.addEventListener("click", (e) => { e.preventDefault(); popups.config.classList.add("active"); });
+    // NUEVO: Listener para el menú de privacidad
+    document.getElementById("btn-menu-privacy")?.addEventListener("click", (e) => { e.preventDefault(); popups.privacyPolicy.classList.add("active"); });
     document.getElementById("btn-menu-logout")?.addEventListener("click", (e) => { e.preventDefault(); logout(); });
 
-    // --- AUTENTICACIÓN ---
+    // --- AUTENTICACIÓN (FLUJO MODIFICADO) ---
     const saveUsers = () => localStorage.setItem("tactical_users", JSON.stringify(usuariosRegistrados));
 
-    document.getElementById("link-to-register").addEventListener("click", (e) => { e.preventDefault(); authForms.login.style.display = "none"; authForms.register.style.display = "block"; });
+    // NUEVO: Al hacer clic en "Regístrate aquí", muestra primero las ventajas
+    document.getElementById("link-to-register-start").addEventListener("click", (e) => { 
+        e.preventDefault(); 
+        popups.login.classList.remove("active");
+        popups.benefits.classList.add("active");
+    });
+
+    // NUEVO: Botón "Continuar al Registro" en el modal de ventajas
+    document.getElementById("btn-continue-register").addEventListener("click", () => {
+        popups.benefits.classList.remove("active");
+        authForms.login.style.display = "none"; 
+        authForms.register.style.display = "block";
+        popups.login.classList.add("active");
+    });
+
     document.getElementById("link-to-login").addEventListener("click", (e) => { e.preventDefault(); authForms.register.style.display = "none"; authForms.login.style.display = "block"; });
 
     document.getElementById("btn-register")?.addEventListener("click", () => {
@@ -156,7 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
         popups.config.classList.remove("active");
     });
 
-    // --- MERCADO (V14) - NUEVA ESTRUCTURA HTML PARA EL EFECTO EXPANDIBLE ---
+    // --- MERCADO (V15) - NUEVA ESTRUCTURA HTML PARA EL EFECTO EXPANDIBLE ---
     const fallbackImage = "https://placehold.co/600x400/111111/7ab317?text=Articulo+Tactico";
 
     const productosBase = [
@@ -185,7 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
           descripcion: "Faros muy brillantes para iluminar la noche.", descripcionEn: "Very bright headlights for the night." }
     ];
     
-    let mercadoActual = JSON.parse(localStorage.getItem("tactical_mercado_v14")) || productosBase;
+    let mercadoActual = JSON.parse(localStorage.getItem("tactical_mercado_v15")) || productosBase;
     const formatearPrecio = (p) => p.toLocaleString(currentLang === 'es' ? "es-ES" : "en-US") + (currentLang === 'es' ? "€" : "$");
 
     const renderizarMercado = () => {
@@ -238,7 +273,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 id: Date.now(), nombre: nombre, tipo: tipo, precio: precio, 
                 vendedor: usuarioActual.user, imagen: imagen, descripcion: descripcion 
             });
-            localStorage.setItem("tactical_mercado_v14", JSON.stringify(mercadoActual));
+            localStorage.setItem("tactical_mercado_v15", JSON.stringify(mercadoActual));
             renderizarMercado(); popups.uploadItem.classList.remove("active");
             
             document.getElementById("new-item-name").value = "";

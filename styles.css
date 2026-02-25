@@ -23,8 +23,8 @@ body { background-color: var(--bg-dark); color: var(--text-main); overflow-x: hi
 .popup-box h2 { margin-bottom: 15px; }
 .popup-box p { margin-bottom: 20px; color: var(--text-muted); line-height: 1.5; }
 
-#privacy-popup .modal-box, #cart-popup .modal-box { max-width: 800px; max-height: 80vh; overflow-y: auto; text-align: left; }
-#privacy-popup h3 { color: var(--primary-color); margin-top: 15px; margin-bottom: 5px; }
+#privacy-popup .modal-box, #cart-popup .modal-box, #privacy-policy-popup .modal-box { max-width: 800px; max-height: 80vh; overflow-y: auto; text-align: left; }
+#privacy-popup h3, #privacy-policy-popup h3 { color: var(--primary-color); margin-top: 15px; margin-bottom: 5px; }
 
 .input-field { width: 100%; padding: 12px; margin-bottom: 15px; background: #000; border: 1px solid #333; color: white; border-radius: 4px; }
 .input-field option { background-color: #111; color: white; } 
@@ -67,50 +67,44 @@ section { padding: 100px 0 50px 0; text-align: center; }
     flex-direction: column; 
     position: relative;
     z-index: 1;
+    overflow: hidden; /* Importante para que el contenido oculto no se salga antes de tiempo */
 }
 
 .card:hover { 
     border-color: var(--primary-color); 
-    transform: scale(1.05); /* Efecto de elevación/zoom */
-    box-shadow: 0 15px 35px rgba(0,0,0,0.9), 0 0 15px rgba(122, 179, 23, 0.15);
+    transform: scale(1.03) translateY(-5px); /* Efecto de elevación y ligero zoom */
+    box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 15px rgba(122, 179, 23, 0.2);
     z-index: 10;
 }
 
-.card h3 { color: var(--primary-color); font-size: 1.1rem; }
+.card h3 { color: var(--primary-color); font-size: 1.1rem; margin-top: 10px; }
 
 .img-container {
     width: 100%;
     height: 180px;
     border-radius: 4px;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
     overflow: hidden;
-    cursor: pointer;
 }
 
 .img-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.4s ease;
-}
-
-.card:hover .img-container img {
-    transform: scale(1.1); 
 }
 
 /* EL CONTENEDOR OCULTO QUE SE EXPANDE AL PASAR EL RATÓN */
 .card-details-hidden {
     max-height: 0;
     opacity: 0;
-    overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: all 0.5s ease-in-out; /* Transición suave */
 }
 
 .card:hover .card-details-hidden {
-    max-height: 400px; /* Expande la caja suavemente */
+    max-height: 500px; /* Altura suficiente para mostrar todo */
     opacity: 1;
-    padding-top: 15px; 
     margin-top: 15px;
+    padding-top: 15px; 
     border-top: 1px solid #333;
 }
 
@@ -150,3 +144,8 @@ section { padding: 100px 0 50px 0; text-align: center; }
 .btn-qty:hover { background: var(--primary-color); color: black;}
 
 footer { text-align: center; padding: 30px 0; background: #050505; color: #555; border-top: 1px solid #222; }
+
+/* Estilos para listas en popups */
+.popup-box ul li::marker {
+    color: var(--primary-color);
+}
