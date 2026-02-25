@@ -1,13 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     
-    // --- DESTRUCCIÓN TOTAL DE GALERÍAS ANTERIORES ---
-    // Esto fuerza a tu navegador a olvidar los pájaros y las plantas para siempre.
-    Object.keys(localStorage).forEach(key => {
-        if (key.includes("galeria") || key.includes("photos")) {
-            localStorage.removeItem(key);
-            console.log("Memoria de galería antigua destruida: " + key);
-        }
-    });
+    // --- LIMPIEZA NUCLEAR V26 (Para asegurar que entran las fotos de Pexels) ---
+    if (!localStorage.getItem("limpieza_nuclear_v26")) {
+        Object.keys(localStorage).forEach(key => {
+            if (key.includes("galeria") || key.includes("mercado") || key.includes("photos")) {
+                localStorage.removeItem(key);
+            }
+        });
+        localStorage.setItem("limpieza_nuclear_v26", "true");
+    }
 
     // --- REFERENCIAS DOM ---
     const popups = {
@@ -205,7 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
         popups.config.classList.remove("active");
     });
 
-    // --- MERCADO (SE MANTIENE INTACTO) ---
+    // --- MERCADO (V26 - FOTO DE SUSPENSIÓN ARREGLADA) ---
     const fallbackImage = "https://placehold.co/600x400/111111/7ab317?text=Articulo+Tactico";
 
     const productosBase = [
@@ -219,8 +220,9 @@ document.addEventListener("DOMContentLoaded", () => {
           descripcion: "Juego de 4 neumáticos de compuesto militar con diseño de banda de rodadura agresivo para barro y roca. Paredes laterales reforzadas con Kevlar de 10 capas. Incluye sistema run-flat interno.", 
           descripcionEn: "Set of 4 military compound tires with aggressive tread design for mud and rock. 10-ply Kevlar reinforced sidewalls. Includes internal run-flat system." },
         
+        // FOTO ARREGLADA (Usando Pexels que es 100% seguro)
         { id: 3, nombre: "Kit de Suspensión Reforzada", nombreEn: "Reinforced Suspension Kit", tipo: "Modificación", tipoEn: "Upgrades", precio: 1200, vendedor: "Tactical HQ", 
-          imagen: "https://images.unsplash.com/photo-1486262715619-67081010dd13?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", 
+          imagen: "https://images.pexels.com/photos/190539/pexels-photo-190539.jpeg?auto=compress&cs=tinysrgb&w=400", 
           descripcion: "Sistema de suspensión de largo recorrido con amortiguadores de nitrógeno presurizado y muelles helicoidales de alta resistencia. Proporciona una elevación de 4 pulgadas y una capacidad de carga superior.", 
           descripcionEn: "Long-travel suspension system with pressurized nitrogen shocks and heavy-duty coil springs. Provides a 4-inch lift and superior load capacity." },
         
@@ -240,7 +242,7 @@ document.addEventListener("DOMContentLoaded", () => {
           descripcionEn: "Tactical-grade LED light bar with a combined output of 30,000 lumens. IP68 waterproof aluminum housing and unbreakable polycarbonate lenses. Mixed beam pattern (flood/spot)." }
     ];
     
-    let mercadoActual = JSON.parse(localStorage.getItem("tactical_mercado_db")) || productosBase;
+    let mercadoActual = JSON.parse(localStorage.getItem("tactical_mercado_v26")) || productosBase;
     const formatearPrecio = (p) => p.toLocaleString(currentLang === 'es' ? "es-ES" : "en-US") + (currentLang === 'es' ? "€" : "$");
 
     const renderizarMercado = () => {
@@ -292,7 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 id: Date.now(), nombre: nombre, tipo: tipo, precio: precio, 
                 vendedor: usuarioActual.user, imagen: imagen, descripcion: descripcion 
             });
-            localStorage.setItem("tactical_mercado_db", JSON.stringify(mercadoActual));
+            localStorage.setItem("tactical_mercado_v26", JSON.stringify(mercadoActual));
             renderizarMercado(); popups.uploadItem.classList.remove("active");
             
             document.getElementById("new-item-name").value = "";
@@ -354,24 +356,23 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- LA NUEVA GALERÍA 100% COCHES (V30) ---
-    // Enlaces directos a coches de alta calidad y muy modificados
+    // --- GALERÍA (V26 - TODAS DE PEXELS, 100% FIABLES) ---
+    // Enlaces directos a Pexels, que no bloquean conexiones
     const galeriaBase = [
-        // 1. Nissan GT-R R35 Oscuro y modificado
-        "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?auto=format&fit=crop&w=800&q=80",
-        // 2. Coche deportivo agresivo y oscuro (estilo táctico)
-        "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80",
-        // 3. Coche clásico/tuner muy modificado
-        "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=800&q=80",
-        // 4. Deportivo negro en garaje (muy bajado)
-        "https://images.unsplash.com/photo-1503376763066-2067ee4e9b69?auto=format&fit=crop&w=800&q=80",
-        // 5. Trasera de un Muscle car/Deportivo agresivo
-        "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=800&q=80"
+        // 1. Coche deportivo oscuro
+        "https://images.pexels.com/photos/3311574/pexels-photo-3311574.jpeg?auto=compress&cs=tinysrgb&w=800",
+        // 2. Mustang clásico/agresivo rojo
+        "https://images.pexels.com/photos/3972755/pexels-photo-3972755.jpeg?auto=compress&cs=tinysrgb&w=800",
+        // 3. Superdeportivo McLaren
+        "https://images.pexels.com/photos/3752194/pexels-photo-3752194.jpeg?auto=compress&cs=tinysrgb&w=800",
+        // 4. Todoterreno táctico oscuro
+        "https://images.pexels.com/photos/1252868/pexels-photo-1252868.jpeg?auto=compress&cs=tinysrgb&w=800",
+        // 5. Nissan Skyline GT-R tuneado
+        "https://images.pexels.com/photos/1035108/pexels-photo-1035108.jpeg?auto=compress&cs=tinysrgb&w=800"
     ];
     
-    // Forzamos a que galeriaActual sea SIEMPRE la lista nueva
-    let galeriaActual = [...galeriaBase];
-    localStorage.setItem("tactical_galeria_v30", JSON.stringify(galeriaActual));
+    let fotosUsuario = JSON.parse(localStorage.getItem("tactical_user_photos_v26")) || [];
+    let galeriaActual = [...galeriaBase, ...fotosUsuario];
 
     let swiper;
     const renderizarGaleria = () => {
@@ -386,8 +387,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("btn-submit-photo")?.addEventListener("click", () => { 
         const url = document.getElementById("new-photo-url").value; 
         if(url) { 
+            fotosUsuario.push(url);
+            localStorage.setItem("tactical_user_photos_v26", JSON.stringify(fotosUsuario));
             galeriaActual.push(url); 
-            localStorage.setItem("tactical_galeria_v30", JSON.stringify(galeriaActual));
             renderizarGaleria(); 
             popups.uploadPhoto.classList.remove("active"); 
         }
