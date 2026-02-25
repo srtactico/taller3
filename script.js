@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     
-    // --- LIMPIEZA NUCLEAR V36 (Para asegurar que se va la foto rota) ---
-    if (!localStorage.getItem("limpieza_nuclear_v36")) {
+    // --- LIMPIEZA NUCLEAR V37 (Para asegurar las nuevas fotos del mercado) ---
+    if (!localStorage.getItem("limpieza_nuclear_v37")) {
         Object.keys(localStorage).forEach(key => {
             // Borramos cualquier rastro de galerias o mercados anteriores
             if (key.includes("galeria") || key.includes("mercado") || key.includes("photos")) {
@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
         // Marcamos que ya hemos hecho la limpieza de esta versión
-        localStorage.setItem("limpieza_nuclear_v36", "true");
+        localStorage.setItem("limpieza_nuclear_v37", "true");
     }
 
     // --- REFERENCIAS DOM ---
@@ -208,23 +208,26 @@ document.addEventListener("DOMContentLoaded", () => {
         popups.config.classList.remove("active");
     });
 
-    // --- MERCADO (V36) ---
+    // --- MERCADO (V37 - FOTOS NUEVAS) ---
     // Definimos una imagen de reserva global por si acaso
     const fallbackImage = "https://placehold.co/600x400/111111/7ab317?text=Articulo+Tactico";
 
     const productosBase = [
+        // 1. FOTO NUEVA: MOTOR V8 IMPRESIONANTE
         { id: 1, nombre: "Motor V8 Blindado", nombreEn: "Armored V8 Engine", tipo: "Mecánica Pesada", tipoEn: "Heavy Mechanics", precio: 4500, vendedor: "Tactical HQ", 
           imagen: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=400&q=80", 
           descripcion: "Motor de bloque grande con pistones forjados, cigüeñal reforzado y culatas de alto flujo. Optimizado para resistir impactos y mantener el rendimiento en condiciones extremas. Potencia estimada: 850 HP.", 
           descripcionEn: "Big block engine with forged pistons, reinforced crankshaft, and high-flow cylinder heads. Optimized to withstand impacts and maintain performance in extreme conditions. Estimated power: 850 HP." },
         
+        // 2. FOTO NUEVA: NEUMÁTICOS TÁCTICOS "TO GUAPOS"
         { id: 2, nombre: "Neumáticos Tácticos Off-Road", nombreEn: "Tactical Off-Road Tires", tipo: "Movilidad", tipoEn: "Mobility", precio: 800, vendedor: "Tactical HQ", 
-          imagen: "https://images.unsplash.com/photo-1600661653561-629509216228?auto=format&fit=crop&w=400&q=80", 
+          imagen: "https://images.unsplash.com/photo-1569397288884-4d43d6738fbd?auto=format&fit=crop&w=400&q=80", 
           descripcion: "Juego de 4 neumáticos de compuesto militar con diseño de banda de rodadura agresivo para barro y roca. Paredes laterales reforzadas con Kevlar de 10 capas. Incluye sistema run-flat interno.", 
           descripcionEn: "Set of 4 military compound tires with aggressive tread design for mud and rock. 10-ply Kevlar reinforced sidewalls. Includes internal run-flat system." },
         
+        // 3. FOTO RESTAURADA: KIT DE SUSPENSIÓN ORIGINAL
         { id: 3, nombre: "Kit de Suspensión Reforzada", nombreEn: "Reinforced Suspension Kit", tipo: "Modificación", tipoEn: "Upgrades", precio: 1200, vendedor: "Tactical HQ", 
-          imagen: "https://images.unsplash.com/photo-1600705722908-bab1e61c0b4d?auto=format&fit=crop&w=400&q=80", 
+          imagen: "https://images.pexels.com/photos/190539/pexels-photo-190539.jpeg?auto=compress&cs=tinysrgb&w=400", 
           descripcion: "Sistema de suspensión de largo recorrido con amortiguadores de nitrógeno presurizado y muelles helicoidales de alta resistencia. Proporciona una elevación de 4 pulgadas y una capacidad de carga superior.", 
           descripcionEn: "Long-travel suspension system with pressurized nitrogen shocks and heavy-duty coil springs. Provides a 4-inch lift and superior load capacity." },
         
@@ -244,8 +247,8 @@ document.addEventListener("DOMContentLoaded", () => {
           descripcionEn: "Tactical-grade LED light bar with a combined output of 30,000 lumens. IP68 waterproof aluminum housing and unbreakable polycarbonate lenses. Mixed beam pattern (flood/spot)." }
     ];
     
-    // Usamos v36 para el mercado
-    let mercadoActual = JSON.parse(localStorage.getItem("tactical_mercado_v36")) || productosBase;
+    // Usamos v37 para el mercado
+    let mercadoActual = JSON.parse(localStorage.getItem("tactical_mercado_v37")) || productosBase;
     const formatearPrecio = (p) => p.toLocaleString(currentLang === 'es' ? "es-ES" : "en-US") + (currentLang === 'es' ? "€" : "$");
 
     const renderizarMercado = () => {
@@ -298,8 +301,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 id: Date.now(), nombre: nombre, tipo: tipo, precio: precio, 
                 vendedor: usuarioActual.user, imagen: imagen, descripcion: descripcion 
             });
-            // Guardamos en v36
-            localStorage.setItem("tactical_mercado_v36", JSON.stringify(mercadoActual));
+            // Guardamos en v37
+            localStorage.setItem("tactical_mercado_v37", JSON.stringify(mercadoActual));
             renderizarMercado(); popups.uploadItem.classList.remove("active");
             
             document.getElementById("new-item-name").value = "";
@@ -361,12 +364,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- GALERÍA (V36 - SEGUNDA FOTO CAMBIADA) ---
+    // --- GALERÍA (V37) ---
     const galeriaBase = [
         // 1. Nissan GT-R R35 Oscuro
         "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?auto=format&fit=crop&w=800&q=80",
         
-        // 2. ¡NUEVA FOTO! Deportivo oscuro agresivo (Reemplaza la que fallaba)
+        // 2. Deportivo oscuro agresivo
         "https://images.unsplash.com/photo-1603503352756-32d8471c26da?auto=format&fit=crop&w=800&q=80",
         
         // 3. Mustang Rojo
@@ -379,15 +382,15 @@ document.addEventListener("DOMContentLoaded", () => {
         "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=800&q=80"
     ];
     
-    // Forzamos la carga de la lista base en v36
+    // Forzamos la carga de la lista base en v37
     let galeriaActual = [...galeriaBase];
-    localStorage.setItem("tactical_galeria_v36", JSON.stringify(galeriaActual));
+    localStorage.setItem("tactical_galeria_v37", JSON.stringify(galeriaActual));
 
     let swiper;
     const renderizarGaleria = () => {
         const wrapper = document.getElementById("gallery-wrapper"); if(!wrapper) return; wrapper.innerHTML = "";
         galeriaActual.forEach(url => {
-            // AQUÍ ESTÁ EL TRUCO: Si la imagen falla (onerror), ocultamos el padre (el swiper-slide)
+            // Si la imagen falla, ocultamos el slide
             wrapper.innerHTML += `<div class="swiper-slide"><img src="${url}" onerror="this.parentElement.style.display='none';"></div>`;
         });
         if(swiper) swiper.destroy(true, true);
@@ -400,8 +403,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const url = document.getElementById("new-photo-url").value; 
         if(url) { 
             galeriaActual.push(url); 
-            // Guardamos en v36
-            localStorage.setItem("tactical_galeria_v36", JSON.stringify(galeriaActual));
+            // Guardamos en v37
+            localStorage.setItem("tactical_galeria_v37", JSON.stringify(galeriaActual));
             renderizarGaleria(); 
             popups.uploadPhoto.classList.remove("active"); 
         }
