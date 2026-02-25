@@ -52,10 +52,9 @@ section { padding: 100px 0 50px 0; text-align: center; }
 .hero-content h1 { font-size: 3rem; margin-bottom: 20px; text-transform: uppercase; }
 .hero-content p { font-size: 1.2rem; margin-bottom: 30px; max-width: 600px; color: var(--text-muted); }
 
-/* GRID DEL MERCADO */
+/* GRID DEL MERCADO Y EFECTO DE TARJETAS */
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; margin-top: 40px; justify-content: center; align-items: start; }
 
-/* NUEVO EFECTO DE EXPANSIÓN PARA LAS TARJETAS */
 .card { 
     background: var(--bg-panel); 
     padding: 20px; 
@@ -67,12 +66,12 @@ section { padding: 100px 0 50px 0; text-align: center; }
     flex-direction: column; 
     position: relative;
     z-index: 1;
-    overflow: hidden; /* Importante para que el contenido oculto no se salga antes de tiempo */
+    overflow: hidden;
 }
 
 .card:hover { 
     border-color: var(--primary-color); 
-    transform: scale(1.03) translateY(-5px); /* Efecto de elevación y ligero zoom */
+    transform: scale(1.03) translateY(-5px);
     box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 15px rgba(122, 179, 23, 0.2);
     z-index: 10;
 }
@@ -93,15 +92,14 @@ section { padding: 100px 0 50px 0; text-align: center; }
     object-fit: cover;
 }
 
-/* EL CONTENEDOR OCULTO QUE SE EXPANDE AL PASAR EL RATÓN */
 .card-details-hidden {
     max-height: 0;
     opacity: 0;
-    transition: all 0.5s ease-in-out; /* Transición suave */
+    transition: all 0.5s ease-in-out;
 }
 
 .card:hover .card-details-hidden {
-    max-height: 500px; /* Altura suficiente para mostrar todo */
+    max-height: 500px;
     opacity: 1;
     margin-top: 15px;
     padding-top: 15px; 
