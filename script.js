@@ -43,7 +43,6 @@ document.addEventListener("DOMContentLoaded", () => {
             benefit4: "Acceso a descuentos exclusivos para miembros.",
             continueRegisterBtn: "Continuar al Registro",
             policyTitle: "Política de Privacidad y Cookies",
-            // NUEVOS TEXTOS DEL FOOTER
             footerPrivacy: "Protocolos de Privacidad y Términos",
             footerCookiesTitle: "Uso de Cookies Activo",
             footerCookiesInfo: "Nota: Esta plataforma utiliza cookies técnicas de sesión y almacenamiento local (Local Storage) para mantener tu inventario (carrito), procesar las traducciones y recordar tu identificación de Agente de forma encriptada en tu dispositivo. Al continuar navegando, reafirmas la aceptación de estas cookies operativas indispensables. No utilizamos rastreadores publicitarios externos."
@@ -62,7 +61,6 @@ document.addEventListener("DOMContentLoaded", () => {
             benefit4: "Access to exclusive member discounts.",
             continueRegisterBtn: "Continue to Registration",
             policyTitle: "Privacy Policy & Cookies",
-            // NEW FOOTER TEXTS
             footerPrivacy: "Privacy Protocols & Terms",
             footerCookiesTitle: "Active Cookie Usage",
             footerCookiesInfo: "Note: This platform uses technical session cookies and local storage to maintain your inventory (cart), process translations, and remember your Agent ID encrypted on your device. By continuing to browse, you reaffirm your acceptance of these essential operational cookies. We do not use external advertising trackers."
@@ -94,7 +92,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     nav.loginBtn?.addEventListener("click", () => popups.login.classList.add("active"));
     
-    // NUEVO: Enlace de Privacidad en el Footer
     document.getElementById("link-footer-privacy")?.addEventListener("click", (e) => {
         e.preventDefault();
         popups.privacyPolicy.classList.add("active");
@@ -198,7 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
         popups.config.classList.remove("active");
     });
 
-    // --- MERCADO ---
+    // --- MERCADO (V17) ---
     const fallbackImage = "https://placehold.co/600x400/111111/7ab317?text=Articulo+Tactico";
 
     const productosBase = [
@@ -233,7 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
           descripcionEn: "Tactical-grade LED light bar with a combined output of 30,000 lumens. IP68 waterproof aluminum housing and unbreakable polycarbonate lenses. Mixed beam pattern (flood/spot)." }
     ];
     
-    let mercadoActual = JSON.parse(localStorage.getItem("tactical_mercado_v16")) || productosBase;
+    let mercadoActual = JSON.parse(localStorage.getItem("tactical_mercado_v17")) || productosBase;
     const formatearPrecio = (p) => p.toLocaleString(currentLang === 'es' ? "es-ES" : "en-US") + (currentLang === 'es' ? "€" : "$");
 
     const renderizarMercado = () => {
@@ -285,7 +282,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 id: Date.now(), nombre: nombre, tipo: tipo, precio: precio, 
                 vendedor: usuarioActual.user, imagen: imagen, descripcion: descripcion 
             });
-            localStorage.setItem("tactical_mercado_v16", JSON.stringify(mercadoActual));
+            localStorage.setItem("tactical_mercado_v17", JSON.stringify(mercadoActual));
             renderizarMercado(); popups.uploadItem.classList.remove("active");
             
             document.getElementById("new-item-name").value = "";
@@ -347,15 +344,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- GALERÍA ---
+    // --- GALERÍA (V19) - COCHES TUNEADOS ---
     const galeriaBase = [
-        "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800",
-        "https://images.unsplash.com/photo-1503376763066-2067ee4e9b69?auto=format&fit=crop&w=800",
-        "https://images.unsplash.com/photo-1542282088-fe8426682b8f?auto=format&fit=crop&w=800",
-        "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=800",
-        "https://images.unsplash.com/photo-1584345604476-8ec5e12e42dd?auto=format&fit=crop&w=800" 
+        // Foto 1: Deportivo tuneado oscuro en la calle
+        "https://images.pexels.com/photos/3311574/pexels-photo-3311574.jpeg?auto=compress&cs=tinysrgb&w=800",
+        // Foto 2: Todoterreno táctico modificado
+        "https://images.pexels.com/photos/1252868/pexels-photo-1252868.jpeg?auto=compress&cs=tinysrgb&w=800",
+        // Foto 3: Coche clásico en proceso de modificación en garaje
+        "https://images.pexels.com/photos/4489749/pexels-photo-4489749.jpeg?auto=compress&cs=tinysrgb&w=800",
+        // Foto 4: Detalle motor modificado de alto rendimiento
+        "https://images.pexels.com/photos/1409968/pexels-photo-1409968.jpeg?auto=compress&cs=tinysrgb&w=800",
+        // Foto 5: Deportivo con kit de ensanche (widebody) agresivo
+        "https://images.pexels.com/photos/7931664/pexels-photo-7931664.jpeg?auto=compress&cs=tinysrgb&w=800"
     ];
-    let galeriaActual = JSON.parse(localStorage.getItem("tactical_galeria_v17")) || galeriaBase;
+    // Versión 19 para forzar la actualización de la galería
+    let galeriaActual = JSON.parse(localStorage.getItem("tactical_galeria_v19")) || galeriaBase;
     let swiper;
     
     const renderizarGaleria = () => {
@@ -366,7 +369,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     
     document.getElementById("btn-open-upload-photo")?.addEventListener("click", () => { if(!usuarioActual) { alert("⚠️ Inicia sesión."); popups.login.classList.add("active"); return; } popups.uploadPhoto.classList.add("active"); });
-    document.getElementById("btn-submit-photo")?.addEventListener("click", () => { const url = document.getElementById("new-photo-url").value; if(url) { galeriaActual.push(url); localStorage.setItem("tactical_galeria_v17", JSON.stringify(galeriaActual)); renderizarGaleria(); popups.uploadPhoto.classList.remove("active"); }});
+    document.getElementById("btn-submit-photo")?.addEventListener("click", () => { const url = document.getElementById("new-photo-url").value; if(url) { galeriaActual.push(url); localStorage.setItem("tactical_galeria_v19", JSON.stringify(galeriaActual)); renderizarGaleria(); popups.uploadPhoto.classList.remove("active"); }});
 
     // --- FORMULARIO TALLER ---
     document.getElementById("form-servicio")?.addEventListener("submit", (e) => { 
