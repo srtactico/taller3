@@ -52,17 +52,33 @@ section { padding: 100px 0 50px 0; text-align: center; }
 .hero-content h1 { font-size: 3rem; margin-bottom: 20px; text-transform: uppercase; }
 .hero-content p { font-size: 1.2rem; margin-bottom: 30px; max-width: 600px; color: var(--text-muted); }
 
-/* GRID DEL MERCADO Y TARJETAS */
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 25px; margin-top: 40px; justify-content: center; }
-.card { background: var(--bg-panel); padding: 20px; border: 1px solid #222; border-radius: 8px; text-align: center; transition: transform 0.3s ease; display: flex; flex-direction: column; height: 100%; }
-.card:hover { border-color: var(--primary-color); transform: translateY(-5px); }
-.card h3 { color: var(--primary-color); font-size: 1.1rem; }
-.card .price { font-size: 1.5rem; font-weight: bold; margin: 10px 0; color: white;}
-.btn-add-cart { margin-top: auto; }
+/* GRID DEL MERCADO */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; margin-top: 40px; justify-content: center; align-items: start; }
 
-/* EFECTO DE HOVER CON DESCRIPCIÓN PARA LA IMAGEN */
-.img-container {
+/* NUEVO EFECTO DE EXPANSIÓN PARA LAS TARJETAS */
+.card { 
+    background: var(--bg-panel); 
+    padding: 20px; 
+    border: 1px solid #222; 
+    border-radius: 8px; 
+    text-align: center; 
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); 
+    display: flex; 
+    flex-direction: column; 
     position: relative;
+    z-index: 1;
+}
+
+.card:hover { 
+    border-color: var(--primary-color); 
+    transform: scale(1.05); /* Efecto de elevación/zoom */
+    box-shadow: 0 15px 35px rgba(0,0,0,0.9), 0 0 15px rgba(122, 179, 23, 0.15);
+    z-index: 10;
+}
+
+.card h3 { color: var(--primary-color); font-size: 1.1rem; }
+
+.img-container {
     width: 100%;
     height: 180px;
     border-radius: 4px;
@@ -70,45 +86,40 @@ section { padding: 100px 0 50px 0; text-align: center; }
     overflow: hidden;
     cursor: pointer;
 }
+
 .img-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.4s ease;
 }
-.product-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(10, 10, 10, 0.9);
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 15px;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    text-align: center;
-    border: 1px solid var(--primary-color);
-    overflow-y: auto; 
-    scrollbar-width: none;
-}
-.img-container:hover .product-overlay {
-    opacity: 1;
-}
-.img-container:hover img {
+
+.card:hover .img-container img {
     transform: scale(1.1); 
 }
 
+/* EL CONTENEDOR OCULTO QUE SE EXPANDE AL PASAR EL RATÓN */
+.card-details-hidden {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.card:hover .card-details-hidden {
+    max-height: 400px; /* Expande la caja suavemente */
+    opacity: 1;
+    padding-top: 15px; 
+    margin-top: 15px;
+    border-top: 1px solid #333;
+}
+
+/* FORMULARIOS */
 .tactical-form { max-width: 600px; margin: 30px auto 0 auto; display: flex; flex-direction: column; gap: 15px; text-align: left; }
 .tactical-form input, .tactical-form textarea, .tactical-form select { padding: 15px; background: var(--bg-panel); border: 1px solid #333; color: white; border-radius: 4px; font-size: 1rem; }
 .tactical-form textarea { resize: vertical; min-height: 150px; }
 
-/* CARRUSEL ARREGLADO (Para que las fotos no se pongan azules) */
+/* CARRUSEL ARREGLADO */
 .swiper { width: 100%; padding-top: 30px; padding-bottom: 50px; }
 .swiper-slide { 
     width: 300px; 
@@ -130,6 +141,7 @@ section { padding: 100px 0 50px 0; text-align: center; }
 .swiper-pagination-bullet-active { background: var(--primary-color) !important; }
 .swiper-pagination-bullet { background: #555; opacity: 1; }
 
+/* CARRITO */
 .cart-item { display: flex; justify-content: space-between; align-items: center; background: #000; padding: 15px; border-radius: 6px; border: 1px solid #333; margin-bottom: 10px; }
 .cart-item-info { flex-grow: 1; margin-right: 15px; }
 .cart-item-info h4 { color: var(--primary-color); margin-bottom: 5px; }

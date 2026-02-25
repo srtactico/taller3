@@ -29,16 +29,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const translations = {
         es: {
             navHome: "Inicio", navMarket: "Compra/Venta", navRepair: "Taller", navGallery: "Galería", loginBtn: "Iniciar Sesión", registerBtn: "Registrar Cuenta", logoutBtn: "Cerrar Sesión", profileBtn: "Mi Perfil", configBtn: "Configuración", heroTitle: "Precisión absoluta. Rendimiento táctico.", heroText: "Tu vehículo no es solo un transporte; es tu mejor herramienta.", 
-            heroBtn: "Solicitar cita previa", // <-- ACTUALIZADO
-            marketTitle: "1. Compra/Venta", // <-- ACTUALIZADO
+            heroBtn: "Solicitar cita previa", 
+            marketTitle: "1. Compra/Venta", 
             uploadItemBtn: "+ Subir Artículo", repairTitle: "2. Unidad de Reparación / Modificación", sendBtn: "Enviar Solicitud", galleryTitle: "Operaciones (Galería)", uploadPhotoBtn: "+ Añadir Foto", cookiesTitle: "Aviso Táctico (Cookies)", cookiesText: "Utilizamos cookies para mejorar la precisión de nuestros servicios. ¿Aceptas?", cookiesAccept: "Afirmativo, aceptar", loginTitle: "Acceso Restringido", noAccount: "¿No tienes cuenta?", registerHere: "Regístrate aquí", registerTitle: "Nuevo Recluta", hasAccount: "¿Ya tienes cuenta?", profileTitle: "Editar Perfil", profileDesc: "Actualiza tus credenciales.", saveChanges: "Guardar Cambios", configTitle: "Configuración", configDesc: "Selecciona el idioma.", applyBtn: "Aplicar", closeBtn: "Cerrar", cancelBtn: "Cancelar", uploadItemTitle: "Añadir al Mercado", publishBtn: "Publicar", uploadPhotoTitle: "Añadir Foto", addBtn: "Añadir", cartTitle: "Carrito", checkoutBtn: "Confirmar Transacción", continueBtn: "Seguir Comprando", privacyTitle: "Protocolos de Privacidad y Términos",
             selectService: "-- Selecciona el Servicio --", optRepair: "Reparación Técnica", optMod: "Modificación y Mejoras", payMethod: "Método de Pago:", newEmailLabel: "Nuevo Email:", newPassLabel: "Nueva Contraseña (Opcional):", currentPassLabel: "* Contraseña ACTUAL (Requerida):", sellerLabel: "Vendedor", catLabel: "Categoría", emptyCart: "Tu carrito está vacío.",
             userHolder: "Usuario", passHolder: "Contraseña", emailHolder: "Email (Obligatorio)", itemNameHolder: "Nombre", itemCatHolder: "Categoría", itemPriceHolder: "Precio (€)", itemImgHolder: "URL Imagen", itemDescHolder: "Descripción del artículo...", cardNum: "Número Tarjeta", vehicleHolder: "Vehículo (Marca y Modelo)", descHolder: "Describe el daño o las modificaciones requeridas..."
         },
         en: {
             navHome: "Home", navMarket: "Buy/Sell", navRepair: "Workshop", navGallery: "Gallery", loginBtn: "Login", registerBtn: "Register", logoutBtn: "Logout", profileBtn: "My Profile", configBtn: "Settings", heroTitle: "Absolute precision. Tactical performance.", heroText: "Your vehicle is a tool. We prepare it for any mission.", 
-            heroBtn: "Request appointment", // <-- ACTUALIZADO
-            marketTitle: "1. Buy/Sell", // <-- ACTUALIZADO
+            heroBtn: "Request appointment", 
+            marketTitle: "1. Buy/Sell", 
             uploadItemBtn: "+ Upload Item", repairTitle: "2. Repair / Modification Unit", sendBtn: "Send Request", galleryTitle: "Operations (Gallery)", uploadPhotoBtn: "+ Add Photo", cookiesTitle: "Tactical Notice (Cookies)", cookiesText: "We use cookies to improve our services accuracy. Accept?", cookiesAccept: "Affirmative, accept", loginTitle: "Restricted Access", noAccount: "No account?", registerHere: "Register here", registerTitle: "New Recruit", hasAccount: "Already have an account?", profileTitle: "Edit Profile", profileDesc: "Update your credentials.", saveChanges: "Save Changes", configTitle: "Settings", configDesc: "Select interface language.", applyBtn: "Apply", closeBtn: "Close", cancelBtn: "Cancel", uploadItemTitle: "Add to Market", publishBtn: "Publish", uploadPhotoTitle: "Add Photo", addBtn: "Add", cartTitle: "Cart", checkoutBtn: "Confirm Checkout", continueBtn: "Continue Shopping", privacyTitle: "Privacy Protocols & Terms",
             selectService: "-- Select Service --", optRepair: "Technical Repair", optMod: "Modification & Upgrades", payMethod: "Payment Method:", newEmailLabel: "New Email:", newPassLabel: "New Password (Optional):", currentPassLabel: "* CURRENT Password (Required):", sellerLabel: "Seller", catLabel: "Category", emptyCart: "Your cart is empty.",
             userHolder: "Username", passHolder: "Password", emailHolder: "Email (Required)", itemNameHolder: "Name", itemCatHolder: "Category", itemPriceHolder: "Price", itemImgHolder: "Image URL", itemDescHolder: "Item description...", cardNum: "Card Number", vehicleHolder: "Vehicle (Brand & Model)", descHolder: "Describe the damage or required modifications..."
@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
         popups.config.classList.remove("active");
     });
 
-    // --- MERCADO (V13) - NOMBRES Y FOTOS ORIGINALES, CON DESCRIPCIONES ---
+    // --- MERCADO (V14) - NUEVA ESTRUCTURA HTML PARA EL EFECTO EXPANDIBLE ---
     const fallbackImage = "https://placehold.co/600x400/111111/7ab317?text=Articulo+Tactico";
 
     const productosBase = [
@@ -185,8 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
           descripcion: "Faros muy brillantes para iluminar la noche.", descripcionEn: "Very bright headlights for the night." }
     ];
     
-    // Versión 13 - Borrado absoluto de caché antigua
-    let mercadoActual = JSON.parse(localStorage.getItem("tactical_mercado_v13")) || productosBase;
+    let mercadoActual = JSON.parse(localStorage.getItem("tactical_mercado_v14")) || productosBase;
     const formatearPrecio = (p) => p.toLocaleString(currentLang === 'es' ? "es-ES" : "en-US") + (currentLang === 'es' ? "€" : "$");
 
     const renderizarMercado = () => {
@@ -202,17 +201,21 @@ document.addEventListener("DOMContentLoaded", () => {
             const tipo = currentLang === 'en' && p.tipoEn ? p.tipoEn : p.tipo;
             const desc = currentLang === 'en' && p.descripcionEn ? p.descripcionEn : (p.descripcion || (currentLang === 'es' ? "Sin descripción detallada." : "No detailed description."));
             
+            /* AQUÍ ESTÁ LA NUEVA ESTRUCTURA EXPANDIBLE DE LA TARJETA */
             contenedor.innerHTML += `
             <div class="card">
                 <div class="img-container">
                     <img src="${p.imagen}" onerror="this.src='${fallbackImage}'">
-                    <div class="product-overlay">${desc}</div>
                 </div>
-                <h3 style="margin-top:10px;">${nombre}</h3>
+                <h3 style="margin-top:5px;">${nombre}</h3>
                 <p style="color:#888;font-size:0.9rem;">${catLabel}: ${tipo}</p>
-                <p style="font-size:0.8rem;margin:5px 0;">${sellerLabel}: <span style="color:var(--primary-color);">${p.vendedor}</span></p>
-                <p class="price">${formatearPrecio(p.precio)}</p>
-                <button class="btn-primary btn-add-cart" data-id="${p.id}" style="margin-top:auto;width:100%;padding:10px;">${btnText}</button>
+                
+                <div class="card-details-hidden">
+                    <p style="font-size:0.8rem; margin-bottom:10px; color:#aaa;">${sellerLabel}: <span style="color:var(--primary-color);">${p.vendedor}</span></p>
+                    <p style="font-size:0.95rem; color:#fff; margin-bottom:15px; line-height:1.4;">${desc}</p>
+                    <p class="price" style="font-size: 1.8rem; font-weight: bold; margin-bottom: 15px; color: white;">${formatearPrecio(p.precio)}</p>
+                    <button class="btn-primary btn-add-cart" data-id="${p.id}" style="width:100%; padding:12px;">${btnText}</button>
+                </div>
             </div>`;
         });
         document.querySelectorAll('.btn-add-cart').forEach(btn => btn.addEventListener('click', (e) => añadirAlCarrito(parseInt(e.target.dataset.id))));
@@ -235,7 +238,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 id: Date.now(), nombre: nombre, tipo: tipo, precio: precio, 
                 vendedor: usuarioActual.user, imagen: imagen, descripcion: descripcion 
             });
-            localStorage.setItem("tactical_mercado_v13", JSON.stringify(mercadoActual));
+            localStorage.setItem("tactical_mercado_v14", JSON.stringify(mercadoActual));
             renderizarMercado(); popups.uploadItem.classList.remove("active");
             
             document.getElementById("new-item-name").value = "";
@@ -305,7 +308,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=800",
         "https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=800"
     ];
-    let galeriaActual = JSON.parse(localStorage.getItem("tactical_galeria_v13")) || galeriaBase;
+    let galeriaActual = JSON.parse(localStorage.getItem("tactical_galeria_v14")) || galeriaBase;
     let swiper;
     
     const renderizarGaleria = () => {
@@ -316,7 +319,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     
     document.getElementById("btn-open-upload-photo")?.addEventListener("click", () => { if(!usuarioActual) { alert("⚠️ Inicia sesión."); popups.login.classList.add("active"); return; } popups.uploadPhoto.classList.add("active"); });
-    document.getElementById("btn-submit-photo")?.addEventListener("click", () => { const url = document.getElementById("new-photo-url").value; if(url) { galeriaActual.push(url); localStorage.setItem("tactical_galeria_v13", JSON.stringify(galeriaActual)); renderizarGaleria(); popups.uploadPhoto.classList.remove("active"); }});
+    document.getElementById("btn-submit-photo")?.addEventListener("click", () => { const url = document.getElementById("new-photo-url").value; if(url) { galeriaActual.push(url); localStorage.setItem("tactical_galeria_v14", JSON.stringify(galeriaActual)); renderizarGaleria(); popups.uploadPhoto.classList.remove("active"); }});
 
     // --- FORMULARIO TALLER ---
     document.getElementById("form-servicio")?.addEventListener("submit", (e) => { 
