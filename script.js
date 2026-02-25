@@ -1,13 +1,48 @@
 document.addEventListener("DOMContentLoaded", () => {
     
-    // --- DESTRUCCIÓN DE MEMORIA SIN PIEDAD ---
-    // Esto borra la memoria del mercado y la galería CADA VEZ que cargas la página.
-    // Así es imposible que el navegador te ponga fotos viejas.
-    Object.keys(localStorage).forEach(key => {
-        if (key.includes("mercado") || key.includes("galeria") || key.includes("photos")) {
-            localStorage.removeItem(key);
+    // =================================================================
+    // --- PARCHE DE EMERGENCIA: FORZADO DE IMÁGENES ---
+    // =================================================================
+    // Este bloque se ejecuta SIEMPRE al inicio. Busca los productos específicos
+    // en la memoria del navegador y les cambia la foto a la fuerza,
+    // ignorando lo que tuvieran guardado antes.
+    
+    // 1. Recuperamos lo que tenga el navegador guardado actualmente
+    let mercadoStorage = JSON.parse(localStorage.getItem("tactical_mercado_vFinal")) || [];
+    let huboCambiosForzados = false;
+
+    if (mercadoStorage.length > 0) {
+        // a) Forzar imagen del Motor V8 (ID 1) a un motor real
+        const v8Item = mercadoStorage.find(p => p.id === 1);
+        if (v8Item) {
+            v8Item.imagen = "https://images.pexels.com/photos/1915149/pexels-photo-1915149.jpeg?auto=compress&cs=tinysrgb&w=400";
+            huboCambiosForzados = true;
         }
-    });
+        
+        // b) Forzar imagen de Neumáticos Tácticos (ID 2) a rueda de tacos
+        const tiresItem = mercadoStorage.find(p => p.id === 2);
+        if (tiresItem) {
+            tiresItem.imagen = "https://images.pexels.com/photos/1592261/pexels-photo-1592261.jpeg?auto=compress&cs=tinysrgb&w=400";
+             huboCambiosForzados = true;
+        }
+
+        // c) Forzar imagen del Kit de Suspensión (ID 3) a la azul/gris original
+        const suspensionItem = mercadoStorage.find(p => p.id === 3);
+        if (suspensionItem) {
+            suspensionItem.imagen = "https://images.pexels.com/photos/190539/pexels-photo-190539.jpeg?auto=compress&cs=tinysrgb&w=400";
+            huboCambiosForzados = true;
+        }
+
+        // Si hemos forzado algún cambio, sobreescribimos la memoria del navegador AHORA MISMO.
+        if (huboCambiosForzados) {
+            localStorage.setItem("tactical_mercado_vFinal", JSON.stringify(mercadoStorage));
+            console.log("PARCHE APLICADO: Imágenes del mercado actualizadas a la fuerza.");
+        }
+    }
+    // =================================================================
+    // FIN DEL PARCHE
+    // =================================================================
+
 
     // --- REFERENCIAS DOM ---
     const popups = {
@@ -205,23 +240,22 @@ document.addEventListener("DOMContentLoaded", () => {
         popups.config.classList.remove("active");
     });
 
-    // --- MERCADO (FOTOS 100% NUEVAS Y ASEGURADAS) ---
+    // --- MERCADO ---
     const fallbackImage = "https://placehold.co/600x400/111111/7ab317?text=Articulo+Tactico";
 
+    // Esta lista solo se usa si es la PRIMERA vez que se abre la web en un navegador nuevo.
+    // Si ya la has abierto antes, el código del principio (el parche) se encargará de poner las fotos bien.
     const productosBase = [
-        // FOTO 1: MOTOR V8 REAL
         { id: 1, nombre: "Motor V8 Blindado", nombreEn: "Armored V8 Engine", tipo: "Mecánica Pesada", tipoEn: "Heavy Mechanics", precio: 4500, vendedor: "Tactical HQ", 
           imagen: "https://images.pexels.com/photos/1915149/pexels-photo-1915149.jpeg?auto=compress&cs=tinysrgb&w=400", 
           descripcion: "Motor de bloque grande con pistones forjados, cigüeñal reforzado y culatas de alto flujo. Optimizado para resistir impactos y mantener el rendimiento en condiciones extremas. Potencia estimada: 850 HP.", 
           descripcionEn: "Big block engine with forged pistons, reinforced crankshaft, and high-flow cylinder heads. Optimized to withstand impacts and maintain performance in extreme conditions. Estimated power: 850 HP." },
         
-        // FOTO 2: RUEDA/NEUMÁTICO OFF-ROAD AGRESIVO
         { id: 2, nombre: "Neumáticos Tácticos Off-Road", nombreEn: "Tactical Off-Road Tires", tipo: "Movilidad", tipoEn: "Mobility", precio: 800, vendedor: "Tactical HQ", 
           imagen: "https://images.pexels.com/photos/1592261/pexels-photo-1592261.jpeg?auto=compress&cs=tinysrgb&w=400", 
           descripcion: "Juego de 4 neumáticos de compuesto militar con diseño de banda de rodadura agresivo para barro y roca. Paredes laterales reforzadas con Kevlar de 10 capas. Incluye sistema run-flat interno.", 
           descripcionEn: "Set of 4 military compound tires with aggressive tread design for mud and rock. 10-ply Kevlar reinforced sidewalls. Includes internal run-flat system." },
         
-        // FOTO 3: KIT DE SUSPENSIÓN (LA ORIGINAL QUE TE GUSTABA)
         { id: 3, nombre: "Kit de Suspensión Reforzada", nombreEn: "Reinforced Suspension Kit", tipo: "Modificación", tipoEn: "Upgrades", precio: 1200, vendedor: "Tactical HQ", 
           imagen: "https://images.pexels.com/photos/190539/pexels-photo-190539.jpeg?auto=compress&cs=tinysrgb&w=400", 
           descripcion: "Sistema de suspensión de largo recorrido con amortiguadores de nitrógeno presurizado y muelles helicoidales de alta resistencia. Proporciona una elevación de 4 pulgadas y una capacidad de carga superior.", 
@@ -243,7 +277,7 @@ document.addEventListener("DOMContentLoaded", () => {
           descripcionEn: "Tactical-grade LED light bar with a combined output of 30,000 lumens. IP68 waterproof aluminum housing and unbreakable polycarbonate lenses. Mixed beam pattern (flood/spot)." }
     ];
     
-    // Al haber borrado arriba la memoria, esto cargará los productos nuevos sí o sí
+    // Cargamos el mercado (que ya habrá sido corregido por el parche del principio si hacía falta)
     let mercadoActual = JSON.parse(localStorage.getItem("tactical_mercado_vFinal")) || productosBase;
     const formatearPrecio = (p) => p.toLocaleString(currentLang === 'es' ? "es-ES" : "en-US") + (currentLang === 'es' ? "€" : "$");
 
@@ -358,18 +392,19 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- GALERÍA (5 COCHES NUEVOS DE PEXELS PARA NO FALLAR) ---
+    // --- GALERÍA (V37) ---
     const galeriaBase = [
-        "https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=800", // BMW M3 Azul
-        "https://images.pexels.com/photos/3729464/pexels-photo-3729464.jpeg?auto=compress&cs=tinysrgb&w=800", // Mustang Oscuro
-        "https://images.pexels.com/photos/244206/pexels-photo-244206.jpeg?auto=compress&cs=tinysrgb&w=800", // Audi R8
-        "https://images.pexels.com/photos/1152077/pexels-photo-1152077.jpeg?auto=compress&cs=tinysrgb&w=800", // Muscle car
-        "https://images.pexels.com/photos/3311574/pexels-photo-3311574.jpeg?auto=compress&cs=tinysrgb&w=800"  // Deportivo negro
+        "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?auto=format&fit=crop&w=800&q=80", // GT-R
+        "https://images.unsplash.com/photo-1603503352756-32d8471c26da?auto=format&fit=crop&w=800&q=80", // Deportivo oscuro
+        "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=800&q=80", // Mustang Rojo
+        "https://images.unsplash.com/photo-1503376763066-2067ee4e9b69?auto=format&fit=crop&w=800&q=80", // Camaro Blanco
+        "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=800&q=80"  // SUV Blanco
     ];
     
     let galeriaActual = JSON.parse(localStorage.getItem("tactical_galeria_vFinal")) || galeriaBase;
+    localStorage.setItem("tactical_galeria_vFinal", JSON.stringify(galeriaActual)); // Aseguramos que se guarde
+
     let swiper;
-    
     const renderizarGaleria = () => {
         const wrapper = document.getElementById("gallery-wrapper"); if(!wrapper) return; wrapper.innerHTML = "";
         galeriaActual.forEach(url => {
