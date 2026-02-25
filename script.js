@@ -1,17 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
     
-    // =================================================================
-    // --- PROTOCOLO DE TIERRA QUEMADA V2 (Borrado agresivo) ---
-    // =================================================================
-    // Busca CUALQUIER clave en la memoria que contenga "tactical_mercado"
-    // y la elimina sin piedad antes de intentar cargar nada.
+    // --- LIMPIEZA Y RESTAURACIÓN A FOTOS ORIGINALES ---
+    // Borramos todo lo anterior para que cargue limpio
     Object.keys(localStorage).forEach(key => {
-        if(key.includes("tactical_mercado")) {
+        if(key.includes("tactical_")) {
            localStorage.removeItem(key);
-           console.log("🔥 Memoria corrupta eliminada: " + key);
         }
     });
-    // =================================================================
 
     // --- REFERENCIAS DOM ---
     const popups = {
@@ -55,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
             benefit2: "Comprar equipamiento exclusivo.",
             benefit3: "Subir fotos de tus modificaciones a la Galería.",
             benefit4: "Acceso a descuentos exclusivos para miembros.",
-            continueRegisterBtn: "Continue to Registration",
+            continueRegisterBtn: "Continuar al Registro",
             policyTitle: "Política de Privacidad y Cookies",
             footerPrivacy: "Protocolos de Privacidad y Términos",
             footerCookiesTitle: "Uso de Cookies Activo",
@@ -66,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
             heroBtn: "Request appointment", 
             marketTitle: "1. Buy/Sell", 
             uploadItemBtn: "+ Upload Item", repairTitle: "2. Repair / Modification Unit", sendBtn: "Send Request", galleryTitle: "Operations (Gallery)", uploadPhotoBtn: "+ Add Photo", cookiesTitle: "Tactical Notice (Cookies)", cookiesText: "We use cookies to improve our services accuracy. Accept?", cookiesAccept: "Affirmative, accept", loginTitle: "Restricted Access", noAccount: "No account?", registerHere: "Register here", registerTitle: "New Recruit", hasAccount: "Already have an account?", profileTitle: "Edit Profile", profileDesc: "Update your credentials.", saveChanges: "Save Changes", configTitle: "Settings", configDesc: "Select interface language.", applyBtn: "Apply", closeBtn: "Close", cancelBtn: "Cancel", uploadItemTitle: "Add to Market", publishBtn: "Publish", uploadPhotoTitle: "Add Photo", addBtn: "Add", cartTitle: "Cart", checkoutBtn: "Confirm Checkout", continueBtn: "Continue Shopping", privacyTitle: "Privacy Protocols & Terms",
-            selectService: "-- Select Service --", optRepair: "Technical Repair", optMod: "Modification & Upgrades", payMethod: "Payment Method:", newEmailLabel: "New Email:", newPassLabel: "Nueva Contraseña (Optional):", currentPassLabel: "* CURRENT Password (Required):", sellerLabel: "Seller", catLabel: "Category", emptyCart: "Your cart is empty.",
+            selectService: "-- Select Service --", optRepair: "Technical Repair", optMod: "Modification & Upgrades", payMethod: "Payment Method:", newEmailLabel: "New Email:", newPassLabel: "New Password (Optional):", currentPassLabel: "* CURRENT Password (Required):", sellerLabel: "Seller", catLabel: "Category", emptyCart: "Your cart is empty.",
             userHolder: "Username", passHolder: "Password", emailHolder: "Email (Required)", itemNameHolder: "Name", itemCatHolder: "Category", itemPriceHolder: "Price", itemImgHolder: "Image URL", itemDescHolder: "Item description...", cardNum: "Card Number", vehicleHolder: "Vehicle (Brand & Model)", descHolder: "Describe the damage or required modifications...",
             benefitsTitle: "Join Advantages",
             benefit1: "Sell your own items in the Market.",
@@ -209,55 +204,44 @@ document.addEventListener("DOMContentLoaded", () => {
         popups.config.classList.remove("active");
     });
 
-    // --- MERCADO (V_DEFINITIVA_RELOADED - FOTOS REALES Y ESTABLES) ---
+    // --- MERCADO (RESTAURACIÓN A LAS 6 FOTOS ORIGINALES DEL INICIO) ---
     const fallbackImage = "https://placehold.co/600x400/111111/7ab317?text=Articulo+Tactico";
-    // CLAVE NUEVA Y ÚNICA PARA FORZAR LA CARGA
-    const MERCADO_KEY_DEFINITIVA = "tactical_mercado_DEFINITIVO_V2_RELOADED";
 
     const productosBase = [
-        // FOTO: Motor V8 Real (Enlace Pexels muy estable)
         { id: 1, nombre: "Motor V8 Blindado", nombreEn: "Armored V8 Engine", tipo: "Mecánica Pesada", tipoEn: "Heavy Mechanics", precio: 4500, vendedor: "Tactical HQ", 
-          imagen: "https://images.pexels.com/photos/3806249/pexels-photo-3806249.jpeg?auto=compress&cs=tinysrgb&w=400", 
+          imagen: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", 
           descripcion: "Motor de bloque grande con pistones forjados, cigüeñal reforzado y culatas de alto flujo. Optimizado para resistir impactos y mantener el rendimiento en condiciones extremas. Potencia estimada: 850 HP.", 
           descripcionEn: "Big block engine with forged pistons, reinforced crankshaft, and high-flow cylinder heads. Optimized to withstand impacts and maintain performance in extreme conditions. Estimated power: 850 HP." },
         
-        // FOTO: Rueda de tacos (Mantenida, la que te gusta, Pexels estable)
         { id: 2, nombre: "Neumáticos Tácticos Off-Road", nombreEn: "Tactical Off-Road Tires", tipo: "Movilidad", tipoEn: "Mobility", precio: 800, vendedor: "Tactical HQ", 
-          imagen: "https://images.pexels.com/photos/1592261/pexels-photo-1592261.jpeg?auto=compress&cs=tinysrgb&w=400", 
+          imagen: "https://images.unsplash.com/photo-1600661653561-629509216228?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", 
           descripcion: "Juego de 4 neumáticos de compuesto militar con diseño de banda de rodadura agresivo para barro y roca. Paredes laterales reforzadas con Kevlar de 10 capas. Incluye sistema run-flat interno.", 
           descripcionEn: "Set of 4 military compound tires with aggressive tread design for mud and rock. 10-ply Kevlar reinforced sidewalls. Includes internal run-flat system." },
         
-        // FOTO: Kit de suspensión azul/gris (Mantenida, la que te gusta, Pexels estable)
         { id: 3, nombre: "Kit de Suspensión Reforzada", nombreEn: "Reinforced Suspension Kit", tipo: "Modificación", tipoEn: "Upgrades", precio: 1200, vendedor: "Tactical HQ", 
           imagen: "https://images.pexels.com/photos/190539/pexels-photo-190539.jpeg?auto=compress&cs=tinysrgb&w=400", 
           descripcion: "Sistema de suspensión de largo recorrido con amortiguadores de nitrógeno presurizado y muelles helicoidales de alta resistencia. Proporciona una elevación de 4 pulgadas y una capacidad de carga superior.", 
           descripcionEn: "Long-travel suspension system with pressurized nitrogen shocks and heavy-duty coil springs. Provides a 4-inch lift and superior load capacity." },
         
-        // FOTO: Textura Pintura Mate (Pexels estable, textura de pared oscura que parece pintura)
         { id: 4, nombre: "Pintura Absorbe-Radar (Mate)", nombreEn: "Radar-Absorbent Paint (Matte)", tipo: "Estética / Camuflaje", tipoEn: "Aesthetics / Camo", precio: 1500, vendedor: "Tactical HQ", 
-          imagen: "https://images.pexels.com/photos/2769614/pexels-photo-2769614.jpeg?auto=compress&cs=tinysrgb&w=400", 
+          imagen: "https://images.unsplash.com/photo-1542362567-b07e54358753?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", 
           descripcion: "Recubrimiento cerámico avanzado con propiedades de absorción de ondas de radar y reducción de firma infrarroja. Acabado negro mate ultraplano para minimizar reflejos visuales nocturnos.", 
           descripcionEn: "Advanced ceramic coating with radar wave absorption properties and infrared signature reduction. Ultra-flat matte black finish to minimize nighttime visual reflections." },
         
-        // FOTO: Placas de Blindaje (Wikimedia Commons, muy estable)
         { id: 5, nombre: "Blindaje Ligero de Puertas", nombreEn: "Light Door Armor", tipo: "Defensa", tipoEn: "Defense", precio: 2100, vendedor: "Tactical HQ", 
-          imagen: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Ceramic_plates.jpg/640px-Ceramic_plates.jpg", 
+          imagen: "https://images.unsplash.com/photo-1592853625601-bb9d23da12fc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", 
           descripcion: "Paneles de blindaje compuesto de nivel III+ para instalación interna en puertas de vehículos estándar. Detiene calibres de rifle comunes sin añadir un peso excesivo al chasis del coche.", 
           descripcionEn: "Level III+ composite armor panels for internal installation in standard vehicle doors. Stops common rifle calibers without adding excessive weight to the chassis." },
         
-        // FOTO: Foco LED primer plano (Pexels estable, primer plano de luz)
         { id: 6, nombre: "Luces LED de Alta Intensidad", nombreEn: "High-Intensity LED Lights", tipo: "Visión", tipoEn: "Vision", precio: 450, vendedor: "Tactical HQ", 
-          imagen: "https://images.pexels.com/photos/3401495/pexels-photo-3401495.jpeg?auto=compress&cs=tinysrgb&w=400", 
+          imagen: "https://images.unsplash.com/photo-1551952237-954a0e68786c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", 
           descripcion: "Barra de luz LED de grado táctico con una salida combinada de 30,000 lúmenes. Carcasa de aluminio impermeable IP68 y lentes de policarbonato irrompibles. Patrón de haz mixto (inundación/punto).", 
           descripcionEn: "Tactical-grade LED light bar with a combined output of 30,000 lumens. IP68 waterproof aluminum housing and unbreakable polycarbonate lenses. Mixed beam pattern (flood/spot)." }
     ];
     
-    // Como hemos borrado todo al principio, esto cargará los productos base sí o sí.
-    let mercadoActual = JSON.parse(localStorage.getItem(MERCADO_KEY_DEFINITIVA));
-    if (!mercadoActual) {
-         console.log("⚠️ Inicializando mercado con datos DEFINITIVOS y FOTOS CORRECTAS.");
-         mercadoActual = productosBase;
-         localStorage.setItem(MERCADO_KEY_DEFINITIVA, JSON.stringify(mercadoActual));
+    let mercadoActual = JSON.parse(localStorage.getItem("tactical_mercado_ORIGINAL_RESTORE")) || productosBase;
+    if (!localStorage.getItem("tactical_mercado_ORIGINAL_RESTORE")) {
+         localStorage.setItem("tactical_mercado_ORIGINAL_RESTORE", JSON.stringify(productosBase));
     }
     
     const formatearPrecio = (p) => p.toLocaleString(currentLang === 'es' ? "es-ES" : "en-US") + (currentLang === 'es' ? "€" : "$");
@@ -275,7 +259,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const tipo = currentLang === 'en' && p.tipoEn ? p.tipoEn : p.tipo;
             const desc = currentLang === 'en' && p.descripcionEn ? p.descripcionEn : (p.descripcion || (currentLang === 'es' ? "Sin descripción detallada." : "No detailed description."));
             
-            // Añadido onerror robusto para evitar iconos de imagen rota
             contenedor.innerHTML += `
             <div class="card">
                 <div class="img-container">
@@ -312,7 +295,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 id: Date.now(), nombre: nombre, tipo: tipo, precio: precio, 
                 vendedor: usuarioActual.user, imagen: imagen, descripcion: descripcion 
             });
-            localStorage.setItem(MERCADO_KEY_DEFINITIVA, JSON.stringify(mercadoActual));
+            localStorage.setItem("tactical_mercado_ORIGINAL_RESTORE", JSON.stringify(mercadoActual));
             renderizarMercado(); popups.uploadItem.classList.remove("active");
             
             document.getElementById("new-item-name").value = "";
@@ -374,23 +357,25 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- GALERÍA (SE MANTIENE IGUAL QUE ANTES) ---
+    // --- GALERÍA (RESTAURACIÓN A LAS 5 FOTOS ORIGINALES DEL INICIO) ---
     const galeriaBase = [
-        "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1603503352756-32d8471c26da?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1503376763066-2067ee4e9b69?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=800&q=80"
+        "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800",
+        "https://images.unsplash.com/photo-1503376763066-2067ee4e9b69?auto=format&fit=crop&w=800",
+        "https://images.unsplash.com/photo-1542282088-fe8426682b8f?auto=format&fit=crop&w=800",
+        "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=800",
+        "https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=800"
     ];
     
-    let galeriaActual = JSON.parse(localStorage.getItem("tactical_galeria_vFinal")) || galeriaBase;
-    localStorage.setItem("tactical_galeria_vFinal", JSON.stringify(galeriaActual));
+    let galeriaActual = JSON.parse(localStorage.getItem("tactical_galeria_ORIGINAL_RESTORE")) || galeriaBase;
+    if (!localStorage.getItem("tactical_galeria_ORIGINAL_RESTORE")) {
+        localStorage.setItem("tactical_galeria_ORIGINAL_RESTORE", JSON.stringify(galeriaActual));
+    }
 
     let swiper;
     const renderizarGaleria = () => {
         const wrapper = document.getElementById("gallery-wrapper"); if(!wrapper) return; wrapper.innerHTML = "";
         galeriaActual.forEach(url => {
-            wrapper.innerHTML += `<div class="swiper-slide"><img src="${url}" onerror="this.parentElement.style.display='none';"></div>`;
+            wrapper.innerHTML += `<div class="swiper-slide"><img src="${url}" onerror="this.src='${fallbackImage}';"></div>`;
         });
         if(swiper) swiper.destroy(true, true);
         swiper = new Swiper(".mySwiper", { effect: "coverflow", grabCursor: true, centeredSlides: true, slidesPerView: "auto", observer: true, observeParents: true, coverflowEffect: { rotate: 50, stretch: 0, depth: 100, modifier: 1, slideShadows: false }, pagination: { el: ".swiper-pagination", clickable: true }, navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" }, initialSlide: 1, loop: true });
@@ -402,7 +387,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const url = document.getElementById("new-photo-url").value; 
         if(url) { 
             galeriaActual.push(url); 
-            localStorage.setItem("tactical_galeria_vFinal", JSON.stringify(galeriaActual));
+            localStorage.setItem("tactical_galeria_ORIGINAL_RESTORE", JSON.stringify(galeriaActual));
             renderizarGaleria(); 
             popups.uploadPhoto.classList.remove("active"); 
         }
