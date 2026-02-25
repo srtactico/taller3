@@ -1,4 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // --- LIMPIEZA FORZOSA DE GALERÍAS ANTIGUAS ---
+    // Esto borra cualquier rastro de versiones anteriores de la galería para asegurar que carguen las nuevas fotos.
+    Object.keys(localStorage).forEach(key => {
+        if (key.startsWith("tactical_galeria_") && key !== "tactical_galeria_v20") {
+            localStorage.removeItem(key);
+            console.log("Galería antigua borrada: " + key);
+        }
+    });
+
     // --- REFERENCIAS DOM ---
     const popups = {
         cookie: document.getElementById("cookie-popup"),
@@ -30,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentLang = localStorage.getItem("tactical_lang") || "es";
     const translations = {
         es: {
-            navHome: "Inicio", navMarket: "Compra/Venta", navRepair: "Taller", navGallery: "Galería", loginBtn: "Iniciar Sesión", registerBtn: "Registrar Cuenta", logoutBtn: "Cerrar Sesión", profileBtn: "Mi Perfil", configBtn: "Configuración", heroTitle: "Precisión absoluta. Rendimiento táctico.", heroText: "Tu vehículo no es solo un transporte; es tu mejor herramienta.", 
+            navHome: "Inicio", navMarket: "Compra/Venta", navRepair: "Taller", navGallery: "Galería", loginBtn: "Iniciar Sesión", registerBtn: "Registrar Cuenta", logoutBtn: "Cerrar Sesión", profileBtn: "Mi Perfil", configBtn: "Configuración", privacyMenuBtn: "Condiciones de Privacidad", heroTitle: "Precisión absoluta. Rendimiento táctico.", heroText: "Tu vehículo no es solo un transporte; es tu mejor herramienta.", 
             heroBtn: "Solicitar cita previa", 
             marketTitle: "1. Compra/Venta", 
             uploadItemBtn: "+ Subir Artículo", repairTitle: "2. Unidad de Reparación / Modificación", sendBtn: "Enviar Solicitud", galleryTitle: "Operaciones (Galería)", uploadPhotoBtn: "+ Añadir Foto", cookiesTitle: "Aviso Táctico (Cookies)", cookiesText: "Utilizamos cookies para mejorar la precisión de nuestros servicios. ¿Aceptas?", cookiesAccept: "Afirmativo, aceptar", loginTitle: "Acceso Restringido", noAccount: "¿No tienes cuenta?", registerHere: "Regístrate aquí", registerTitle: "Nuevo Recluta", hasAccount: "¿Ya tienes cuenta?", profileTitle: "Editar Perfil", profileDesc: "Actualiza tus credenciales.", saveChanges: "Guardar Cambios", configTitle: "Configuración", configDesc: "Selecciona el idioma.", applyBtn: "Aplicar", closeBtn: "Cerrar", cancelBtn: "Cancelar", uploadItemTitle: "Añadir al Mercado", publishBtn: "Publicar", uploadPhotoTitle: "Añadir Foto", addBtn: "Añadir", cartTitle: "Carrito", checkoutBtn: "Confirmar Transacción", continueBtn: "Seguir Comprando", privacyTitle: "Protocolos de Privacidad y Términos",
@@ -344,21 +353,22 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- GALERÍA (V19) - COCHES TUNEADOS ---
+    // --- GALERÍA (V20) - COCHES COMPLETOS MUY MODIFICADOS ---
     const galeriaBase = [
-        // Foto 1: Deportivo tuneado oscuro en la calle
-        "https://images.pexels.com/photos/3311574/pexels-photo-3311574.jpeg?auto=compress&cs=tinysrgb&w=800",
-        // Foto 2: Todoterreno táctico modificado
-        "https://images.pexels.com/photos/1252868/pexels-photo-1252868.jpeg?auto=compress&cs=tinysrgb&w=800",
-        // Foto 3: Coche clásico en proceso de modificación en garaje
-        "https://images.pexels.com/photos/4489749/pexels-photo-4489749.jpeg?auto=compress&cs=tinysrgb&w=800",
-        // Foto 4: Detalle motor modificado de alto rendimiento
-        "https://images.pexels.com/photos/1409968/pexels-photo-1409968.jpeg?auto=compress&cs=tinysrgb&w=800",
-        // Foto 5: Deportivo con kit de ensanche (widebody) agresivo
-        "https://images.pexels.com/photos/7931664/pexels-photo-7931664.jpeg?auto=compress&cs=tinysrgb&w=800"
+        // 1. Nissan GT-R R35 muy ancho y agresivo (Liberty Walk style)
+        "https://images.pexels.com/photos/15127331/pexels-photo-15127331.jpeg?auto=compress&cs=tinysrgb&w=800",
+        // 2. Mustang clásico restomod muy bajo y oscuro
+        "https://images.pexels.com/photos/3972755/pexels-photo-3972755.jpeg?auto=compress&cs=tinysrgb&w=800",
+        // 3. Coche de drift japonés muy modificado y colorido en acción
+        "https://images.pexels.com/photos/16384597/pexels-photo-16384597.jpeg?auto=compress&cs=tinysrgb&w=800",
+        // 4. Todoterreno Jeep Wrangler extremadamente modificado (ruedas gigantes, luces, suspensión)
+        "https://images.pexels.com/photos/19287793/pexels-photo-19287793.jpeg?auto=compress&cs=tinysrgb&w=800",
+        // 5. Deportivo moderno (tipo Supra/BMW) con kit de carrocería completo y alerón gigante
+        "https://images.pexels.com/photos/14297701/pexels-photo-14297701.jpeg?auto=compress&cs=tinysrgb&w=800"
     ];
-    // Versión 19 para forzar la actualización de la galería
-    let galeriaActual = JSON.parse(localStorage.getItem("tactical_galeria_v19")) || galeriaBase;
+    
+    // Versión 20 + Limpieza automática al inicio
+    let galeriaActual = JSON.parse(localStorage.getItem("tactical_galeria_v20")) || galeriaBase;
     let swiper;
     
     const renderizarGaleria = () => {
@@ -369,7 +379,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     
     document.getElementById("btn-open-upload-photo")?.addEventListener("click", () => { if(!usuarioActual) { alert("⚠️ Inicia sesión."); popups.login.classList.add("active"); return; } popups.uploadPhoto.classList.add("active"); });
-    document.getElementById("btn-submit-photo")?.addEventListener("click", () => { const url = document.getElementById("new-photo-url").value; if(url) { galeriaActual.push(url); localStorage.setItem("tactical_galeria_v19", JSON.stringify(galeriaActual)); renderizarGaleria(); popups.uploadPhoto.classList.remove("active"); }});
+    document.getElementById("btn-submit-photo")?.addEventListener("click", () => { const url = document.getElementById("new-photo-url").value; if(url) { galeriaActual.push(url); localStorage.setItem("tactical_galeria_v20", JSON.stringify(galeriaActual)); renderizarGaleria(); popups.uploadPhoto.classList.remove("active"); }});
 
     // --- FORMULARIO TALLER ---
     document.getElementById("form-servicio")?.addEventListener("submit", (e) => { 
