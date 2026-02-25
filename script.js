@@ -1,13 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
     
-    // --- LIMPIEZA NUCLEAR V35 (Para reparar los dos enlaces rotos) ---
-    if (!localStorage.getItem("limpieza_nuclear_v35")) {
+    // --- LIMPIEZA NUCLEAR V36 (Para asegurar que se va la foto rota) ---
+    if (!localStorage.getItem("limpieza_nuclear_v36")) {
         Object.keys(localStorage).forEach(key => {
+            // Borramos cualquier rastro de galerias o mercados anteriores
             if (key.includes("galeria") || key.includes("mercado") || key.includes("photos")) {
                 localStorage.removeItem(key);
             }
         });
-        localStorage.setItem("limpieza_nuclear_v35", "true");
+        // Marcamos que ya hemos hecho la limpieza de esta versión
+        localStorage.setItem("limpieza_nuclear_v36", "true");
     }
 
     // --- REFERENCIAS DOM ---
@@ -206,7 +208,8 @@ document.addEventListener("DOMContentLoaded", () => {
         popups.config.classList.remove("active");
     });
 
-    // --- MERCADO (V35 - ENLACE DE SUSPENSIÓN ARREGLADO) ---
+    // --- MERCADO (V36) ---
+    // Definimos una imagen de reserva global por si acaso
     const fallbackImage = "https://placehold.co/600x400/111111/7ab317?text=Articulo+Tactico";
 
     const productosBase = [
@@ -220,7 +223,6 @@ document.addEventListener("DOMContentLoaded", () => {
           descripcion: "Juego de 4 neumáticos de compuesto militar con diseño de banda de rodadura agresivo para barro y roca. Paredes laterales reforzadas con Kevlar de 10 capas. Incluye sistema run-flat interno.", 
           descripcionEn: "Set of 4 military compound tires with aggressive tread design for mud and rock. 10-ply Kevlar reinforced sidewalls. Includes internal run-flat system." },
         
-        // ¡NUEVA FOTO DE SUSPENSIÓN/RUEDA DE ALTO RENDIMIENTO AQUÍ!
         { id: 3, nombre: "Kit de Suspensión Reforzada", nombreEn: "Reinforced Suspension Kit", tipo: "Modificación", tipoEn: "Upgrades", precio: 1200, vendedor: "Tactical HQ", 
           imagen: "https://images.unsplash.com/photo-1600705722908-bab1e61c0b4d?auto=format&fit=crop&w=400&q=80", 
           descripcion: "Sistema de suspensión de largo recorrido con amortiguadores de nitrógeno presurizado y muelles helicoidales de alta resistencia. Proporciona una elevación de 4 pulgadas y una capacidad de carga superior.", 
@@ -242,7 +244,8 @@ document.addEventListener("DOMContentLoaded", () => {
           descripcionEn: "Tactical-grade LED light bar with a combined output of 30,000 lumens. IP68 waterproof aluminum housing and unbreakable polycarbonate lenses. Mixed beam pattern (flood/spot)." }
     ];
     
-    let mercadoActual = JSON.parse(localStorage.getItem("tactical_mercado_v35")) || productosBase;
+    // Usamos v36 para el mercado
+    let mercadoActual = JSON.parse(localStorage.getItem("tactical_mercado_v36")) || productosBase;
     const formatearPrecio = (p) => p.toLocaleString(currentLang === 'es' ? "es-ES" : "en-US") + (currentLang === 'es' ? "€" : "$");
 
     const renderizarMercado = () => {
@@ -258,6 +261,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const tipo = currentLang === 'en' && p.tipoEn ? p.tipoEn : p.tipo;
             const desc = currentLang === 'en' && p.descripcionEn ? p.descripcionEn : (p.descripcion || (currentLang === 'es' ? "Sin descripción detallada." : "No detailed description."));
             
+            // Añadimos onerror para que si falla, ponga la imagen de reserva
             contenedor.innerHTML += `
             <div class="card">
                 <div class="img-container">
@@ -294,7 +298,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 id: Date.now(), nombre: nombre, tipo: tipo, precio: precio, 
                 vendedor: usuarioActual.user, imagen: imagen, descripcion: descripcion 
             });
-            localStorage.setItem("tactical_mercado_v35", JSON.stringify(mercadoActual));
+            // Guardamos en v36
+            localStorage.setItem("tactical_mercado_v36", JSON.stringify(mercadoActual));
             renderizarMercado(); popups.uploadItem.classList.remove("active");
             
             document.getElementById("new-item-name").value = "";
@@ -356,32 +361,35 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- GALERÍA (V35 - NUEVA FOTO ARREGLADA) ---
+    // --- GALERÍA (V36 - SEGUNDA FOTO CAMBIADA) ---
     const galeriaBase = [
-        // 1. Nissan GT-R R35 Oscuro (Confirmado por ti que funciona)
+        // 1. Nissan GT-R R35 Oscuro
         "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?auto=format&fit=crop&w=800&q=80",
         
-        // ¡NUEVA FOTO PARA SUSTITUIR LA ROTA! (Coche deportivo negro de Pexels)
-        "https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?auto=format&fit=crop&w=800&q=80",
+        // 2. ¡NUEVA FOTO! Deportivo oscuro agresivo (Reemplaza la que fallaba)
+        "https://images.unsplash.com/photo-1603503352756-32d8471c26da?auto=format&fit=crop&w=800&q=80",
         
-        // 3. Mustang Rojo (Confirmado por ti que funciona)
+        // 3. Mustang Rojo
         "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=800&q=80",
         
-        // 4. Camaro Blanco (Confirmado por ti que funciona)
+        // 4. Camaro Blanco
         "https://images.unsplash.com/photo-1503376763066-2067ee4e9b69?auto=format&fit=crop&w=800&q=80",
         
-        // 5. SUV Blanco en carretera (Confirmado por ti que funciona)
+        // 5. SUV Blanco
         "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=800&q=80"
     ];
     
-    // Forzamos la carga de esta nueva lista
+    // Forzamos la carga de la lista base en v36
     let galeriaActual = [...galeriaBase];
-    localStorage.setItem("tactical_galeria_v35", JSON.stringify(galeriaActual));
+    localStorage.setItem("tactical_galeria_v36", JSON.stringify(galeriaActual));
 
     let swiper;
     const renderizarGaleria = () => {
         const wrapper = document.getElementById("gallery-wrapper"); if(!wrapper) return; wrapper.innerHTML = "";
-        galeriaActual.forEach(url => wrapper.innerHTML += `<div class="swiper-slide"><img src="${url}" onerror="this.src='${fallbackImage}'"></div>`);
+        galeriaActual.forEach(url => {
+            // AQUÍ ESTÁ EL TRUCO: Si la imagen falla (onerror), ocultamos el padre (el swiper-slide)
+            wrapper.innerHTML += `<div class="swiper-slide"><img src="${url}" onerror="this.parentElement.style.display='none';"></div>`;
+        });
         if(swiper) swiper.destroy(true, true);
         swiper = new Swiper(".mySwiper", { effect: "coverflow", grabCursor: true, centeredSlides: true, slidesPerView: "auto", observer: true, observeParents: true, coverflowEffect: { rotate: 50, stretch: 0, depth: 100, modifier: 1, slideShadows: false }, pagination: { el: ".swiper-pagination", clickable: true }, navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" }, initialSlide: 1, loop: true });
     };
@@ -392,7 +400,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const url = document.getElementById("new-photo-url").value; 
         if(url) { 
             galeriaActual.push(url); 
-            localStorage.setItem("tactical_galeria_v35", JSON.stringify(galeriaActual));
+            // Guardamos en v36
+            localStorage.setItem("tactical_galeria_v36", JSON.stringify(galeriaActual));
             renderizarGaleria(); 
             popups.uploadPhoto.classList.remove("active"); 
         }
