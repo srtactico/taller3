@@ -15,7 +15,7 @@
 <body>
 
     <div id="custom-alert" class="overlay">
-        <div class="popup-box" style="max-width: 400px; padding: 30px;">
+        <div class="popup-box" style="max-width: 400px; padding: 30px; border-top: 4px solid var(--primary-color);">
             <h3 style="color: var(--primary-color); margin-bottom: 15px; font-size: 1.3rem;" data-i18n="alertTitle">Soporte Táctico</h3>
             <p id="custom-alert-message" style="color: #fff; margin-bottom: 20px; font-size: 1rem; line-height: 1.4;"></p>
             <button id="btn-close-alert" class="btn-primary" data-i18n="alertBtn">ENTENDIDO</button>
@@ -57,7 +57,7 @@
 
     <footer style="margin-top: auto; width: 100%;">
         <div class="container" style="text-align: center;">
-            <p>&copy; 2026 Tactical Reparations. Todos los derechos reservados.</p>
+            <p data-i18n="copyrightText">&copy; 2026 Tactical Reparations. Todos los derechos reservados.</p>
             <p style="margin-top: 10px; font-size: 0.9rem; color: var(--text-muted);">
                 <span data-i18n="footerContact">Contacto:</span> <span style="color: var(--primary-color); font-weight: bold;">639 12 75 28</span> | Email: <a href="mailto:tacticalreparations@gmail.com" style="color: var(--primary-color); text-decoration: none;">tacticalreparations@gmail.com</a>
             </p>
@@ -70,11 +70,11 @@
         const translations = {
             es: {
                 claimsTitle: "Centro de Soporte Oficial", claimsDesc: "Utiliza este formulario para solicitar devoluciones, poner una reclamacion formal o enviarnos sugerencias para mejorar la plataforma. Un agente superior revisara tu caso en menos de 24 horas.", claimOpt0: "-- Selecciona el tipo de tramite --", claimOpt1: "Solicitud de Devolucion", claimOpt2: "Reclamacion / Queja", claimOpt3: "Sugerencia de Mejora", claimOpt4: "Otro problema tecnico", claimSend: "Enviar Informe al Cuartel General", claimBack: "Volver al Inicio", footerContact: "Contacto:", alertTitle: "Soporte Táctico", alertBtn: "ENTENDIDO",
-                claimName: "Nombre / Identificacion de Agente", claimEmail: "Email de contacto", claimOrder: "Numero de pedido (Ej: TR-123456)", claimMessage: "Describe tu situacion con el mayor detalle posible...", successMsg: "Formulario enviado con exito. El equipo de Tactical Reparations se pondra en contacto contigo pronto."
+                claimName: "Nombre / Identificacion de Agente", claimEmail: "Email de contacto", claimOrder: "Numero de pedido (Ej: TR-123456)", claimMessage: "Describe tu situacion con el mayor detalle posible...", successMsg: "Formulario enviado con exito. El equipo de Tactical Reparations se pondra en contacto contigo pronto.", copyrightText: "© 2026 Tactical Reparations. Todos los derechos reservados."
             },
             en: {
                 claimsTitle: "Official Support Center", claimsDesc: "Use this form to request returns, file a formal complaint, or send us suggestions to improve the platform. A senior agent will review your case in less than 24 hours.", claimOpt0: "-- Select request type --", claimOpt1: "Return Request", claimOpt2: "Complaint / Claim", claimOpt3: "Improvement Suggestion", claimOpt4: "Other technical issue", claimSend: "Send Report to HQ", claimBack: "Back to Home", footerContact: "Contact:", alertTitle: "Tactical Support", alertBtn: "UNDERSTOOD",
-                claimName: "Name / Agent ID", claimEmail: "Contact Email", claimOrder: "Order Number (e.g. TR-123456)", claimMessage: "Describe your situation in as much detail as possible...", successMsg: "Form successfully submitted. The Tactical Reparations team will contact you shortly."
+                claimName: "Name / Agent ID", claimEmail: "Contact Email", claimOrder: "Order Number (e.g. TR-123456)", claimMessage: "Describe your situation in as much detail as possible...", successMsg: "Form successfully submitted. The Tactical Reparations team will contact you shortly.", copyrightText: "© 2026 Tactical Reparations. All rights reserved."
             }
         };
 
@@ -97,7 +97,6 @@
             alertBox.classList.add("active");
             
             const closeBtn = document.getElementById("btn-close-alert");
-            // Limpiar eventos anteriores
             const newCloseBtn = closeBtn.cloneNode(true);
             closeBtn.parentNode.replaceChild(newCloseBtn, closeBtn);
             

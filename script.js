@@ -16,6 +16,38 @@ document.addEventListener("DOMContentLoaded", () => {
     let verTodosMercado = false; 
     let descuentoActual = 0; 
     let codigoAplicado = "";
+    let currentLang = localStorage.getItem("tactical_lang") || "es";
+
+    // --- INYECCIÓN DINÁMICA DEL POPUP DE ALERTAS PERSONALIZADO ---
+    if (!document.getElementById("custom-alert-box")) {
+        const alertHTML = `
+        <div id="custom-alert-box" class="overlay" style="z-index: 99999;">
+            <div class="popup-box" style="max-width: 420px; padding: 30px; border-top: 4px solid var(--primary-color);">
+                <h3 id="custom-alert-title" style="color: var(--primary-color); margin-bottom: 15px; font-size: 1.4rem;">Aviso del Sistema</h3>
+                <p id="custom-alert-msg" style="color: #fff; margin-bottom: 25px; font-size: 1rem; line-height: 1.5;"></p>
+                <button id="custom-alert-btn" class="btn-primary" style="width: 100%;">ENTENDIDO</button>
+            </div>
+        </div>`;
+        document.body.insertAdjacentHTML('beforeend', alertHTML);
+    }
+
+    const showAlert = (msg, callback) => {
+        const box = document.getElementById("custom-alert-box");
+        document.getElementById("custom-alert-title").textContent = currentLang === 'en' ? "System Notice" : "Soporte Tactico";
+        document.getElementById("custom-alert-msg").innerHTML = msg; 
+        document.getElementById("custom-alert-btn").textContent = currentLang === 'en' ? "UNDERSTOOD" : "ENTENDIDO";
+
+        box.classList.add("active");
+
+        const btn = document.getElementById("custom-alert-btn");
+        const newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+
+        newBtn.addEventListener("click", () => {
+            box.classList.remove("active");
+            if(callback) callback();
+        });
+    };
 
     // --- ACCION DEL LOGO AL INICIO ---
     document.querySelectorAll('.clickable-logo').forEach(logo => {
@@ -23,39 +55,6 @@ document.addEventListener("DOMContentLoaded", () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     });
-
-    // --- MENÚ RESPONSIVE MÓVIL ---
-    const mobileBtn = document.getElementById("mobile-menu-btn");
-    const navMenu = document.getElementById("nav-menu");
-    
-    if(mobileBtn && navMenu) {
-        mobileBtn.addEventListener("click", () => {
-            navMenu.classList.toggle("mobile-active");
-        });
-    }
-
-    // Cerrar menú móvil al hacer click en un enlace normal
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', () => {
-            if(navMenu) navMenu.classList.remove("mobile-active");
-        });
-    });
-
-    // --- SISTEMA DE ALERTAS PERSONALIZADO ---
-    const showCustomAlert = (msg, callback) => {
-        document.getElementById("custom-alert-message").innerHTML = msg; 
-        const alertBox = document.getElementById("custom-alert");
-        alertBox.classList.add("active");
-        
-        const closeBtn = document.getElementById("btn-close-alert");
-        const newCloseBtn = closeBtn.cloneNode(true);
-        closeBtn.parentNode.replaceChild(newCloseBtn, closeBtn);
-        
-        newCloseBtn.addEventListener("click", () => {
-            alertBox.classList.remove("active");
-            if(callback) callback();
-        });
-    };
 
     const popups = {
         cookie: document.getElementById("cookie-popup"),
@@ -80,7 +79,8 @@ document.addEventListener("DOMContentLoaded", () => {
         loginBtn: document.getElementById("btn-nav-login"),
         userDropdown: document.getElementById("user-controls"),
         userTrigger: document.getElementById("btn-user-menu-trigger"),
-        userContent: document.getElementById("user-dropdown-content")
+        userContent: document.getElementById("user-dropdown-content"),
+        navMenu: document.getElementById("nav-menu")
     };
 
     let usuariosRegistrados = JSON.parse(localStorage.getItem("tactical_users")) || [];
@@ -92,27 +92,26 @@ document.addEventListener("DOMContentLoaded", () => {
         nav.userTrigger.textContent = usuarioActual.user;
     }
 
-    let currentLang = localStorage.getItem("tactical_lang") || "es";
-    
-    // --- DICCIONARIO BILINGÜE COMPLETO ---
     const translations = {
         es: {
             navHome: "Inicio", navMarket: "Compra/Venta", navRepair: "Taller", navGallery: "Galeria", loginBtn: "Iniciar Sesion", registerBtn: "Registrar Cuenta", logoutBtn: "Cerrar Sesion", profileBtn: "Mi Perfil", configBtn: "Configuracion", privacyMenuBtn: "Condiciones de Privacidad", heroTitle: "Precision absoluta. Rendimiento tactico.", heroText: "Tu vehiculo no es solo un transporte; es tu mejor herramienta.", 
-            heroBtn: "Solicitar cita previa", marketTitle: "1. Compra/Venta", uploadItemBtn: "+ Subir Articulo", repairTitle: "2. Unidad de Reparacion / Modificacion", sendBtn: "Enviar Solicitud", galleryTitle: "Operaciones (Galeria)", uploadPhotoBtn: "+ Añadir Foto", cookiesTitle: "Aviso Tactico (Cookies)", cookiesText: "Utilizamos cookies para mejorar la precision de nuestros servicios. ¿Aceptas?", cookiesAccept: "Afirmativo, aceptar", loginTitle: "Acceso Restringido", noAccount: "¿No tienes cuenta?", registerHere: "Registrate aqui", registerTitle: "Nuevo Recluta", hasAccount: "¿Ya tienes cuenta?", profileTitle: "Editar Perfil", profileDesc: "Actualiza tus credenciales.", saveChanges: "Guardar Cambios", configTitle: "Configuracion", configDesc: "Selecciona el idioma.", applyBtn: "Aplicar", closeBtn: "Cerrar", cancelBtn: "Cancelar", uploadItemTitle: "Añadir al Mercado", publishBtn: "Publicar", uploadPhotoTitle: "Añadir Foto", addBtn: "Añadir", cartTitle: "Carrito", checkoutBtn: "Confirmar Transaccion", continueBtn: "Seguir Comprando", privacyTitle: "Protocolos de Privacidad y Terminos", selectService: "-- Selecciona el Servicio --", optRepair: "Reparacion Tecnica", optMod: "Modificacion y Mejoras", payMethod: "Metodo de Pago:", newEmailLabel: "Nuevo Email:", newPassLabel: "Nueva Contraseña (Opcional):", currentPassLabel: "* Contraseña ACTUAL (Requerida):", sellerLabel: "Vendedor", catLabel: "Categoria", emptyCart: "El carrito esta vacio.", userHolder: "Usuario", passHolder: "Contraseña", emailHolder: "Email (Obligatorio)", itemNameHolder: "Nombre", itemCatHolder: "Categoria", itemPriceHolder: "Precio", itemImgHolder: "URL Imagen", itemDescHolder: "Descripcion del articulo...", cardNum: "Numero Tarjeta (12 digitos)", vehicleHolder: "Vehiculo (Marca y Modelo)", descHolder: "Describe el daño o las modificaciones requeridas...", benefitsTitle: "Ventajas de Unirte", benefit1: "Vender tus propios articulos en el Mercado.", benefit2: "Comprar equipamiento exclusivo.", benefit3: "Subir fotos a la Galeria.", benefit4: "Acceso a descuentos exclusivos.", benefit5: "Bono exclusivo del 20% de bienvenida en tu primera compra.", continueRegisterBtn: "Continuar al Registro", policyTitle: "Politica de Privacidad y Cookies", footerPrivacy: "Protocolos de Privacidad y Terminos", footerCookiesTitle: "Uso de Cookies Activo", footerCookiesInfo: "Nota: Usamos cookies indispensables.", seeMoreBtn: "Ver todos los articulos", seeLessBtn: "Ver menos", chatTitle: "Soporte Tactico", chatWelcome: "Agente en linea. ¿En que puedo ayudarte hoy?", chatInput: "Escribe tu mensaje...",
+            heroBtn: "Solicitar cita previa", marketTitle: "1. Compra/Venta", uploadItemBtn: "+ Subir Articulo", repairTitle: "2. Unidad de Reparacion / Modificacion", sendBtn: "Enviar Solicitud", galleryTitle: "Operaciones (Galeria)", uploadPhotoBtn: "+ Añadir Foto", cookiesTitle: "Aviso Tactico (Cookies)", cookiesText: "Utilizamos cookies para mejorar la precision de nuestros servicios. ¿Aceptas?", cookiesAccept: "Afirmativo, aceptar", loginTitle: "Acceso Restringido", noAccount: "¿No tienes cuenta?", registerHere: "Registrate aqui", registerTitle: "Nuevo Recluta", hasAccount: "¿Ya tienes cuenta?", profileTitle: "Editar Perfil", profileDesc: "Actualiza tus credenciales.", saveChanges: "Guardar Cambios", configTitle: "Configuracion", configDesc: "Selecciona el idioma.", applyBtn: "Aplicar", closeBtn: "Cerrar", cancelBtn: "Cancelar", uploadItemTitle: "Añadir al Mercado", publishBtn: "Publicar", uploadPhotoTitle: "Añadir Foto", addBtn: "Añadir", cartTitle: "Carrito", checkoutBtn: "Confirmar Transaccion", continueBtn: "Seguir Comprando", privacyTitle: "Politica de Privacidad, Cookies y Aviso Legal", selectService: "-- Selecciona el Servicio --", optRepair: "Reparacion Tecnica", optMod: "Modificacion y Mejoras", payMethod: "Metodo de Pago:", newEmailLabel: "Nuevo Email:", newPassLabel: "Nueva Contraseña (Opcional):", currentPassLabel: "* Contraseña ACTUAL (Requerida):", sellerLabel: "Vendedor", catLabel: "Categoria", emptyCart: "El carrito esta vacio.", userHolder: "Usuario", passHolder: "Contraseña", emailHolder: "Email (Obligatorio)", itemNameHolder: "Nombre", itemCatHolder: "Categoria", itemPriceHolder: "Precio", itemImgHolder: "URL Imagen", itemDescHolder: "Descripcion del articulo...", cardNum: "Numero Tarjeta (12 digitos)", vehicleHolder: "Vehiculo (Marca y Modelo)", descHolder: "Describe el daño o las modificaciones requeridas...", benefitsTitle: "Ventajas de Unirte", benefit1: "Vender tus propios articulos en el Mercado.", benefit2: "Comprar equipamiento exclusivo.", benefit3: "Subir fotos a la Galeria.", benefit4: "Acceso a descuentos exclusivos.", benefit5: "Bono exclusivo del 20% de bienvenida en tu primera compra.", continueRegisterBtn: "Continuar al Registro", footerPrivacy: "Protocolos de Privacidad y Terminos", footerCookiesTitle: "Uso de Cookies Activo", footerCookiesInfo: "Nota: Usamos cookies indispensables.", seeMoreBtn: "Ver todos los articulos", seeLessBtn: "Ver menos", chatTitle: "Soporte Tactico", chatWelcome: "Agente en linea. ¿En que puedo ayudarte hoy?", chatInput: "Escribe tu mensaje...",
             discountsMenu: "Mis Descuentos", discountsSubtitle: "Aumenta tu rango realizando compras.", discountPlaceholder: "Codigo de descuento", applyCodeBtn: "Aplicar", noDiscounts: "Aun no tienes descuentos.",
             welcomeDiscount: "20% de descuento en tu primer pedido.", bronze: "10% de descuento en la tienda.", silver: "15% de descuento en la tienda.", gold: "20% de descuento en la tienda.", elite: "25% de descuento absoluto.", historyMenu: "Historial",
             forgotPass: "¿Has olvidado tu contraseña?", forgotTitle: "Recuperar Contraseña", resetBtn: "Cambiar Contraseña", backLogin: "Volver a Iniciar Sesion", forgotUserHolder: "Usuario", forgotEmailHolder: "Email de registro", forgotNewPassHolder: "Nueva Contraseña",
             payOptCard: "Tarjeta de Credito/Debito", payOptPayPal: "PayPal", payOptCrypto: "Criptomonedas", paypalHolder: "Email de PayPal asociado", cryptoHolder: "Direccion de tu Wallet (BTC/ETH)", cartTotalLabel: "Total:",
-            historyDesc: "Tus operaciones en Tactical Reparations.", historyMyPurchases: "Mis Compras", historyMySales: "Mis Ventas (Mercado)", alertTitle: "Aviso del Sistema", alertBtn: "ENTENDIDO", footerContact: "Contacto:"
+            historyDesc: "Tus operaciones en Tactical Reparations.", historyMyPurchases: "Mis Compras", historyMySales: "Mis Ventas (Mercado)", alertTitle: "Aviso del Sistema", alertBtn: "ENTENDIDO", footerContact: "Contacto:",
+            policyLegalTitle: "1. Aviso Legal", policyLegalText: "Tactical Reparations es una plataforma virtual dedicada a la prestacion de servicios automotrices avanzados. Todos los derechos reservados.", policyDataTitle: "2. Uso de Datos (Privacidad)", policyDataText: "Recopilamos la informacion estrictamente necesaria para gestionar tu cuenta de Agente, procesar tus pedidos y ofrecer soporte tecnico. Tus credenciales se procesan de forma segura. No vendemos informacion a terceros.", policyCookiesTitle: "3. Politica de Cookies", policyCookiesText: "Utilizamos cookies tecnicas y de sesion (Local Storage) indispensables para mantener tu inventario en el carrito, aplicar descuentos, conservar tu historial y recordar tu idioma. No usamos rastreadores publicitarios externos.", copyrightText: "© 2026 Tactical Reparations. Todos los derechos reservados."
         },
         en: {
             navHome: "Home", navMarket: "Buy/Sell", navRepair: "Workshop", navGallery: "Gallery", loginBtn: "Login", registerBtn: "Register", logoutBtn: "Logout", profileBtn: "My Profile", configBtn: "Settings", heroTitle: "Absolute precision. Tactical performance.", heroText: "Your vehicle is a tool. We prepare it for any mission.", 
-            heroBtn: "Request appointment", marketTitle: "1. Buy/Sell", uploadItemBtn: "+ Upload Item", repairTitle: "2. Repair / Modification Unit", sendBtn: "Send Request", galleryTitle: "Operations (Gallery)", uploadPhotoBtn: "+ Add Photo", cookiesTitle: "Tactical Notice (Cookies)", cookiesText: "We use cookies to improve our services accuracy. Accept?", cookiesAccept: "Affirmative, accept", loginTitle: "Restricted Access", noAccount: "No account?", registerHere: "Register here", registerTitle: "New Recruit", hasAccount: "Already have an account?", profileTitle: "Edit Profile", profileDesc: "Update your credentials.", saveChanges: "Save Changes", configTitle: "Settings", configDesc: "Select interface language.", applyBtn: "Apply", closeBtn: "Close", cancelBtn: "Cancel", uploadItemTitle: "Add to Market", publishBtn: "Publish", uploadPhotoTitle: "Add Photo", addBtn: "Add", cartTitle: "Cart", checkoutBtn: "Confirm Checkout", continueBtn: "Continue Shopping", privacyTitle: "Privacy Protocols & Terms", selectService: "-- Select Service --", optRepair: "Technical Repair", optMod: "Modification & Upgrades", payMethod: "Payment Method:", newEmailLabel: "New Email:", newPassLabel: "New Password (Optional):", currentPassLabel: "* CURRENT Password (Required):", sellerLabel: "Seller", catLabel: "Category", emptyCart: "The cart is empty.", userHolder: "Username", passHolder: "Password", emailHolder: "Email (Required)", itemNameHolder: "Name", itemCatHolder: "Category", itemPriceHolder: "Price", itemImgHolder: "Image URL", itemDescHolder: "Item description...", cardNum: "Card Number (12 digits)", vehicleHolder: "Vehicle (Brand & Model)", descHolder: "Describe the damage...", benefitsTitle: "Join Advantages", benefit1: "Sell your own items.", benefit2: "Buy exclusive equipment.", benefit3: "Upload photos.", benefit4: "Access to exclusive discounts.", benefit5: "Exclusive 20% welcome bonus on your first purchase.", continueRegisterBtn: "Continue to Registration", policyTitle: "Privacy Policy & Cookies", footerPrivacy: "Privacy Protocols & Terms", footerCookiesTitle: "Active Cookie Usage", footerCookiesInfo: "Note: We use essential cookies.", seeMoreBtn: "See all items", seeLessBtn: "See less", chatTitle: "Tactical Support", chatWelcome: "Agent online. How can I help you today?", chatInput: "Type your message...",
+            heroBtn: "Request appointment", marketTitle: "1. Buy/Sell", uploadItemBtn: "+ Upload Item", repairTitle: "2. Repair / Modification Unit", sendBtn: "Send Request", galleryTitle: "Operations (Gallery)", uploadPhotoBtn: "+ Add Photo", cookiesTitle: "Tactical Notice (Cookies)", cookiesText: "We use cookies to improve our services accuracy. Accept?", cookiesAccept: "Affirmative, accept", loginTitle: "Restricted Access", noAccount: "No account?", registerHere: "Register here", registerTitle: "New Recruit", hasAccount: "Already have an account?", profileTitle: "Edit Profile", profileDesc: "Update your credentials.", saveChanges: "Save Changes", configTitle: "Settings", configDesc: "Select interface language.", applyBtn: "Apply", closeBtn: "Close", cancelBtn: "Cancel", uploadItemTitle: "Add to Market", publishBtn: "Publish", uploadPhotoTitle: "Add Photo", addBtn: "Add", cartTitle: "Cart", checkoutBtn: "Confirm Checkout", continueBtn: "Continue Shopping", privacyTitle: "Privacy Policy, Cookies & Legal Notice", selectService: "-- Select Service --", optRepair: "Technical Repair", optMod: "Modification & Upgrades", payMethod: "Payment Method:", newEmailLabel: "New Email:", newPassLabel: "New Password (Optional):", currentPassLabel: "* CURRENT Password (Required):", sellerLabel: "Seller", catLabel: "Category", emptyCart: "The cart is empty.", userHolder: "Username", passHolder: "Password", emailHolder: "Email (Required)", itemNameHolder: "Name", itemCatHolder: "Category", itemPriceHolder: "Price", itemImgHolder: "Image URL", itemDescHolder: "Item description...", cardNum: "Card Number (12 digits)", vehicleHolder: "Vehicle (Brand & Model)", descHolder: "Describe the damage...", benefitsTitle: "Join Advantages", benefit1: "Sell your own items.", benefit2: "Buy exclusive equipment.", benefit3: "Upload photos.", benefit4: "Access to exclusive discounts.", benefit5: "Exclusive 20% welcome bonus on your first purchase.", continueRegisterBtn: "Continue to Registration", footerPrivacy: "Privacy Protocols & Terms", footerCookiesTitle: "Active Cookie Usage", footerCookiesInfo: "Note: We use essential cookies.", seeMoreBtn: "See all items", seeLessBtn: "See less", chatTitle: "Tactical Support", chatWelcome: "Agent online. How can I help you today?", chatInput: "Type your message...",
             discountsMenu: "My Discounts", discountsSubtitle: "Level up by making purchases.", discountPlaceholder: "Discount code", applyCodeBtn: "Apply", noDiscounts: "No discounts yet.",
             welcomeDiscount: "20% discount on your first order.", bronze: "10% store discount.", silver: "15% store discount.", gold: "20% store discount.", elite: "25% absolute discount.", historyMenu: "Order History",
             forgotPass: "Forgot your password?", forgotTitle: "Recover Password", resetBtn: "Reset Password", backLogin: "Back to Login", forgotUserHolder: "Username", forgotEmailHolder: "Registration Email", forgotNewPassHolder: "New Password",
             payOptCard: "Credit/Debit Card", payOptPayPal: "PayPal", payOptCrypto: "Cryptocurrency", paypalHolder: "Linked PayPal Email", cryptoHolder: "Wallet Address (BTC/ETH)", cartTotalLabel: "Total:",
-            historyDesc: "Your operations at Tactical Reparations.", historyMyPurchases: "My Purchases", historyMySales: "My Sales (Market)", alertTitle: "System Notice", alertBtn: "UNDERSTOOD", footerContact: "Contact:"
+            historyDesc: "Your operations at Tactical Reparations.", historyMyPurchases: "My Purchases", historyMySales: "My Sales (Market)", alertTitle: "System Notice", alertBtn: "UNDERSTOOD", footerContact: "Contact:",
+            policyLegalTitle: "1. Legal Notice", policyLegalText: "Tactical Reparations is a virtual platform dedicated to providing advanced automotive services. All rights reserved.", policyDataTitle: "2. Data Usage (Privacy)", policyDataText: "We collect strictly necessary information to manage your Agent account, process your orders, and provide technical support. Your credentials are processed securely. We do not sell information to third parties.", policyCookiesTitle: "3. Cookies Policy", policyCookiesText: "We use essential technical and session cookies (Local Storage) to maintain your cart inventory, apply discounts, keep your history, and remember your language. We do not use external advertising trackers.", copyrightText: "© 2026 Tactical Reparations. All rights reserved."
         }
     };
 
@@ -132,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const closeAllPopups = () => {
         Object.values(popups).forEach(p => p.classList.remove("active"));
-        if(navMenu) navMenu.classList.remove("mobile-active");
+        if(nav.navMenu) nav.navMenu.classList.remove("mobile-active");
     };
     document.querySelectorAll(".btn-close-popup").forEach(btn => btn.addEventListener("click", closeAllPopups));
 
@@ -150,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     nav.loginBtn?.addEventListener("click", () => {
         popups.login.classList.add("active");
-        if(navMenu) navMenu.classList.remove("mobile-active");
+        if(nav.navMenu) nav.navMenu.classList.remove("mobile-active");
     });
     document.getElementById("link-footer-privacy")?.addEventListener("click", (e) => { e.preventDefault(); popups.privacyPolicy.classList.add("active"); });
     
@@ -166,14 +165,14 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("btn-menu-profile")?.addEventListener("click", (e) => {
         e.preventDefault(); popups.editProfile.classList.add("active");
         document.getElementById("edit-email").value = usuarioActual.email;
-        if(navMenu) navMenu.classList.remove("mobile-active");
+        if(nav.navMenu) nav.navMenu.classList.remove("mobile-active");
     });
 
-    // --- POPUP DESCUENTOS Y NIVELES (CON BONO BIENVENIDA) ---
+    // --- POPUP DESCUENTOS BILINGÜE ---
     document.getElementById("btn-menu-discounts")?.addEventListener("click", (e) => {
         e.preventDefault(); 
         popups.discounts.classList.add("active");
-        if(navMenu) navMenu.classList.remove("mobile-active");
+        if(nav.navMenu) nav.navMenu.classList.remove("mobile-active");
         
         const descContainer = document.getElementById("user-discounts-container");
         const compras = usuarioActual.compras || 0;
@@ -182,21 +181,21 @@ document.addEventListener("DOMContentLoaded", () => {
         if (compras === 0) {
             descContainer.innerHTML = `<span style="color:#00ffcc; font-size:1.1rem; font-weight:bold;">${lang==='es'?'Rango Novato':'Rookie Rank'}:</span> ${translations[lang].welcomeDiscount} <br><br><span style="color:var(--text-main);">${lang==='es'?'Codigo valido':'Valid Code'}:</span> <strong style="color:var(--primary-color);">WELCOME20</strong><br><br><small style="color:#666;">${lang==='es'?'Haz tu primera compra para desbloquear los niveles de socio.':'Make your first purchase to unlock membership tiers.'}</small>`;
         } else if (compras >= 1 && compras <= 2) {
-            descContainer.innerHTML = `<span style="color:#cd7f32; font-size:1.1rem; font-weight:bold;">${lang==='es'?'Rango Bronce':'Bronze Rank'}:</span> ${translations[lang].bronze} <br><br><span style="color:var(--text-main);">${lang==='es'?'Codigo valido':'Valid Code'}:</span> <strong style="color:var(--primary-color);">BRONCE10</strong><br><br><small style="color:#666;">${lang==='es'?`Compras realizadas: ${compras}/3 para ascender a Plata`:`Purchases: ${compras}/3 to reach Silver`}</small>`;
+            descContainer.innerHTML = `<span style="color:#cd7f32; font-size:1.1rem; font-weight:bold;">${lang==='es'?'Rango Bronce':'Bronze Rank'}:</span> ${translations[lang].bronze} <br><br><span style="color:var(--text-main);">${lang==='es'?'Codigo valido':'Valid Code'}:</span> <strong style="color:var(--primary-color);">BRONCE10</strong><br><br><small style="color:#666;">${lang==='es'?`Compras realizadas: ${compras}/3 para ascender a Plata`:`Purchases: ${compras}/3 to reach Silver Rank`}</small>`;
         } else if (compras >= 3 && compras <= 5) {
-            descContainer.innerHTML = `<span style="color:#c0c0c0; font-size:1.1rem; font-weight:bold;">${lang==='es'?'Rango Plata':'Silver Rank'}:</span> ${translations[lang].silver} <br><br><span style="color:var(--text-main);">${lang==='es'?'Codigo valido':'Valid Code'}:</span> <strong style="color:var(--primary-color);">PLATA15</strong><br><br><small style="color:#666;">${lang==='es'?`Compras realizadas: ${compras}/6 para ascender a Oro`:`Purchases: ${compras}/6 to reach Gold`}</small>`;
+            descContainer.innerHTML = `<span style="color:#c0c0c0; font-size:1.1rem; font-weight:bold;">${lang==='es'?'Rango Plata':'Silver Rank'}:</span> ${translations[lang].silver} <br><br><span style="color:var(--text-main);">${lang==='es'?'Codigo valido':'Valid Code'}:</span> <strong style="color:var(--primary-color);">PLATA15</strong><br><br><small style="color:#666;">${lang==='es'?`Compras realizadas: ${compras}/6 para ascender a Oro`:`Purchases: ${compras}/6 to reach Gold Rank`}</small>`;
         } else if (compras >= 6 && compras <= 9) {
-            descContainer.innerHTML = `<span style="color:#ffd700; font-size:1.1rem; font-weight:bold;">${lang==='es'?'Rango Oro':'Gold Rank'}:</span> ${translations[lang].gold} <br><br><span style="color:var(--text-main);">${lang==='es'?'Codigo valido':'Valid Code'}:</span> <strong style="color:var(--primary-color);">ORO20</strong><br><br><small style="color:#666;">${lang==='es'?`Compras realizadas: ${compras}/10 para ascender a Elite`:`Purchases: ${compras}/10 to reach Elite`}</small>`;
+            descContainer.innerHTML = `<span style="color:#ffd700; font-size:1.1rem; font-weight:bold;">${lang==='es'?'Rango Oro':'Gold Rank'}:</span> ${translations[lang].gold} <br><br><span style="color:var(--text-main);">${lang==='es'?'Codigo valido':'Valid Code'}:</span> <strong style="color:var(--primary-color);">ORO20</strong><br><br><small style="color:#666;">${lang==='es'?`Compras realizadas: ${compras}/10 para ascender a Elite`:`Purchases: ${compras}/10 to reach Elite Rank`}</small>`;
         } else {
             descContainer.innerHTML = `<span style="color:#e5e4e2; font-size:1.1rem; font-weight:bold; text-shadow: 0 0 5px #fff;">${lang==='es'?'Rango Elite':'Elite Rank'}:</span> ${translations[lang].elite} <br><br><span style="color:var(--text-main);">${lang==='es'?'Codigo valido':'Valid Code'}:</span> <strong style="color:var(--primary-color);">ELITE25</strong><br><br><small style="color:#666;">${lang==='es'?`Agente legendario. Compras totales: ${compras}`:`Legendary Agent. Total purchases: ${compras}`}</small>`;
         }
     });
 
-    // --- POPUP HISTORIAL ---
+    // --- POPUP HISTORIAL BILINGÜE ---
     document.getElementById("btn-menu-history")?.addEventListener("click", (e) => {
         e.preventDefault();
         popups.history.classList.add("active");
-        if(navMenu) navMenu.classList.remove("mobile-active");
+        if(nav.navMenu) nav.navMenu.classList.remove("mobile-active");
         
         const boxCompras = document.getElementById("history-purchases");
         const boxVentas = document.getElementById("history-sales");
@@ -216,7 +215,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const misVentas = mercadoActual.filter(p => p.vendedor === usuarioActual.user);
         if (misVentas.length === 0) {
-            boxVentas.innerHTML = `<p style='color:var(--text-muted);'>${lang==='es'?'No has publicado articulos.':'You have not published any items.'}</p>`;
+            boxVentas.innerHTML = `<p style='color:var(--text-muted);'>${lang==='es'?'No has publicado articulos en el mercado.':'You have not published any items in the market.'}</p>`;
         } else {
             boxVentas.innerHTML = misVentas.map(venta => {
                 const nombreItem = lang === 'en' && venta.nombreEn ? venta.nombreEn : venta.nombre;
@@ -231,7 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("btn-menu-config")?.addEventListener("click", (e) => { 
         e.preventDefault(); 
         popups.config.classList.add("active"); 
-        if(navMenu) navMenu.classList.remove("mobile-active");
+        if(nav.navMenu) nav.navMenu.classList.remove("mobile-active");
     });
     
     document.getElementById("btn-menu-logout")?.addEventListener("click", (e) => { 
@@ -283,7 +282,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const newPass = document.getElementById("forgot-new-pass").value.trim();
         
         if(!user || !email || !newPass) { 
-            showCustomAlert(currentLang === 'es' ? "Completa todos los campos obligatorios." : "Please fill in all fields."); 
+            showAlert(currentLang === 'es' ? "Completa todos los campos obligatorios." : "Please fill in all fields."); 
             return; 
         }
         
@@ -291,7 +290,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if(foundUser) {
             foundUser.pass = newPass;
             saveUsers();
-            showCustomAlert(currentLang === 'es' ? "Contraseña actualizada con exito." : "Password updated successfully.", () => {
+            showAlert(currentLang === 'es' ? "Contraseña actualizada con exito." : "Password updated successfully.", () => {
                 authForms.forgot.style.display = "none";
                 authForms.login.style.display = "block";
                 document.getElementById("forgot-username").value = "";
@@ -299,7 +298,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById("forgot-new-pass").value = "";
             });
         } else {
-            showCustomAlert(currentLang === 'es' ? "Usuario o email incorrectos. No coinciden los datos de registro." : "Incorrect username or email. Registration data does not match.");
+            showAlert(currentLang === 'es' ? "Usuario o email incorrectos. No coinciden los datos de registro." : "Incorrect username or email. Registration data does not match.");
         }
     });
 
@@ -308,13 +307,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const emailVal = document.getElementById("reg-email").value.trim();
         const passVal = document.getElementById("reg-password").value.trim();
         
-        if(emailVal === "" || !emailVal.includes("@")) { showCustomAlert(currentLang === 'es' ? "Email invalido." : "Invalid email."); return; }
-        if(userVal === "" || passVal === "") { showCustomAlert(currentLang === 'es' ? "Usuario y contraseña obligatorios." : "Username and password required."); return; }
-        if(usuariosRegistrados.find(u => u.user === userVal)) { showCustomAlert(currentLang === 'es' ? "Usuario en uso." : "Username already taken."); return; }
+        if(emailVal === "" || !emailVal.includes("@")) { showAlert(currentLang === 'es' ? "Email invalido." : "Invalid email."); return; }
+        if(userVal === "" || passVal === "") { showAlert(currentLang === 'es' ? "Usuario y contraseña obligatorios." : "Username and password required."); return; }
+        if(usuariosRegistrados.find(u => u.user === userVal)) { showAlert(currentLang === 'es' ? "Ese usuario ya existe." : "Username already exists."); return; }
 
         usuariosRegistrados.push({ user: userVal, pass: passVal, email: emailVal, compras: 0, ultimoUsoCupon: null, ultimoCuponUsado: "", historialCompras: [] });
         saveUsers();
-        showCustomAlert(currentLang === 'es' ? "Cuenta creada con exito." : "Account successfully created.", () => {
+        showAlert(currentLang === 'es' ? "Cuenta creada con exito. Ahora puedes iniciar sesion." : "Account created successfully. You can now log in.", () => {
             authForms.register.style.display = "none"; 
             authForms.login.style.display = "block";
         });
@@ -325,8 +324,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const passVal = document.getElementById("password").value.trim();
         const userFound = usuariosRegistrados.find(u => u.user === userVal);
 
-        if(!userFound) { showCustomAlert(currentLang === 'es' ? "Cuenta no encontrada." : "Account not found."); }
-        else if(userFound.pass !== passVal) { showCustomAlert(currentLang === 'es' ? "Contraseña incorrecta." : "Incorrect password."); }
+        if(!userFound) { showAlert(currentLang === 'es' ? "Cuenta no encontrada." : "Account not found."); }
+        else if(userFound.pass !== passVal) { showAlert(currentLang === 'es' ? "Contraseña incorrecta." : "Incorrect password."); }
         else {
             usuarioActual = userFound;
             if(!usuarioActual.historialCompras) usuarioActual.historialCompras = [];
@@ -343,7 +342,7 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.removeItem("tactical_current_user"); 
         nav.userDropdown.style.display = "none"; 
         nav.loginBtn.style.display = "block"; 
-        showCustomAlert(currentLang === 'es' ? "Sesion cerrada correctamente." : "Logged out successfully."); 
+        showAlert(currentLang === 'es' ? "Sesion cerrada correctamente." : "Logged out successfully."); 
     };
 
     document.getElementById("btn-save-profile")?.addEventListener("click", () => {
@@ -351,8 +350,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const newPass = document.getElementById("edit-new-pass").value.trim();
         const currentPassCheck = document.getElementById("edit-current-pass").value.trim();
 
-        if(currentPassCheck !== usuarioActual.pass) { showCustomAlert(currentLang === 'es' ? "Contraseña actual incorrecta." : "Current password incorrect."); return; }
-        if(newEmail === "" || !newEmail.includes("@")) { showCustomAlert(currentLang === 'es' ? "Email invalido." : "Invalid email."); return; }
+        if(currentPassCheck !== usuarioActual.pass) { showAlert(currentLang === 'es' ? "Contraseña actual incorrecta." : "Current password incorrect."); return; }
+        if(newEmail === "" || !newEmail.includes("@")) { showAlert(currentLang === 'es' ? "Email invalido." : "Invalid email."); return; }
         
         usuarioActual.email = newEmail;
         if(newPass !== "") usuarioActual.pass = newPass;
@@ -362,7 +361,7 @@ document.addEventListener("DOMContentLoaded", () => {
         saveUsers();
         localStorage.setItem("tactical_current_user", JSON.stringify(usuarioActual)); 
         
-        showCustomAlert(currentLang === 'es' ? "Perfil actualizado." : "Profile updated.", () => {
+        showAlert(currentLang === 'es' ? "Perfil actualizado correctamente." : "Profile updated successfully.", () => {
             popups.editProfile.classList.remove("active");
             document.getElementById("edit-current-pass").value = "";
             document.getElementById("edit-new-pass").value = "";
@@ -376,7 +375,7 @@ document.addEventListener("DOMContentLoaded", () => {
         popups.config.classList.remove("active");
     });
 
-    // --- MERCADO ---
+    // --- MERCADO (CON DESCRIPCIONES EN INGLÉS) ---
     const fallbackImage = "https://placehold.co/600x400/111111/7ab317?text=Articulo+Tactico";
 
     const productosBase = [
@@ -446,9 +445,9 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     document.getElementById("btn-open-upload-item")?.addEventListener("click", () => {
-        if(!usuarioActual) { showCustomAlert(currentLang === 'es' ? "Inicia sesion para publicar." : "Log in to publish."); popups.login.classList.add("active"); return; }
+        if(!usuarioActual) { showAlert(currentLang === 'es' ? "Inicia sesion para publicar." : "Log in to publish."); popups.login.classList.add("active"); return; }
         popups.uploadItem.classList.add("active");
-        if(navMenu) navMenu.classList.remove("mobile-active");
+        if(nav.navMenu) nav.navMenu.classList.remove("mobile-active");
     });
     
     document.getElementById("btn-submit-item")?.addEventListener("click", () => {
@@ -459,7 +458,7 @@ document.addEventListener("DOMContentLoaded", () => {
             mercadoActual.push({ id: Date.now(), nombre: nombre, tipo: document.getElementById("new-item-type").value, precio: precio, vendedor: usuarioActual.user, imagen: imagen, descripcion: document.getElementById("new-item-desc").value });
             localStorage.setItem("tactical_mercado_100", JSON.stringify(mercadoActual));
             renderizarMercado(); popups.uploadItem.classList.remove("active");
-        } else { showCustomAlert(currentLang === 'es' ? "Faltan campos obligatorios." : "Missing required fields."); }
+        } else { showAlert(currentLang === 'es' ? "Faltan campos obligatorios." : "Missing required fields."); }
     });
 
     // --- CARRITO Y PAGOS ---
@@ -512,7 +511,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     document.getElementById("btn-apply-discount")?.addEventListener("click", () => {
         if(!usuarioActual) {
-            showCustomAlert(currentLang === 'es' ? "Debes iniciar sesion para usar descuentos." : "You must log in to use discounts.");
+            showAlert(currentLang === 'es' ? "Debes iniciar sesion para usar descuentos." : "You must log in to use discounts.");
             return;
         }
 
@@ -528,7 +527,7 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (compras >= 10) { validCodeForUser = "ELITE25"; expDiscount = 0.25; }
 
         if (code !== validCodeForUser) {
-            showCustomAlert(currentLang === 'es' ? "Codigo invalido o no corresponde a tu nivel actual." : "Invalid code or doesn't match your current rank.");
+            showAlert(currentLang === 'es' ? "Codigo invalido o no corresponde a tu nivel actual." : "Invalid code or doesn't match your current rank.");
             descuentoActual = 0;
             codigoAplicado = "";
             actualizarCarritoUI();
@@ -539,7 +538,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const diasPasados = (Date.now() - usuarioActual.ultimoUsoCupon) / (1000 * 60 * 60 * 24);
             if (diasPasados < 14) {
                 const diasRestantes = Math.ceil(14 - diasPasados);
-                showCustomAlert(currentLang === 'es' ? `Aun no puedes usar de nuevo este cupon. Faltan ${diasRestantes} dias.` : `You cannot reuse this coupon yet. ${diasRestantes} days remaining.`);
+                showAlert(currentLang === 'es' ? `Aun no puedes usar de nuevo este cupon. Faltan ${diasRestantes} dias.` : `You cannot reuse this coupon yet. ${diasRestantes} days remaining.`);
                 descuentoActual = 0;
                 codigoAplicado = "";
                 actualizarCarritoUI();
@@ -549,21 +548,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
         descuentoActual = expDiscount;
         codigoAplicado = code;
-        showCustomAlert(currentLang === 'es' ? `Descuento tactico aplicado: ${descuentoActual*100}%` : `Tactical discount applied: ${descuentoActual*100}%`);
+        showAlert(currentLang === 'es' ? `Descuento tactico aplicado: ${descuentoActual*100}%` : `Tactical discount applied: ${descuentoActual*100}%`);
         actualizarCarritoUI();
     });
 
     const modCan = (id, c) => { const pc = carrito.find(i => i.id === id); if(pc) { pc.cantidad += c; if(pc.cantidad <= 0) carrito = carrito.filter(i => i.id !== id); } actualizarCarritoUI(); };
     
     const añadirAlCarrito = (id) => {
-        if(!usuarioActual) { showCustomAlert(currentLang === 'es' ? "Inicia sesion primero." : "Log in first."); popups.login.classList.add("active"); return; }
-        const pdb = mercadoActual.find(p => p.id === id); if(pdb.vendedor === usuarioActual.user) { showCustomAlert(currentLang === 'es' ? "No puedes comprar tu propio item." : "You can't buy your own item."); return; }
+        if(!usuarioActual) { showAlert(currentLang === 'es' ? "Inicia sesion primero." : "Log in first."); popups.login.classList.add("active"); return; }
+        const pdb = mercadoActual.find(p => p.id === id); if(pdb.vendedor === usuarioActual.user) { showAlert(currentLang === 'es' ? "No puedes comprar tu propio item." : "You can't buy your own item."); return; }
         const pc = carrito.find(i => i.id === id); if(pc) pc.cantidad +=1; else carrito.push({...pdb, cantidad:1}); actualizarCarritoUI();
     };
     
     document.getElementById("btn-open-cart")?.addEventListener("click", () => {
         popups.cart.classList.add("active");
-        if(navMenu) navMenu.classList.remove("mobile-active");
+        if(nav.navMenu) nav.navMenu.classList.remove("mobile-active");
     });
 
     // EVENTOS DE FORMATO DE PAGO ESTRICTOS
@@ -621,17 +620,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 const cDate = document.getElementById("card-date").value.trim();
                 const cCvc = document.getElementById("card-cvc").value.trim();
                 if(cNum.length < 12 || cDate.length < 5 || cCvc.length < 3) {
-                    showCustomAlert(currentLang === 'es' ? "Faltan datos obligatorios de la Tarjeta (12 digitos, Fecha MM/AA, 3 digitos CVC)." : "Missing exact Card data (12 digits, Date MM/YY, 3-digit CVC)."); return;
+                    showAlert(currentLang === 'es' ? "Faltan datos obligatorios de la Tarjeta (12 digitos, Fecha MM/AA, 3 digitos CVC)." : "Missing exact Card data (12 digits, Date MM/YY, 3-digit CVC)."); return;
                 }
             } else if(method === "paypal") {
                 const pEmail = document.getElementById("paypal-email").value.trim();
                 if(pEmail === "" || !pEmail.includes("@")) {
-                    showCustomAlert(currentLang === 'es' ? "Introduce un email valido de PayPal." : "Enter a valid PayPal email."); return;
+                    showAlert(currentLang === 'es' ? "Introduce un email valido de PayPal." : "Enter a valid PayPal email."); return;
                 }
             } else if(method === "cripto") {
                 const wAddr = document.getElementById("cripto-wallet").value.trim();
                 if(wAddr.length < 10) {
-                    showCustomAlert(currentLang === 'es' ? "Introduce una direccion valida de tu Wallet." : "Enter a valid Wallet address."); return;
+                    showAlert(currentLang === 'es' ? "Introduce una direccion valida de tu Wallet." : "Enter a valid Wallet address."); return;
                 }
             }
 
@@ -665,14 +664,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 ? `Transaccion aprobada, ${usuarioActual.user}.<br><br><span style="color:var(--primary-color);">TU NUMERO DE PEDIDO ES: <strong>${orderId}</strong></span><br><br>Por favor, guardalo para cualquier reclamacion. Tus articulos llegaran pronto.` 
                 : `Transaction approved, ${usuarioActual.user}.<br><br><span style="color:var(--primary-color);">YOUR ORDER ID IS: <strong>${orderId}</strong></span><br><br>Please keep it for any claims. Your items will arrive soon.`;
             
-            showCustomAlert(successMsg, () => {
+            showAlert(successMsg, () => {
                 carrito = []; descuentoActual = 0; codigoAplicado = ""; document.getElementById("discount-code").value = "";
                 actualizarCarritoUI(); popups.cart.classList.remove("active");
             });
         }
     });
 
-    // --- GALERÍA ARREGLADA ---
+    // --- GALERÍA ---
     const galeriaBase = ["https://espirituracer.com/archivos/2017/11/Ringbrothers-Ford-Mustang-Mach-1-Patriarc-15.webp","https://i.ytimg.com/vi/uIIaNGFAy6o/sddefault.jpg","https://www.schairerklassiker.de/wp-content/gallery/mb-220-seb-coupe-w111/MB_220SEbC_Fahrerseite.jpg","https://i.pinimg.com/736x/a1/44/1b/a1441b9424550332aa4c96c7b1d2b9b9.jpg","https://d1gl66oyi6i593.cloudfront.net/wp-content/uploads/2022/10/subasta-replica-DeLorean-DMC-12-7.jpg","https://hips.hearstapps.com/hmg-prod/images/porsche-911-gt3-r-101-1659114035.jpg?crop=1xw:0.920416250624064xh;center,top&resize=1200:*"];
     let galeriaActual = JSON.parse(localStorage.getItem("tactical_galeria_100")) || galeriaBase;
     
@@ -689,7 +688,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     document.getElementById("btn-open-upload-photo")?.addEventListener("click", () => { 
-        if(!usuarioActual) { showCustomAlert(currentLang === 'es' ? "Inicia sesion para publicar." : "Log in to publish."); popups.login.classList.add("active"); return; } 
+        if(!usuarioActual) { showAlert(currentLang === 'es' ? "Inicia sesion para publicar." : "Log in to publish."); popups.login.classList.add("active"); return; } 
         popups.uploadPhoto.classList.add("active"); 
     });
 
@@ -702,22 +701,22 @@ document.addEventListener("DOMContentLoaded", () => {
             renderizarGaleria(); 
             popups.uploadPhoto.classList.remove("active"); 
             urlInput.value = ""; 
-            showCustomAlert(currentLang === 'es' ? "Foto añadida a la galeria con exito." : "Photo successfully added to the gallery.");
-        } else { showCustomAlert(currentLang === 'es' ? "Por favor, introduce una URL valida." : "Please enter a valid URL."); }
+            showAlert(currentLang === 'es' ? "Foto añadida a la galeria con exito." : "Photo successfully added to the gallery.");
+        } else { showAlert(currentLang === 'es' ? "Por favor, introduce una URL valida." : "Please enter a valid URL."); }
     });
 
     // --- TALLER ---
     document.getElementById("form-servicio")?.addEventListener("submit", (e) => { 
         e.preventDefault(); 
-        if(!usuarioActual) { showCustomAlert(currentLang === 'es' ? "Inicia sesion para solicitar una cita." : "Log in to request an appointment."); popups.login.classList.add("active"); }
+        if(!usuarioActual) { showAlert(currentLang === 'es' ? "Inicia sesion para solicitar una cita." : "Log in to request an appointment."); popups.login.classList.add("active"); }
         else { 
-            showCustomAlert(currentLang === 'es' ? `Solicitud enviada, ${usuarioActual.user}. Un mecanico se pondra en contacto contigo.` : `Request sent, ${usuarioActual.user}. A mechanic will contact you.`); 
+            showAlert(currentLang === 'es' ? `Solicitud enviada, ${usuarioActual.user}. Un mecanico se pondra en contacto contigo.` : `Request sent, ${usuarioActual.user}. A mechanic will contact you.`); 
             e.target.reset(); 
         }
     });
 
     // ====================================================================
-    // --- LÓGICA DEL CHATBOT TOTALMENTE REESCRITA (BILINGÜE PERFECTO) ---
+    // --- LÓGICA DEL CHATBOT BILINGÜE Y MANUAL DE INSTRUCCIONES ---
     // ====================================================================
     const chatToggle = document.getElementById('chat-toggle');
     const chatWindow = document.getElementById('chat-window');
@@ -756,7 +755,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const check = (keywords) => keywords.some(word => cleanText.includes(word));
             
             // Deteccion de idioma basado en el input
-            const isEnglishQuery = check(["how", "what", "where", "can i", "my", "history", "buy", "sell", "thank", "hello", "hi ", "logout", "login", "sign", "refund", "return", "issue", "pass", "forgot", "order", "purchase"]);
+            const isEnglishQuery = check(["how", "what", "where", "can i", "my", "history", "buy", "sell", "thank", "hello", "hi", "logout", "login", "sign", "refund", "return", "issue", "pass", "forgot", "order", "purchase"]);
 
             if (isEnglishQuery) {
                 name = usuarioActual ? usuarioActual.user : "Agent";
@@ -786,7 +785,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     reply = `To create an account, click the 'Login' button at the top right, then click 'Register here'. Registration allows you to buy, sell, and earn discounts!`;
                 } else if (check(["log in", "login", "sign in"])) {
                     reply = `To log in, ${name}, click the 'Login' button in the top right navigation bar.`;
-                } else if (check(["hello", "hi", "hey", "greetings"])) {
+                } else if (check(["hello", "hi ", "hey", "greetings"])) {
                     reply = `Hello, ${name}! I can help you with your order history, uploading photos, buying/selling, or password recovery. What do you need?`;
                 } else {
                     reply = `I am your virtual assistant, ${name}. I can guide you on how to check your history, buy, sell, upload photos, or manage claims. Could you rephrase your question?`;
@@ -820,7 +819,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else if (check(["olvida", "perdi", "recuperar", "contra"])) {
                     reply = `Para recuperar tu contraseña, ${name}, ve al boton de Iniciar Sesion y pincha en "¿Has olvidado tu contraseña?". Introduce tu usuario y correo de registro exactos para cambiarla.`;
                 } else if (check(["registrar", "crear cuenta", "hacer cuenta", "ventaja", "beneficio"])) {
-                    reply = `Registrarte te permite subir de nivel, conseguir codigos de descuento de hasta el 25%, vender piezas, ver tu historial y usar la Galeria. Haz clic en "Iniciar Sesion" y luego en "Registrate aqui".`;
+                    reply = `Registrarte te permite subir de nivel, conseguir codigos de descuento, vender piezas, ver tu historial y usar la Galeria. Haz clic en "Iniciar Sesion" y luego en "Registrate aqui".`;
                 } else if (check(["iniciar", "entrar", "acceder", "loguear"])) {
                     reply = `Para iniciar sesion, ${name}, haz clic en el boton verde de "Iniciar Sesion" situado en la barra superior derecha.`;
                 } else if(check(["hola", "buenas", "ey", "saludo", "que tal"])) {
