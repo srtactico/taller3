@@ -144,28 +144,26 @@ document.addEventListener("DOMContentLoaded", () => {
         const boxCompras = document.getElementById("history-purchases");
         const boxVentas = document.getElementById("history-sales");
         
-        // Historial Compras
         if (!usuarioActual.historialCompras || usuarioActual.historialCompras.length === 0) {
-            boxCompras.innerHTML = "<p>No has realizado compras aun.</p>";
+            boxCompras.innerHTML = "<p style='color:var(--text-muted);'>No has realizado compras aun.</p>";
         } else {
             boxCompras.innerHTML = usuarioActual.historialCompras.map(compra => 
                 `<div style="border-bottom:1px solid #333; padding-bottom:10px; margin-bottom:10px;">
                     <strong style="color:var(--primary-color);">ID Pedido: ${compra.pedido}</strong> <span style="color:#aaa;">(${compra.fecha})</span><br>
-                    <span style="color:#aaa;">Articulos:</span> ${compra.items}<br>
-                    <span style="color:#aaa;">Total Pagado:</span> ${compra.total}
+                    <span style="color:#aaa;">Articulos:</span> <span style="color:#fff;">${compra.items}</span><br>
+                    <span style="color:#aaa;">Total Pagado:</span> <span style="color:#fff;">${compra.total}</span>
                 </div>`
             ).reverse().join("");
         }
 
-        // Historial Ventas
         const misVentas = mercadoActual.filter(p => p.vendedor === usuarioActual.user);
         if (misVentas.length === 0) {
-            boxVentas.innerHTML = "<p>No has publicado articulos en el mercado.</p>";
+            boxVentas.innerHTML = "<p style='color:var(--text-muted);'>No has publicado articulos en el mercado.</p>";
         } else {
             boxVentas.innerHTML = misVentas.map(venta => 
                 `<div style="border-bottom:1px solid #333; padding-bottom:10px; margin-bottom:10px;">
-                    <strong>${venta.nombre}</strong><br>
-                    <span style="color:#aaa;">Precio:</span> ${formatearPrecio(venta.precio)}
+                    <strong style="color:#fff;">${venta.nombre}</strong><br>
+                    <span style="color:#aaa;">Precio:</span> <span style="color:var(--primary-color); font-weight:bold;">${formatearPrecio(venta.precio)}</span>
                 </div>`
             ).reverse().join("");
         }
@@ -208,7 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
         else if(userFound.pass !== passVal) { alert("Contraseña incorrecta."); }
         else {
             usuarioActual = userFound;
-            if(!usuarioActual.historialCompras) usuarioActual.historialCompras = []; // Parche si es cuenta vieja
+            if(!usuarioActual.historialCompras) usuarioActual.historialCompras = [];
             localStorage.setItem("tactical_current_user", JSON.stringify(usuarioActual)); 
             closeAllPopups();
             nav.loginBtn.style.display = "none";
@@ -470,7 +468,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
 
-            // Calculamos totales y generamos numero de pedido
+            // CREACIÓN DE PEDIDO E HISTORIAL
             let totalP = 0;
             carrito.forEach(item => totalP += (item.precio * item.cantidad));
             let totalFinal = totalP - (totalP * descuentoActual);
@@ -497,7 +495,6 @@ document.addEventListener("DOMContentLoaded", () => {
             saveUsers();
             localStorage.setItem("tactical_current_user", JSON.stringify(usuarioActual));
             
-            // Mensaje final con el numero de pedido
             alert(`Transaccion aprobada, ${usuarioActual.user}.\n\nTU NUMERO DE PEDIDO ES: ${orderId}\n\nPor favor, guardalo para cualquier reclamacion. Tus articulos llegaran pronto.`);
             
             carrito = []; descuentoActual = 0; codigoAplicado = ""; document.getElementById("discount-code").value = "";
@@ -578,89 +575,102 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         const botReply = (text) => {
+            // Normalizar texto quitando acentos y mayusculas
             const cleanText = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); 
             let reply = "";
             let isHTML = false;
             let name = usuarioActual ? usuarioActual.user : "Agente";
 
-            const incluyeAlguna = (arrayPalabras) => arrayPalabras.some(palabra => cleanText.includes(palabra));
+            const incluye = (arr) => arr.some(palabra => cleanText.includes(palabra));
             
-            // DETECCIÓN DE INGLÉS REFINADA
-            const isEnglishInput = incluyeAlguna(["how", "what", "where", "login", "register", "buy", "sell", "price", "hello", "hi", "thank", "help", "upload", "photo", "cart", "account", "claim", "return", "refund", "sign up", "log out", "sign out", "log in", "history"]);
+            // DETECCION DEL IDIOMA INGLES EN BASE A PALABRAS CLAVE DEL USUARIO
+            const isEnglish = incluye(["how", "what", "where", "can i", "my", "history", "buy", "sell", "thank", "hello", "hi ", "logout", "login", "sign", "refund", "return", "issue"]);
 
-            if (isEnglishInput) {
-                if (incluyeAlguna(["thank"])) {
+            if (isEnglish) {
+                name = usuarioActual ? usuarioActual.user : "Agent";
+                
+                if (incluye(["thank", "thx"])) {
                     reply = `You're welcome, ${name}! Let me know if you need anything else.`;
-                } else if (incluyeAlguna(["upload", "photo", "gallery"])) {
-                    reply = `To upload a photo, ${name}, log in first, scroll down to the 'Gallery' section, and click the gray '+ Add Photo' button.`;
-                } else if (incluyeAlguna(["sell", "add item", "post"])) {
-                    reply = `To sell an item, ${name}, log in, go to the 'Buy/Sell' section, and click the '+ Upload Item' button.`;
-                } else if (incluyeAlguna(["buy", "cart", "pay", "purchase"])) {
-                    reply = `To buy, simply add items from the 'Buy/Sell' market to your cart, then open the Cart button at the top right to complete the payment.`;
-                } else if (incluyeAlguna(["log out", "sign out", "logout"])) {
-                    reply = `To log out, click your name at the top right and select 'Cerrar Sesion' (Logout) in red.`;
-                } else if (incluyeAlguna(["sign up", "register", "create account"])) {
-                    reply = `To sign up, click 'Login' at the top right, then click 'Register here'. You get discounts and can sell items!`;
-                } else if (incluyeAlguna(["login", "sign in", "enter", "log in"])) {
-                    reply = "To log in, click the green 'Login' button in the top right navigation bar.";
-                } else if (incluyeAlguna(["history", "orders", "past"])) {
-                    reply = `You can check your past orders and sales by clicking your name at the top right and selecting 'Historial'.`;
-                } else if (incluyeAlguna(["claim", "return", "problem", "complain", "refund", "issue"])) {
-                    reply = `Sorry for the inconvenience. Please fill out our form here: <a href="reclamaciones.html" style="color:var(--primary-color); font-weight:bold; text-decoration:underline;">Support Center</a>. Remember to include your Order Code!`;
+                
+                } else if (incluye(["history", "past order", "previous order"])) {
+                    reply = `To check your purchase and sales history, ${name}, click on your name at the top right corner and select 'Historial' (Order History). You will see all your past transactions and order codes there.`;
+                
+                } else if (incluye(["claim", "return", "refund", "problem", "issue", "complain", "broken"])) {
+                    reply = `I'm sorry you have an issue, ${name}. Please fill out our form here: <a href="reclamaciones.html" style="color:var(--primary-color); font-weight:bold; text-decoration:underline;">Official Support Center</a>. You can find your Order ID in your History.`;
                     isHTML = true;
-                } else if (incluyeAlguna(["hello", "hi", "hey"])) {
-                    reply = `Hello, ${name}! I can help you find out how to upload photos, buy, sell, check your history, or contact support.`;
+                
+                } else if (incluye(["repair", "fix", "workshop", "modify", "mechanic"])) {
+                    reply = `For repairs or modifications, ${name}, please submit a request using the 'Workshop' form on our main page. A mechanic will contact you shortly.`;
+                
+                } else if (incluye(["gallery", "upload photo", "add photo", "picture"])) {
+                    reply = `To upload a photo of your vehicle, ${name}, make sure you are logged in, scroll down to the 'Gallery' section, and click the '+ Add Photo' button.`;
+                
+                } else if (incluye(["discount", "coupon", "code", "promo", "level", "rank"])) {
+                    reply = `You earn discounts by leveling up through purchases, ${name}. Click your name at the top right and select 'Mis Descuentos' to see your rank and active codes. Note: Codes have a 14-day cooldown!`;
+                
+                } else if (incluye(["buy", "purchase", "pay", "cart", "cost", "price"])) {
+                    reply = `To buy items, browse our 'Buy/Sell' section, add products to your cart, and click the Cart button at the top right to checkout. Don't forget to enter your discount code if you have one!`;
+                
+                } else if (incluye(["sell", "add item", "post item"])) {
+                    reply = `To sell your own items, ${name}, log in and go to the 'Buy/Sell' market, then click the '+ Upload Item' button.`;
+                
+                } else if (incluye(["log out", "logout", "sign out"])) {
+                    reply = `To log out, click your name at the top right of the screen and select 'Cerrar Sesion' (Logout).`;
+                
+                } else if (incluye(["sign up", "register", "create account", "join"])) {
+                    reply = `To create an account, click the 'Login' button at the top right, then click 'Register here'. Registration allows you to buy, sell, and earn discounts!`;
+                
+                } else if (incluye(["log in", "login", "sign in"])) {
+                    reply = `To log in, ${name}, click the 'Login' button in the top right navigation bar.`;
+                
+                } else if (incluye(["hello", "hi", "hey", "greetings"])) {
+                    reply = `Hello, ${name}! I can help you with your order history, uploading photos, buying/selling, or contacting support. What do you need?`;
+                
                 } else {
-                    reply = `I am your virtual assistant, ${name}. I can guide you on how to buy, sell, check your history, upload photos, or manage claims. How can I help?`;
+                    reply = `I am your virtual assistant, ${name}. I can guide you on how to check your history, buy, sell, upload photos, or manage claims. Could you rephrase your question?`;
                 }
+
             } else {
-                // LÓGICA EN ESPAÑOL
-                if (incluyeAlguna(["gracia", "mersi"])) {
-                    reply = `Gracias a ti por visitar Tactical Reparations, ${name}. Si necesitas algo mas, aqui me tienes.`;
+                // LOGICA DEL CHAT EN ESPAÑOL
+                if (incluye(["gracia", "mersi"])) {
+                    reply = `¡Gracias a ti por confiar en Tactical Reparations, ${name}! Si necesitas algo mas, aqui me tienes.`;
                 
-                } else if (incluyeAlguna(["subir", "añadir", "poner"] ) && incluyeAlguna(["foto", "imagen", "galeria"])) {
-                    reply = `Para subir una foto, ${name}, inicia sesion primero. Luego baja a la seccion 'Galeria' (abajo del todo) y pulsa el boton gris que dice '+ Añadir Foto'. Pegas la URL y listo.`;
+                } else if (incluye(["historial", "pedidos", "compras hechas", "he comprado", "pasado", "mis compras", "mis ventas"])) {
+                    reply = `Para ver tu historial de compras y ventas, ${name}, haz clic en tu nombre arriba a la derecha y selecciona "Historial". Alli veras tus tickets y codigos de pedido.`;
                 
-                } else if (incluyeAlguna(["vender", "subir", "añadir"]) && incluyeAlguna(["articulo", "producto", "mercado", "pieza"])) {
-                    reply = `Para vender un articulo en el mercado, ${name}, inicia sesion, ve a la seccion 'Compra/Venta' (Unidad 1) y pulsa el boton '+ Subir Articulo'.`;
-                
-                } else if (incluyeAlguna(["comprar", "carrito", "pagar"]) && incluyeAlguna(["como", "donde", "forma", "hacer"])) {
-                    reply = `Para comprar, ${name}, busca el articulo que quieras y pulsa 'Añadir'. Luego ve al boton verde de 'Carrito' arriba a la derecha. Al pagar se generara tu Numero de Pedido unico.`;
-                
-                } else if (incluyeAlguna(["iniciar", "entrar", "acceder", "log"]) && incluyeAlguna(["sesion", "cuenta"])) {
-                    reply = `Para iniciar sesion, ${name}, haz clic en el boton verde de "Iniciar Sesion" situado en la barra superior.`;
-                
-                } else if (incluyeAlguna(["cerrar", "salir", "desconectar", "apagar"]) && incluyeAlguna(["sesion", "cuenta", "usuario"])) {
-                    reply = `Para cerrar tu sesion de forma segura, haz clic en el boton de arriba a la derecha que dice "${name}" y pulsa en "Cerrar Sesion".`;
-                
-                } else if (incluyeAlguna(["historial", "pedidos", "compras hechas", "he comprado", "que he vendido"])) {
-                    reply = `Para ver tu historial de compras y ventas con sus numeros de pedido, haz clic en tu nombre arriba a la derecha y selecciona "Historial".`;
-                
-                } else if (incluyeAlguna(["nivel", "rango", "cuantas compras", "estoy"])) {
-                    if(usuarioActual) {
-                        reply = `Tienes un total de ${usuarioActual.compras || 0} compras, ${name}. Abre tu perfil desplegando tu nombre arriba y haz clic en "Mis Descuentos".`;
-                    } else {
-                        reply = "Para consultar tu rango de fidelidad y compras, primero debes iniciar sesion.";
-                    }
-                
-                } else if (incluyeAlguna(["registrar", "crear", "hacer"]) && incluyeAlguna(["cuenta", "ventaja", "beneficio", "por que"])) {
-                    reply = `Registrarte es vital, ${name}. Te permite subir de nivel, conseguir codigos de descuento, vender piezas, ver tu historial y subir fotos a la Galeria.`;
-                
-                } else if (incluyeAlguna(["reclam", "recalam", "devolu", "queja", "sugeren", "problema", "roto", "mal"])) {
-                    reply = `Siento mucho tu problema, ${name}. Por favor rellena el formulario en nuestro <a href="reclamaciones.html" style="color:var(--primary-color); font-weight:bold; text-decoration:underline;">Centro de Soporte Oficial</a>. Necesitaras el numero de pedido que se genero en tu historial.`;
+                } else if (incluye(["reclam", "recalam", "devolu", "queja", "sugeren", "problema", "roto", "mal"])) {
+                    reply = `Siento mucho tu problema, ${name}. Por favor rellena el formulario en nuestro <a href="reclamaciones.html" style="color:var(--primary-color); font-weight:bold; text-decoration:underline;">Centro de Soporte Oficial</a>. Necesitaras el codigo de pedido que esta en tu Historial.`;
                     isHTML = true; 
                 
-                } else if (incluyeAlguna(["reparar", "taller", "cita", "arreglo", "modificar"])) {
+                } else if (incluye(["reparar", "taller", "cita", "arreglo", "modificar", "mecanico"])) {
                     reply = `Para modificar o reparar tu vehiculo, ${name}, utiliza el formulario de la seccion 'Taller' indicando tu modelo. Te responderemos al instante.`;
                 
-                } else if (incluyeAlguna(["cupon", "codigo", "descuento", "promocion"])) {
-                    reply = "Si tienes un codigo de tu rango, metelo en el Carrito. Recuerda la norma del cuartel: Los codigos tienen un tiempo de enfriamiento de 14 dias.";
+                } else if (incluye(["galeria", "subir foto", "añadir foto", "imagen", "poner foto"])) {
+                    reply = `Para subir una foto, ${name}, inicia sesion primero. Luego baja a la seccion 'Galeria' y pulsa el boton gris '+ Añadir Foto'.`;
                 
-                } else if(incluyeAlguna(["hola", "buenas", "ey", "saludo"])) {
-                    reply = `¡Hola, ${name}! Preguntame como subir una foto, ver tu historial de pedidos, tu rango, o si necesitas ir a reclamaciones.`;
+                } else if (incluye(["cupon", "codigo", "descuento", "promocion", "nivel", "rango"])) {
+                    reply = `Al comprar subes de nivel y ganas descuentos. Abre tu perfil arriba a la derecha y haz clic en "Mis Descuentos" para ver tu codigo. Recuerda que solo se pueden usar 1 vez cada 14 dias habiles.`;
+                
+                } else if (incluye(["comprar", "carrito", "pagar", "precio", "cuesta", "adquirir"])) {
+                    reply = `Para comprar, ${name}, busca el articulo en el mercado y pulsa 'Añadir'. Luego ve al 'Carrito' arriba a la derecha para pagar. ¡Acuerdate de aplicar tu codigo de descuento!`;
+                
+                } else if (incluye(["vender", "subir articulo", "añadir articulo", "publicar"])) {
+                    reply = `Para poner a la venta una pieza, ${name}, inicia sesion, ve a 'Compra/Venta' y pulsa el boton '+ Subir Articulo'.`;
+                
+                } else if (incluye(["cerrar", "salir", "desconectar", "apagar"]) && incluye(["sesion", "cuenta", "usuario"])) {
+                    reply = `Para cerrar tu sesion, ${name}, haz clic en el boton de arriba a la derecha que dice tu nombre y pulsa en "Cerrar Sesion" (en rojo).`;
+                
+                } else if (incluye(["registrar", "crear cuenta", "hacer cuenta", "ventaja", "beneficio"])) {
+                    reply = `Registrarte te permite subir de nivel, conseguir codigos de descuento, vender piezas, ver tu historial y usar la Galeria. Haz clic en "Iniciar Sesion" y luego en "Registrate aqui".`;
+                
+                } else if (incluye(["iniciar", "entrar", "acceder", "loguear"]) && incluye(["sesion", "cuenta"])) {
+                    reply = `Para iniciar sesion, ${name}, haz clic en el boton verde de "Iniciar Sesion" situado en la barra superior derecha.`;
+                
+                } else if(incluye(["hola", "buenas", "ey", "saludo", "que tal"])) {
+                    reply = `¡Hola, ${name}! Preguntame como ver tu historial, subir una foto, usar codigos de descuento, o como hacer devoluciones.`;
                 
                 } else {
-                    reply = `Soy la IA de soporte, ${name}. Entiendo preguntas sobre como ver tu historial, subir fotos, comprar/vender, o temas de cuenta y reclamaciones. ¿Como te ayudo?`;
+                    reply = `Soy la IA de soporte, ${name}. Entiendo preguntas sobre como ver tu historial, subir fotos a la galeria, aplicar cupones, el taller o reclamaciones. ¿Me lo dices de otra manera?`;
                 }
             }
             
