@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tactical Reparations</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="styles.css?v=legal">
+    <link rel="stylesheet" href="styles.css?v=chat">
 </head>
 <body>
 
@@ -17,13 +17,16 @@
         </div>
     </div>
 
-    <div id="privacy-popup" class="overlay">
+    <div id="privacy-policy-popup" class="overlay">
         <div class="popup-box modal-box">
-            <h2 data-i18n="privacyTitle">Protocolos de Privacidad y Términos</h2>
-            <p><strong>1. Tratamiento de Datos:</strong> La información recopilada está clasificada.</p>
-            <p><strong>2. Mercado:</strong> La Empresa actúa como intermediario.</p>
-            <p><strong>3. Modificaciones:</strong> Las "Operaciones Especiales" son responsabilidad del Cliente.</p>
-            <button class="btn-secondary btn-close-popup" data-i18n="closeBtn">Cerrar</button>
+            <h2 data-i18n="policyTitle">Política de Privacidad y Cookies</h2>
+            <div style="text-align: left; color: var(--text-muted);">
+                <h3 style="color: var(--primary-color);">1. Uso de Datos</h3>
+                <p>Recopilamos información necesaria para gestionar tu cuenta, procesar pedidos y mejorar tu experiencia en la plataforma.</p>
+                <h3 style="color: var(--primary-color); margin-top: 15px;">2. Cookies</h3>
+                <p>Utilizamos cookies propias y de terceros para analizar el tráfico, recordar tus preferencias y ofrecerte contenido personalizado.</p>
+            </div>
+            <button class="btn-secondary btn-close-popup" data-i18n="closeBtn" style="margin-top: 20px;">Cerrar</button>
         </div>
     </div>
 
@@ -59,27 +62,10 @@
                 <li data-i18n="benefit1" style="margin-bottom: 10px;">Vender tus propios artículos en el Mercado.</li>
                 <li data-i18n="benefit2" style="margin-bottom: 10px;">Comprar equipamiento exclusivo.</li>
                 <li data-i18n="benefit3" style="margin-bottom: 10px;">Subir fotos de tus modificaciones a la Galería.</li>
-                <li data-i18n="benefit4" style="margin-bottom: 10px;">Acceso a descuentos exclusivos para miembros.</li>
+                <li data-i18n="benefit4" style="margin-bottom: 10px;">Acceso a descuentos exclusivos.</li>
             </ul>
             <button id="btn-continue-register" class="btn-primary" data-i18n="continueRegisterBtn">Continuar al Registro</button>
             <button class="btn-secondary btn-close-popup" style="width: 100%;" data-i18n="cancelBtn">Cancelar</button>
-        </div>
-    </div>
-
-    <div id="privacy-policy-popup" class="overlay">
-        <div class="popup-box modal-box">
-            <h2 data-i18n="policyTitle">Política de Privacidad y Cookies</h2>
-            <div style="text-align: left; color: var(--text-muted);">
-                <h3 style="color: var(--primary-color);">1. Uso de Datos</h3>
-                <p>Recopilamos información necesaria para gestionar tu cuenta, procesar pedidos y mejorar tu experiencia en la plataforma.</p>
-                <h3 style="color: var(--primary-color); margin-top: 15px;">2. Cookies</h3>
-                <p>Utilizamos cookies propias y de terceros para analizar el tráfico, recordar tus preferencias y ofrecerte contenido personalizado.</p>
-                <h3 style="color: var(--primary-color); margin-top: 15px;">3. Compartir Información</h3>
-                <p>No vendemos ni compartimos tus datos personales con terceros, salvo que sea necesario para prestar el servicio (ej. procesamiento de pagos) o por obligación legal.</p>
-                <h3 style="color: var(--primary-color); margin-top: 15px;">4. Tus Derechos</h3>
-                <p>Tienes derecho a acceder, rectificar o eliminar tus datos personales en cualquier momento desde tu perfil.</p>
-            </div>
-            <button class="btn-secondary btn-close-popup" data-i18n="closeBtn" style="margin-top: 20px;">Cerrar</button>
         </div>
     </div>
 
@@ -87,17 +73,13 @@
         <div class="popup-box">
             <h2 data-i18n="profileTitle">Editar Perfil</h2>
             <p style="font-size: 0.9rem; color: var(--text-muted);" data-i18n="profileDesc">Actualiza tus credenciales de acceso.</p>
-            
             <label style="display:block; text-align:left; color:var(--primary-color); margin-bottom:5px;" data-i18n="newEmailLabel">Nuevo Email:</label>
             <input type="email" id="edit-email" class="input-field">
-            
             <label style="display:block; text-align:left; color:var(--primary-color); margin-bottom:5px;" data-i18n="newPassLabel">Nueva Contraseña (Opcional):</label>
             <input type="password" id="edit-new-pass" class="input-field">
-            
             <hr style="border: 0; border-top: 1px solid #333; margin: 20px 0;">
             <label style="display:block; text-align:left; color:#ff4c4c; margin-bottom:5px;" data-i18n="currentPassLabel">* Contraseña ACTUAL (Requerida):</label>
             <input type="password" id="edit-current-pass" class="input-field" style="border-color: #ff4c4c;">
-
             <button id="btn-save-profile" class="btn-primary" data-i18n="saveChanges">Guardar Cambios</button>
             <button class="btn-secondary btn-close-popup" style="width: 100%;" data-i18n="cancelBtn">Cancelar</button>
         </div>
@@ -107,12 +89,10 @@
         <div class="popup-box">
             <h2 data-i18n="configTitle">Configuración</h2>
             <p data-i18n="configDesc">Selecciona el idioma de la interfaz.</p>
-            
             <select id="language-selector" class="input-field" style="cursor: pointer; text-align: center;">
                 <option value="es">🇪🇸 Español (ES)</option>
                 <option value="en">🇺🇸 English (EN)</option>
             </select>
-
             <button id="btn-save-config" class="btn-primary" data-i18n="applyBtn">Aplicar</button>
             <button class="btn-secondary btn-close-popup" style="width: 100%;" data-i18n="closeBtn">Cerrar</button>
         </div>
@@ -252,18 +232,29 @@
                 <div style="margin-top: 15px;">
                     <a href="#" id="link-footer-privacy" style="color: var(--primary-color); text-decoration: none; font-weight: bold; font-size: 0.9rem;" data-i18n="footerPrivacy">Protocolos de Privacidad y Términos</a>
                 </div>
-                <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #222; text-align: left; max-width: 800px; margin-left: auto; margin-right: auto;">
-                    <h4 style="color: var(--text-muted); margin-bottom: 8px; font-size: 0.9rem;" data-i18n="footerCookiesTitle">Uso de Cookies Activo</h4>
-                    <p style="font-size: 0.8rem; color: #666; line-height: 1.5;" data-i18n="footerCookiesInfo">
-                        Nota: Esta plataforma utiliza cookies técnicas de sesión y almacenamiento local (Local Storage) para mantener tu inventario (carrito), procesar las traducciones y recordar tu identificación de Agente de forma encriptada en tu dispositivo. Al continuar navegando, reafirmas la aceptación de estas cookies operativas indispensables. No utilizamos rastreadores publicitarios externos.
-                    </p>
-                </div>
             </div>
         </footer>
 
     </div>
 
+    <div id="tactical-chat-widget">
+        <div id="chat-window">
+            <div id="chat-header">
+                <span id="chat-title" data-i18n="chatTitle">Soporte Táctico</span>
+                <span id="close-chat" style="cursor:pointer; font-size:18px;">✖</span>
+            </div>
+            <div id="chat-messages">
+                <div class="msg-bot" id="chat-welcome" data-i18n="chatWelcome">Agente en línea. ¿En qué puedo ayudarte hoy?</div>
+            </div>
+            <div id="chat-input-area">
+                <input type="text" id="chat-input" placeholder="..." data-i18n-placeholder="chatInput">
+                <button id="chat-send">➤</button>
+            </div>
+        </div>
+        <button id="chat-toggle">💬</button>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="script.js?v=legal"></script>
+    <script src="script.js?v=chat"></script>
 </body>
 </html>

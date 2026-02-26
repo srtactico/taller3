@@ -55,7 +55,9 @@ document.addEventListener("DOMContentLoaded", () => {
             policyTitle: "Política de Privacidad y Cookies",
             footerPrivacy: "Protocolos de Privacidad y Términos",
             footerCookiesTitle: "Uso de Cookies Activo",
-            footerCookiesInfo: "Nota: Esta plataforma utiliza cookies técnicas de sesión y almacenamiento local (Local Storage) para mantener tu inventario (carrito), procesar las traducciones y recordar tu identificación de Agente de forma encriptada en tu dispositivo. Al continuar navegando, reafirmas la aceptación de estas cookies operativas indispensables. No utilizamos rastreadores publicitarios externos."
+            footerCookiesInfo: "Nota: Esta plataforma utiliza cookies técnicas de sesión y almacenamiento local (Local Storage) para mantener tu inventario (carrito), procesar las traducciones y recordar tu identificación de Agente de forma encriptada en tu dispositivo. Al continuar navegando, reafirmas la aceptación de estas cookies operativas indispensables. No utilizamos rastreadores publicitarios externos.",
+            // NUEVOS TEXTOS
+            seeMoreBtn: "Ver todos los artículos", seeLessBtn: "Ver menos", chatTitle: "Soporte Táctico", chatWelcome: "Agente en línea. ¿En qué puedo ayudarte hoy?", chatInput: "Escribe tu mensaje..."
         },
         en: {
             navHome: "Home", navMarket: "Buy/Sell", navRepair: "Workshop", navGallery: "Gallery", loginBtn: "Login", registerBtn: "Register", logoutBtn: "Logout", profileBtn: "My Profile", configBtn: "Settings", heroTitle: "Absolute precision. Tactical performance.", heroText: "Your vehicle is a tool. We prepare it for any mission.", 
@@ -73,7 +75,9 @@ document.addEventListener("DOMContentLoaded", () => {
             policyTitle: "Privacy Policy & Cookies",
             footerPrivacy: "Privacy Protocols & Terms",
             footerCookiesTitle: "Active Cookie Usage",
-            footerCookiesInfo: "Note: This platform uses technical session cookies and local storage to maintain your inventory (cart), process translations, and remember your Agent ID encrypted on your device. By continuing to browse, you reaffirm your acceptance of these essential operational cookies. We do not use external advertising trackers."
+            footerCookiesInfo: "Note: This platform uses technical session cookies and local storage to maintain your inventory (cart), process translations, and remember your Agent ID encrypted on your device. By continuing to browse, you reaffirm your acceptance of these essential operational cookies. We do not use external advertising trackers.",
+            // NEW TEXTS
+            seeMoreBtn: "See all items", seeLessBtn: "See less", chatTitle: "Tactical Support", chatWelcome: "Agent online. How can I help you today?", chatInput: "Type your message..."
         }
     };
 
@@ -205,45 +209,55 @@ document.addEventListener("DOMContentLoaded", () => {
         popups.config.classList.remove("active");
     });
 
-    // --- MERCADO (V_ORIGINAL_EXACTA) ---
+    // --- MERCADO (LAS 6 FOTOS ORIGINALES + 3 NUEVAS) ---
     const fallbackImage = "https://placehold.co/600x400/111111/7ab317?text=Articulo+Tactico";
 
     const productosBase = [
-        // 1. EL BMW AZUL ORIGINAL
         { id: 1, nombre: "Motor V8 Blindado", nombreEn: "Armored V8 Engine", tipo: "Mecánica Pesada", tipoEn: "Heavy Mechanics", precio: 4500, vendedor: "Tactical HQ", 
-          imagen: "https://media.istockphoto.com/id/528918828/es/foto/motor-de-automoci%C3%B3n-3d-ilustraci%C3%B3n.jpg?s=612x612&w=0&k=20&c=o5ejIooVV10-5hFTbCv1l1IETRzSaHqupWhT-LRPbGc=", 
-          descripcion: "Motor de bloque grande con pistones forjados, cigüeñal reforzado y culatas de alto flujo. Optimizado para resistir impactos y mantener el rendimiento en condiciones extremas. Potencia estimada: 850 HP.", 
-          descripcionEn: "Big block engine with forged pistons, reinforced crankshaft, and high-flow cylinder heads. Optimized to withstand impacts and maintain performance in extreme conditions. Estimated power: 850 HP." },
+          imagen: "https://media.istockphoto.com/id/528918828/es/foto/motor-de-automoción-3d-ilustración.jpg?s=612x612&w=0&k=20&c=o5ejIooVV10-5hFTbCv1l1IETRzSaHqupWhT-LRPbGc=", 
+          descripcion: "Motor de bloque grande con pistones forjados, cigüeñal reforzado y culatas de alto flujo. Optimizado para resistir impactos y mantener el rendimiento en condiciones extremas.", 
+          descripcionEn: "Big block engine with forged pistons, reinforced crankshaft, and high-flow cylinder heads. Optimized to withstand impacts and maintain performance." },
         
-        // 2. EL TESLA BLANCO ORIGINAL
         { id: 2, nombre: "Neumáticos Tácticos Off-Road", nombreEn: "Tactical Off-Road Tires", tipo: "Movilidad", tipoEn: "Mobility", precio: 800, vendedor: "Tactical HQ", 
           imagen: "https://img.freepik.com/psd-gratis/neumaticos-agresivos-todo-terreno-caucho-duradero-todo-terreno_191095-90385.jpg?semt=ais_user_personalization&w=740&q=80", 
-          descripcion: "Juego de 4 neumáticos de compuesto militar con diseño de banda de rodadura agresivo para barro y roca. Paredes laterales reforzadas con Kevlar de 10 capas. Incluye sistema run-flat interno.", 
+          descripcion: "Juego de 4 neumáticos de compuesto militar con diseño de banda de rodadura agresivo para barro y roca. Paredes laterales reforzadas con Kevlar de 10 capas.", 
           descripcionEn: "Set of 4 military compound tires with aggressive tread design for mud and rock. 10-ply Kevlar reinforced sidewalls. Includes internal run-flat system." },
         
-        // 3. LOS PISTONES ORIGINALES
         { id: 3, nombre: "Kit de Suspensión Reforzada", nombreEn: "Reinforced Suspension Kit", tipo: "Modificación", tipoEn: "Upgrades", precio: 1200, vendedor: "Tactical HQ", 
           imagen: "https://www.tot4x4.com/2269-large_default/kit-de-suspension-reforzada-30mm-efs-diesel.jpg", 
-          descripcion: "Sistema de suspensión de largo recorrido con amortiguadores de nitrógeno presurizado y muelles helicoidales de alta resistencia. Proporciona una elevación de 4 pulgadas y una capacidad de carga superior.", 
+          descripcion: "Sistema de suspensión de largo recorrido con amortiguadores de nitrógeno presurizado y muelles helicoidales de alta resistencia. Proporciona elevación de 4 pulgadas.", 
           descripcionEn: "Long-travel suspension system with pressurized nitrogen shocks and heavy-duty coil springs. Provides a 4-inch lift and superior load capacity." },
         
-        // 4. EL MCLAREN BLANCO ORIGINAL
         { id: 4, nombre: "Pintura Absorbe-Radar (Mate)", nombreEn: "Radar-Absorbent Paint (Matte)", tipo: "Estética / Camuflaje", tipoEn: "Aesthetics / Camo", precio: 1500, vendedor: "Tactical HQ", 
           imagen: "https://montopinturas.com/public/Image/2023/7/502230.png", 
-          descripcion: "Recubrimiento cerámico avanzado con propiedades de absorción de ondas de radar y reducción de firma infrarroja. Acabado negro mate ultraplano para minimizar reflejos visuales nocturnos.", 
-          descripcionEn: "Advanced ceramic coating with radar wave absorption properties and infrared signature reduction. Ultra-flat matte black finish to minimize nighttime visual reflections." },
+          descripcion: "Recubrimiento cerámico avanzado con propiedades de absorción de ondas de radar y reducción de firma infrarroja. Acabado negro mate ultraplano.", 
+          descripcionEn: "Advanced ceramic coating with radar wave absorption properties and infrared signature reduction. Ultra-flat matte black finish." },
         
-        // 5. EL PORSCHE GRIS ORIGINAL
         { id: 5, nombre: "Blindaje Ligero de Puertas", nombreEn: "Light Door Armor", tipo: "Defensa", tipoEn: "Defense", precio: 2100, vendedor: "Tactical HQ", 
           imagen: "https://images.unsplash.com/photo-1592853625601-bb9d23da12fc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", 
-          descripcion: "Paneles de blindaje compuesto de nivel III+ para instalación interna en puertas de vehículos estándar. Detiene calibres de rifle comunes sin añadir un peso excesivo al chasis del coche.", 
-          descripcionEn: "Level III+ composite armor panels for internal installation in standard vehicle doors. Stops common rifle calibers without adding excessive weight to the chassis." },
+          descripcion: "Paneles de blindaje compuesto de nivel III+ para instalación interna en puertas de vehículos estándar. Detiene calibres de rifle comunes.", 
+          descripcionEn: "Level III+ composite armor panels for internal installation in standard vehicle doors. Stops common rifle calibers without adding excessive weight." },
         
-        // 6. EL PRIUS GRIS ORIGINAL
         { id: 6, nombre: "Luces LED de Alta Intensidad", nombreEn: "High-Intensity LED Lights", tipo: "Visión", tipoEn: "Vision", precio: 450, vendedor: "Tactical HQ", 
           imagen: "https://asxstore.com/cdn/shop/files/pop-up.png?v=1685366963&width=1080", 
-          descripcion: "Barra de luz LED de grado táctico con una salida combinada de 30,000 lúmenes. Carcasa de aluminio impermeable IP68 y lentes de policarbonato irrompibles. Patrón de haz mixto (inundación/punto).", 
-          descripcionEn: "Tactical-grade LED light bar with a combined output of 30,000 lumens. IP68 waterproof aluminum housing and unbreakable polycarbonate lenses. Mixed beam pattern (flood/spot)." }
+          descripcion: "Barra de luz LED de grado táctico con una salida combinada de 30,000 lúmenes. Carcasa de aluminio impermeable IP68 y lentes irrompibles.", 
+          descripcionEn: "Tactical-grade LED light bar with a combined output of 30,000 lumens. IP68 waterproof aluminum housing and unbreakable polycarbonate lenses." },
+
+        // LOS 3 ARTÍCULOS NUEVOS
+        { id: 7, nombre: "Kit de Frenos Cerámicos", nombreEn: "Ceramic Brake Kit", tipo: "Mecánica Pesada", tipoEn: "Heavy Mechanics", precio: 1800, vendedor: "Tactical HQ", 
+          imagen: "https://images.unsplash.com/photo-1486262715619-67081010dd13?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", 
+          descripcion: "Discos de freno carbono-cerámicos perforados y ventilados. Resisten temperaturas extremas sin perder eficacia de frenado.", 
+          descripcionEn: "Carbon-ceramic drilled and vented brake discs. Withstand extreme temperatures without fading." },
+        
+        { id: 8, nombre: "Asientos Tácticos Recaro", nombreEn: "Tactical Recaro Seats", tipo: "Estética / Camuflaje", tipoEn: "Aesthetics / Camo", precio: 950, vendedor: "Tactical HQ", 
+          imagen: "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", 
+          descripcion: "Asientos deportivos tipo baquet con arneses de 5 puntos. Tejido ignífugo y refuerzos lumbares para mantener la postura a alta velocidad.", 
+          descripcionEn: "Bucket-style sports seats with 5-point harnesses. Fire-retardant fabric and lumbar supports to maintain posture." },
+        
+        { id: 9, nombre: "Cristales Antibalas Nivel 4", nombreEn: "Level 4 Bulletproof Glass", tipo: "Defensa", tipoEn: "Defense", precio: 3200, vendedor: "Tactical HQ", 
+          imagen: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", 
+          descripcion: "Juego de cristales de policarbonato laminado ultragrueso. Capaces de detener impactos directos de calibres pesados.", 
+          descripcionEn: "Ultra-thick laminated polycarbonate glass set. Capable of stopping direct impacts from heavy calibers." }
     ];
     
     let mercadoActual = JSON.parse(localStorage.getItem("tactical_mercado_100")) || productosBase;
@@ -261,7 +275,15 @@ document.addEventListener("DOMContentLoaded", () => {
         const sellerLabel = translations[currentLang].sellerLabel;
         const btnText = translations[currentLang].addBtn;
 
-        mercadoActual.forEach(p => {
+        // LÓGICA DE VER TODOS / VER MENOS
+        // Miramos si la URL de la página termina en "?view=all"
+        const urlParams = new URLSearchParams(window.location.search);
+        const verTodos = urlParams.get('view') === 'all';
+        
+        // Si no es verTodos, cortamos la lista para mostrar solo los 8 primeros
+        const itemsAMostrar = verTodos ? mercadoActual : mercadoActual.slice(0, 8);
+
+        itemsAMostrar.forEach(p => {
             const nombre = currentLang === 'en' && p.nombreEn ? p.nombreEn : p.nombre;
             const tipo = currentLang === 'en' && p.tipoEn ? p.tipoEn : p.tipo;
             const desc = currentLang === 'en' && p.descripcionEn ? p.descripcionEn : (p.descripcion || (currentLang === 'es' ? "Sin descripción detallada." : "No detailed description."));
@@ -282,6 +304,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
             </div>`;
         });
+
+        // AÑADIMOS EL BOTÓN "VER MÁS" o "VER MENOS" AL FINAL DE LA CUADRÍCULA
+        if (!verTodos && mercadoActual.length > 8) {
+            contenedor.innerHTML += `
+            <div style="grid-column: 1 / -1; margin-top: 30px; text-align: center;">
+                <a href="?view=all#mercado" class="btn-primary" style="display:inline-block; width:auto; text-decoration:none; padding:15px 30px;" data-i18n="seeMoreBtn">${translations[currentLang].seeMoreBtn}</a>
+            </div>`;
+        } else if (verTodos && mercadoActual.length > 8) {
+            contenedor.innerHTML += `
+            <div style="grid-column: 1 / -1; margin-top: 30px; text-align: center;">
+                <a href="?#mercado" class="btn-secondary" style="display:inline-block; width:auto; text-decoration:none; padding:15px 30px;" data-i18n="seeLessBtn">${translations[currentLang].seeLessBtn}</a>
+            </div>`;
+        }
+
         document.querySelectorAll('.btn-add-cart').forEach(btn => btn.addEventListener('click', (e) => añadirAlCarrito(parseInt(e.target.dataset.id))));
     };
 
@@ -413,6 +449,76 @@ document.addEventListener("DOMContentLoaded", () => {
             e.target.reset(); 
         }
     });
+
+    // ====================================================================
+    // --- LÓGICA DEL CHATBOT ---
+    // ====================================================================
+    const chatToggle = document.getElementById('chat-toggle');
+    const chatWindow = document.getElementById('chat-window');
+    const closeChat = document.getElementById('close-chat');
+    const chatInput = document.getElementById('chat-input');
+    const chatSend = document.getElementById('chat-send');
+    const chatMessages = document.getElementById('chat-messages');
+
+    if (chatToggle && chatWindow) {
+        chatToggle.addEventListener('click', () => {
+            chatWindow.style.display = chatWindow.style.display === 'flex' ? 'none' : 'flex';
+        });
+        closeChat.addEventListener('click', () => chatWindow.style.display = 'none');
+
+        const addMessage = (text, sender) => {
+            const msg = document.createElement('div');
+            msg.className = sender === 'user' ? 'msg-user' : 'msg-bot';
+            msg.textContent = text;
+            chatMessages.appendChild(msg);
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll hacia abajo
+        }
+
+        const botReply = (text) => {
+            const isEnglish = currentLang === 'en';
+            const lowerText = text.toLowerCase();
+            let reply = "";
+
+            // Lógica de respuestas (Detecta palabras clave)
+            if (isEnglish) {
+                if(lowerText.includes("price") || lowerText.includes("buy") || lowerText.includes("cost")) {
+                    reply = "You can purchase items directly from our Buy/Sell section by adding them to your cart. We accept Card, PayPal, and Crypto.";
+                } else if(lowerText.includes("hello") || lowerText.includes("hi")) {
+                    reply = "Hello! How can the Tactical Team assist you today?";
+                } else if (lowerText.includes("repair") || lowerText.includes("workshop") || lowerText.includes("fix")) {
+                    reply = "For repairs or modifications, please submit a request through the Workshop form on our main page.";
+                } else {
+                    reply = "Received. An agent will review your message shortly. For immediate technical support, please refer to the Workshop section.";
+                }
+            } else {
+                if(lowerText.includes("precio") || lowerText.includes("comprar") || lowerText.includes("vender") || lowerText.includes("cuesta")) {
+                    reply = "Puedes adquirir o vender artículos directamente desde nuestra sección de Compra/Venta usando el carrito. Aceptamos Tarjeta, PayPal y Cripto.";
+                } else if(lowerText.includes("hola") || lowerText.includes("buenas")) {
+                    reply = "¡Hola! ¿En qué puede ayudarte el equipo Táctico hoy?";
+                } else if (lowerText.includes("reparar") || lowerText.includes("taller") || lowerText.includes("arreglo")) {
+                    reply = "Para reparaciones o modificaciones, por favor envía una solicitud a través del formulario de la sección Taller.";
+                } else {
+                    reply = "Recibido. Un agente revisará tu mensaje en breve. Para soporte técnico inmediato, dirígete a la sección del Taller.";
+                }
+            }
+            
+            // Simula que el bot está "escribiendo" y responde tras 1 segundo
+            setTimeout(() => addMessage(reply, 'bot'), 1000);
+        }
+
+        const sendMessage = () => {
+            const text = chatInput.value.trim();
+            if(!text) return;
+            addMessage(text, 'user');
+            chatInput.value = '';
+            botReply(text);
+        };
+
+        chatSend.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => { 
+            if(e.key === 'Enter') sendMessage(); 
+        });
+    }
 
     // INICIO
     applyLanguage(currentLang);
