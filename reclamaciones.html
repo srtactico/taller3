@@ -6,7 +6,7 @@
     <title>Soporte y Reclamaciones - Tactical Reparations</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        .claims-container { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; }
+        .claims-container { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 120px 20px 40px 20px; }
         .claims-box { background: var(--bg-panel); padding: 40px; border: 1px solid #333; border-radius: 8px; max-width: 600px; width: 100%; border-top: 4px solid var(--primary-color); box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .claims-box h1 { margin-bottom: 10px; color: var(--primary-color); }
         .claims-box p { color: var(--text-muted); margin-bottom: 25px; line-height: 1.5; }
@@ -14,8 +14,8 @@
 </head>
 <body>
 
-    <header style="position: absolute; top: 0; background: transparent; border: none;">
-        <div class="container header-content" style="justify-content: center; padding-top: 20px;">
+    <header style="position: absolute; top: 20px; background: transparent; border: none; width: 100%;">
+        <div class="container header-content" style="justify-content: center;">
             <div class="logo-text">TACTICAL <span>REPARATIONS</span></div>
         </div>
     </header>
@@ -23,23 +23,23 @@
     <div class="claims-container">
         <div class="claims-box">
             <h1>Centro de Soporte Oficial</h1>
-            <p>Utiliza este formulario para solicitar devoluciones, poner una reclamación formal o enviarnos sugerencias para mejorar la plataforma. Un agente superior revisará tu caso en menos de 24 horas.</p>
+            <p>Utiliza este formulario para solicitar devoluciones, poner una reclamacion formal o enviarnos sugerencias para mejorar la plataforma. Un agente superior revisara tu caso en menos de 24 horas.</p>
             
             <form class="tactical-form" id="form-reclamaciones" style="margin-top: 0;">
-                <input type="text" id="claim-name" placeholder="Nombre / Identificación de Agente" class="input-field" required>
+                <input type="text" id="claim-name" placeholder="Nombre / Identificacion de Agente" class="input-field" required>
                 <input type="email" id="claim-email" placeholder="Email de contacto" class="input-field" required>
                 
                 <select id="claim-type" class="input-field" required>
-                    <option value="" disabled selected>-- Selecciona el tipo de trámite --</option>
-                    <option value="devolucion">Solicitud de Devolución</option>
-                    <option value="reclamacion">Reclamación / Queja</option>
+                    <option value="" disabled selected>-- Selecciona el tipo de tramite --</option>
+                    <option value="devolucion">Solicitud de Devolucion</option>
+                    <option value="reclamacion">Reclamacion / Queja</option>
                     <option value="sugerencia">Sugerencia de Mejora</option>
-                    <option value="otro">Otro problema técnico</option>
+                    <option value="otro">Otro problema tecnico</option>
                 </select>
                 
-                <input type="text" id="claim-order" placeholder="Número de pedido (Opcional)" class="input-field">
+                <input type="text" id="claim-order" placeholder="Numero de pedido (Opcional)" class="input-field">
                 
-                <textarea id="claim-message" placeholder="Describe tu situación con el mayor detalle posible..." class="input-field" required style="min-height: 120px;"></textarea>
+                <textarea id="claim-message" placeholder="Describe tu situacion con el mayor detalle posible..." class="input-field" required style="min-height: 120px;"></textarea>
                 
                 <button type="submit" class="btn-primary" style="margin-top: 10px;">Enviar Informe al Cuartel General</button>
                 <a href="index.html" class="btn-secondary" style="display: block; text-align: center; text-decoration: none; margin-top: 15px;">Volver al Inicio</a>
@@ -50,8 +50,8 @@
     <script>
         document.getElementById("form-reclamaciones").addEventListener("submit", (e) => {
             e.preventDefault();
-            alert("✅ Formulario enviado con éxito. El equipo de Tactical Reparations se pondrá en contacto contigo pronto.");
-            window.location.href = "index.html"; // Redirige al inicio
+            alert("Formulario enviado con exito. El equipo de Tactical Reparations se pondra en contacto contigo pronto.");
+            window.location.href = "index.html"; 
         });
     </script>
 </body>
