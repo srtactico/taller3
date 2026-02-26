@@ -319,14 +319,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // --- MENSAJE DE ERROR DE LOGIN UNIFICADO ---
     document.getElementById("btn-login")?.addEventListener("click", () => {
         const userVal = document.getElementById("username").value.trim();
         const passVal = document.getElementById("password").value.trim();
         const userFound = usuariosRegistrados.find(u => u.user === userVal);
 
-        if(!userFound) { showAlert(currentLang === 'es' ? "Cuenta no encontrada." : "Account not found."); }
-        else if(userFound.pass !== passVal) { showAlert(currentLang === 'es' ? "Contraseña incorrecta." : "Incorrect password."); }
-        else {
+        // Si el usuario NO se encuentra O la contraseña es incorrecta, lanza el mismo error genérico (Seguridad)
+        if(!userFound || userFound.pass !== passVal) { 
+            showAlert(currentLang === 'es' ? "Usuario o contraseña incorrectos." : "Incorrect username or password."); 
+        } else {
             usuarioActual = userFound;
             if(!usuarioActual.historialCompras) usuarioActual.historialCompras = [];
             localStorage.setItem("tactical_current_user", JSON.stringify(usuarioActual)); 
@@ -671,7 +673,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- GALERÍA ---
+    // --- GALERÍA ARREGLADA ---
     const galeriaBase = ["https://espirituracer.com/archivos/2017/11/Ringbrothers-Ford-Mustang-Mach-1-Patriarc-15.webp","https://i.ytimg.com/vi/uIIaNGFAy6o/sddefault.jpg","https://www.schairerklassiker.de/wp-content/gallery/mb-220-seb-coupe-w111/MB_220SEbC_Fahrerseite.jpg","https://i.pinimg.com/736x/a1/44/1b/a1441b9424550332aa4c96c7b1d2b9b9.jpg","https://d1gl66oyi6i593.cloudfront.net/wp-content/uploads/2022/10/subasta-replica-DeLorean-DMC-12-7.jpg","https://hips.hearstapps.com/hmg-prod/images/porsche-911-gt3-r-101-1659114035.jpg?crop=1xw:0.920416250624064xh;center,top&resize=1200:*"];
     let galeriaActual = JSON.parse(localStorage.getItem("tactical_galeria_100")) || galeriaBase;
     
@@ -731,7 +733,7 @@ document.addEventListener("DOMContentLoaded", () => {
             chatWindow.style.display = chatWindow.style.display === 'flex' ? 'none' : 'flex';
             if(chatWindow.style.display === 'flex' && chatMessages.children.length === 1) {
                 const welcomeMsg = document.getElementById("chat-welcome");
-                const agentName = usuarioActual ? usuarioActual.user : "Agente";
+                const agentName = usuarioActual ? usuarioActual.user : (currentLang === 'es' ? "Agente" : "Agent");
                 welcomeMsg.textContent = currentLang === 'es' ? `Bienvenido al sistema, ${agentName}. ¿En que te ayudo hoy?` : `Welcome to the system, ${agentName}. How can I help you today?`;
             }
         });
@@ -754,8 +756,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const check = (keywords) => keywords.some(word => cleanText.includes(word));
             
-            // Deteccion de idioma basado en el input
-            const isEnglishQuery = check(["how", "what", "where", "can i", "my", "history", "buy", "sell", "thank", "hello", "hi", "logout", "login", "sign", "refund", "return", "issue", "pass", "forgot", "order", "purchase"]);
+            const isEnglishQuery = check(["how", "what", "where", "can i", "my", "history", "buy", "sell", "thank", "hello", "hi ", "logout", "login", "sign", "refund", "return", "issue", "pass", "forgot", "order", "purchase"]);
 
             if (isEnglishQuery) {
                 name = usuarioActual ? usuarioActual.user : "Agent";
@@ -785,14 +786,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     reply = `To create an account, click the 'Login' button at the top right, then click 'Register here'. Registration allows you to buy, sell, and earn discounts!`;
                 } else if (check(["log in", "login", "sign in"])) {
                     reply = `To log in, ${name}, click the 'Login' button in the top right navigation bar.`;
-                } else if (check(["hello", "hi ", "hey", "greetings"])) {
+                } else if (check(["hello", "hi", "hey", "greetings"])) {
                     reply = `Hello, ${name}! I can help you with your order history, uploading photos, buying/selling, or password recovery. What do you need?`;
                 } else {
                     reply = `I am your virtual assistant, ${name}. I can guide you on how to check your history, buy, sell, upload photos, or manage claims. Could you rephrase your question?`;
                 }
 
             } else {
-                // LÓGICA EN ESPAÑOL
                 if (check(["gracia", "mersi"])) {
                     reply = `¡Gracias a ti por confiar en Tactical Reparations, ${name}! Si necesitas algo mas, aqui me tienes.`;
                 } else if (check(["historial", "pedidos", "compras hechas", "he comprado", "pasado", "mis compras", "mis ventas"])) {
@@ -819,7 +819,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else if (check(["olvida", "perdi", "recuperar", "contra"])) {
                     reply = `Para recuperar tu contraseña, ${name}, ve al boton de Iniciar Sesion y pincha en "¿Has olvidado tu contraseña?". Introduce tu usuario y correo de registro exactos para cambiarla.`;
                 } else if (check(["registrar", "crear cuenta", "hacer cuenta", "ventaja", "beneficio"])) {
-                    reply = `Registrarte te permite subir de nivel, conseguir codigos de descuento, vender piezas, ver tu historial y usar la Galeria. Haz clic en "Iniciar Sesion" y luego en "Registrate aqui".`;
+                    reply = `Registrarte te permite subir de nivel, conseguir codigos de descuento de hasta el 25%, vender piezas, ver tu historial y usar la Galeria. Haz clic en "Iniciar Sesion" y luego en "Registrate aqui".`;
                 } else if (check(["iniciar", "entrar", "acceder", "loguear"])) {
                     reply = `Para iniciar sesion, ${name}, haz clic en el boton verde de "Iniciar Sesion" situado en la barra superior derecha.`;
                 } else if(check(["hola", "buenas", "ey", "saludo", "que tal"])) {
