@@ -95,8 +95,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const translations = {
         es: {
             navHome: "Inicio", navMarket: "Compra/Venta", navRepair: "Taller", navGallery: "Galeria", loginBtn: "Iniciar Sesion", registerBtn: "Registrar Cuenta", logoutBtn: "Cerrar Sesion", profileBtn: "Mi Perfil", configBtn: "Configuracion", privacyMenuBtn: "Condiciones de Privacidad", heroTitle: "Precision absoluta. Rendimiento tactico.", heroText: "Tu vehiculo no es solo un transporte; es tu mejor herramienta.", 
-            heroBtn: "Solicitar cita previa", marketTitle: "1. Compra/Venta", uploadItemBtn: "+ Subir Articulo", repairTitle: "2. Unidad de Reparacion / Modificacion", sendBtn: "Enviar Solicitud", galleryTitle: "Operaciones (Galeria)", uploadPhotoBtn: "+ Añadir Foto", cookiesTitle: "Aviso Tactico (Cookies)", cookiesText: "Utilizamos cookies para mejorar la precision de nuestros servicios. ¿Aceptas?", cookiesAccept: "Afirmativo, aceptar", loginTitle: "Acceso Restringido", noAccount: "¿No tienes cuenta?", registerHere: "Registrate aqui", registerTitle: "Nuevo Recluta", hasAccount: "¿Ya tienes cuenta?", profileTitle: "Editar Perfil", profileDesc: "Actualiza tus credenciales.", saveChanges: "Guardar Cambios", configTitle: "Configuracion", configDesc: "Selecciona el idioma.", applyBtn: "Aplicar", closeBtn: "Cerrar", cancelBtn: "Cancelar", uploadItemTitle: "Añadir al Mercado", publishBtn: "Publicar", uploadPhotoTitle: "Añadir Foto", addBtn: "Añadir", cartTitle: "Carrito", checkoutBtn: "Confirmar Transaccion", continueBtn: "Seguir Comprando", privacyTitle: "Politica de Privacidad, Cookies y Aviso Legal", selectService: "-- Selecciona el Servicio --", optRepair: "Reparacion Tecnica", optMod: "Modificacion y Mejoras", payMethod: "Metodo de Pago:", newEmailLabel: "Nuevo Email:", newPassLabel: "Nueva Contraseña (Opcional):", currentPassLabel: "* Contraseña ACTUAL (Requerida):", sellerLabel: "Vendedor", catLabel: "Categoria", emptyCart: "El carrito esta vacio.", userHolder: "Usuario", passHolder: "Contraseña", emailHolder: "Email (Obligatorio)", itemNameHolder: "Nombre", itemCatHolder: "Categoria", itemPriceHolder: "Precio", itemImgHolder: "URL Imagen", itemDescHolder: "Descripcion del articulo...", cardNum: "Numero Tarjeta (12 digitos)", vehicleHolder: "Vehiculo (Marca y Modelo)", descHolder: "Describe el daño o las modificaciones requeridas...", benefitsTitle: "Ventajas de Unirte", benefit1: "Vender tus propios articulos en el Mercado.", benefit2: "Comprar equipamiento exclusivo.", benefit3: "Subir fotos a la Galeria.", benefit4: "Acceso a descuentos exclusivos.", benefit5: "Bono exclusivo del 20% de bienvenida en tu primera compra.", continueRegisterBtn: "Continuar al Registro", footerPrivacy: "Protocolos de Privacidad y Terminos", footerCookiesTitle: "Uso de Cookies Activo", footerCookiesInfo: "Nota: Usamos cookies indispensables.", seeMoreBtn: "Ver todos los articulos", seeLessBtn: "Ver menos", chatTitle: "Soporte Tactico", chatWelcome: "Agente en linea. ¿En que puedo ayudarte hoy?", chatInput: "Escribe tu mensaje...",
-            discountsMenu: "Mis Descuentos", discountsSubtitle: "Aumenta tu rango realizando compras.", discountPlaceholder: "Codigo de descuento", applyCodeBtn: "Aplicar", noDiscounts: "Aun no tienes descuentos.",
+            heroBtn: "Solicitar cita previa", marketTitle: "1. Compra/Venta", uploadItemBtn: "+ Subir Articulo", repairTitle: "2. Unidad de Reparacion / Modificacion", sendBtn: "Enviar Solicitud", galleryTitle: "Operaciones (Galeria)", uploadPhotoBtn: "+ Añadir Foto", cookiesTitle: "Aviso Tactico (Cookies)", cookiesText: "Utilizamos cookies para mejorar la precision de nuestros servicios. ¿Aceptas?", cookiesAccept: "Afirmativo, aceptar", loginTitle: "Acceso Restringido", noAccount: "¿No tienes cuenta?", registerHere: "Registrate aqui", registerTitle: "Nuevo Recluta", hasAccount: "¿Ya tienes cuenta?", profileTitle: "Editar Perfil", profileDesc: "Actualiza tus credenciales.", saveChanges: "Guardar Cambios", configTitle: "Configuracion", configDesc: "Selecciona el idioma.", applyBtn: "Aplicar", closeBtn: "Cerrar", cancelBtn: "Cancelar", uploadItemTitle: "Añadir al Mercado", publishBtn: "Publicar", uploadPhotoTitle: "Añadir Foto", addBtn: "Añadir", cartTitle: "Carrito", checkoutBtn: "Confirmar Transaccion", continueBtn: "Seguir Comprando", privacyTitle: "Politica de Privacidad, Cookies y Aviso Legal", selectService: "-- Selecciona el Servicio --", optRepair: "Reparacion Tecnica", optMod: "Modificacion y Mejoras", payMethod: "Metodo de Pago:", newEmailLabel: "Nuevo Email:", newPassLabel: "Nueva Contraseña (Opcional):", currentPassLabel: "* Contraseña ACTUAL (Requerida):", sellerLabel: "Vendedor", catLabel: "Categoria", emptyCart: "El carrito esta vacio.", userHolder: "Usuario", passHolder: "Contraseña", emailHolder: "Email (Obligatorio)", itemNameHolder: "Nombre", itemCatHolder: "Categoria", itemPriceHolder: "Precio", itemImgHolder: "URL Imagen", itemDescHolder: "Descripcion del articulo...", cardNum: "Numero Tarjeta (12 digitos)", vehicleHolder: "Vehiculo (Marca y Modelo)", descHolder: "Describe el daño o las modificaciones requeridas...", benefitsTitle: "Ventajas de Unirte", benefit1: "Vender tus propios articulos en el Mercado.", benefit2: "Comprar equipamiento exclusivo.", benefit3: "Subir fotos a la Galeria.", benefit4: "Acceso a descuentos exclusivos.", benefit5: "Bono exclusivo del 20% de bienvenida en tu primera compra.", continueRegisterBtn: "Continuar al Registro", footerPrivacy: "Protocolos de Privacidad y Terminos", footerCookiesTitle: "Uso de Cookies Activo", footerCookiesInfo: "Nota: Usamos cookies indispensables.", seeMoreBtn: "Ver todos los articulos", seeLessBtn: "Ver menos", chatTitle: "Soporte Tactico", chatWelcome: "Agente en linea. ¿En que puedo ayudarte hoy?", chatInput: "Escribe tu mensaje...", chatSendBtn: "ENVIAR",
+            discountsMenu: "Mis Descuentos", discountsSubtitle: "Aumenta tu rango realizando compras.", discountPlaceholder: "Codigo de descuento", applyCodeBtn: "Aplicar", noDiscounts: "Aun no tienes descuentos. ¡Realiza compras en el Mercado para subir de nivel y desbloquear codigos tacticos!",
             welcomeDiscount: "20% de descuento en tu primer pedido.", bronze: "10% de descuento en la tienda.", silver: "15% de descuento en la tienda.", gold: "20% de descuento en la tienda.", elite: "25% de descuento absoluto.", historyMenu: "Historial",
             forgotPass: "¿Has olvidado tu contraseña?", forgotTitle: "Recuperar Contraseña", resetBtn: "Cambiar Contraseña", backLogin: "Volver a Iniciar Sesion", forgotUserHolder: "Usuario", forgotEmailHolder: "Email de registro", forgotNewPassHolder: "Nueva Contraseña",
             payOptCard: "Tarjeta de Credito/Debito", payOptPayPal: "PayPal", payOptCrypto: "Criptomonedas", paypalHolder: "Email de PayPal asociado", cryptoHolder: "Direccion de tu Wallet (BTC/ETH)", cartTotalLabel: "Total:",
@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         en: {
             navHome: "Home", navMarket: "Buy/Sell", navRepair: "Workshop", navGallery: "Gallery", loginBtn: "Login", registerBtn: "Register", logoutBtn: "Logout", profileBtn: "My Profile", configBtn: "Settings", heroTitle: "Absolute precision. Tactical performance.", heroText: "Your vehicle is a tool. We prepare it for any mission.", 
-            heroBtn: "Request appointment", marketTitle: "1. Buy/Sell", uploadItemBtn: "+ Upload Item", repairTitle: "2. Repair / Modification Unit", sendBtn: "Send Request", galleryTitle: "Operations (Gallery)", uploadPhotoBtn: "+ Add Photo", cookiesTitle: "Tactical Notice (Cookies)", cookiesText: "We use cookies to improve our services accuracy. Accept?", cookiesAccept: "Affirmative, accept", loginTitle: "Restricted Access", noAccount: "No account?", registerHere: "Register here", registerTitle: "New Recruit", hasAccount: "Already have an account?", profileTitle: "Edit Profile", profileDesc: "Update your credentials.", saveChanges: "Save Changes", configTitle: "Settings", configDesc: "Select interface language.", applyBtn: "Apply", closeBtn: "Close", cancelBtn: "Cancel", uploadItemTitle: "Add to Market", publishBtn: "Publish", uploadPhotoTitle: "Add Photo", addBtn: "Add", cartTitle: "Cart", checkoutBtn: "Confirm Checkout", continueBtn: "Continue Shopping", privacyTitle: "Privacy Policy, Cookies & Legal Notice", selectService: "-- Select Service --", optRepair: "Technical Repair", optMod: "Modification & Upgrades", payMethod: "Payment Method:", newEmailLabel: "New Email:", newPassLabel: "New Password (Optional):", currentPassLabel: "* CURRENT Password (Required):", sellerLabel: "Seller", catLabel: "Category", emptyCart: "The cart is empty.", userHolder: "Username", passHolder: "Password", emailHolder: "Email (Required)", itemNameHolder: "Name", itemCatHolder: "Category", itemPriceHolder: "Price", itemImgHolder: "Image URL", itemDescHolder: "Item description...", cardNum: "Card Number (12 digits)", vehicleHolder: "Vehicle (Brand & Model)", descHolder: "Describe the damage...", benefitsTitle: "Join Advantages", benefit1: "Sell your own items.", benefit2: "Buy exclusive equipment.", benefit3: "Upload photos.", benefit4: "Access to exclusive discounts.", benefit5: "Exclusive 20% welcome bonus on your first purchase.", continueRegisterBtn: "Continue to Registration", footerPrivacy: "Privacy Protocols & Terms", footerCookiesTitle: "Active Cookie Usage", footerCookiesInfo: "Note: We use essential cookies.", seeMoreBtn: "See all items", seeLessBtn: "See less", chatTitle: "Tactical Support", chatWelcome: "Agent online. How can I help you today?", chatInput: "Type your message...",
+            heroBtn: "Request appointment", marketTitle: "1. Buy/Sell", uploadItemBtn: "+ Upload Item", repairTitle: "2. Repair / Modification Unit", sendBtn: "Send Request", galleryTitle: "Operations (Gallery)", uploadPhotoBtn: "+ Add Photo", cookiesTitle: "Tactical Notice (Cookies)", cookiesText: "We use cookies to improve our services accuracy. Accept?", cookiesAccept: "Affirmative, accept", loginTitle: "Restricted Access", noAccount: "No account?", registerHere: "Register here", registerTitle: "New Recruit", hasAccount: "Already have an account?", profileTitle: "Edit Profile", profileDesc: "Update your credentials.", saveChanges: "Save Changes", configTitle: "Settings", configDesc: "Select interface language.", applyBtn: "Apply", closeBtn: "Close", cancelBtn: "Cancel", uploadItemTitle: "Add to Market", publishBtn: "Publish", uploadPhotoTitle: "Add Photo", addBtn: "Add", cartTitle: "Cart", checkoutBtn: "Confirm Checkout", continueBtn: "Continue Shopping", privacyTitle: "Privacy Policy, Cookies & Legal Notice", selectService: "-- Select Service --", optRepair: "Technical Repair", optMod: "Modification & Upgrades", payMethod: "Payment Method:", newEmailLabel: "New Email:", newPassLabel: "New Password (Optional):", currentPassLabel: "* CURRENT Password (Required):", sellerLabel: "Seller", catLabel: "Category", emptyCart: "The cart is empty.", userHolder: "Username", passHolder: "Password", emailHolder: "Email (Required)", itemNameHolder: "Name", itemCatHolder: "Category", itemPriceHolder: "Price", itemImgHolder: "Image URL", itemDescHolder: "Item description...", cardNum: "Card Number (12 digits)", vehicleHolder: "Vehicle (Brand & Model)", descHolder: "Describe the damage...", benefitsTitle: "Join Advantages", benefit1: "Sell your own items.", benefit2: "Buy exclusive equipment.", benefit3: "Upload photos.", benefit4: "Access to exclusive discounts.", benefit5: "Exclusive 20% welcome bonus on your first purchase.", continueRegisterBtn: "Continue to Registration", footerPrivacy: "Privacy Protocols & Terms", footerCookiesTitle: "Active Cookie Usage", footerCookiesInfo: "Note: We use essential cookies.", seeMoreBtn: "See all items", seeLessBtn: "See less", chatTitle: "Tactical Support", chatWelcome: "Agent online. How can I help you today?", chatInput: "Type your message...", chatSendBtn: "SEND",
             discountsMenu: "My Discounts", discountsSubtitle: "Level up by making purchases.", discountPlaceholder: "Discount code", applyCodeBtn: "Apply", noDiscounts: "No discounts yet.",
             welcomeDiscount: "20% discount on your first order.", bronze: "10% store discount.", silver: "15% store discount.", gold: "20% store discount.", elite: "25% absolute discount.", historyMenu: "Order History",
             forgotPass: "Forgot your password?", forgotTitle: "Recover Password", resetBtn: "Reset Password", backLogin: "Back to Login", forgotUserHolder: "Username", forgotEmailHolder: "Registration Email", forgotNewPassHolder: "New Password",
@@ -134,6 +134,19 @@ document.addEventListener("DOMContentLoaded", () => {
         if(nav.navMenu) nav.navMenu.classList.remove("mobile-active");
     };
     document.querySelectorAll(".btn-close-popup").forEach(btn => btn.addEventListener("click", closeAllPopups));
+
+    // --- MENÚ RESPONSIVE MÓVIL ---
+    const mobileBtn = document.getElementById("mobile-menu-btn");
+    if(mobileBtn && nav.navMenu) {
+        mobileBtn.addEventListener("click", () => {
+            nav.navMenu.classList.toggle("mobile-active");
+        });
+    }
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            if(nav.navMenu) nav.navMenu.classList.remove("mobile-active");
+        });
+    });
 
     if (localStorage.getItem("tactical_cookies_accepted") === "true") {
         popups.cookie.classList.remove("active");
@@ -319,13 +332,11 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // --- MENSAJE DE ERROR DE LOGIN UNIFICADO ---
     document.getElementById("btn-login")?.addEventListener("click", () => {
         const userVal = document.getElementById("username").value.trim();
         const passVal = document.getElementById("password").value.trim();
         const userFound = usuariosRegistrados.find(u => u.user === userVal);
 
-        // Si el usuario NO se encuentra O la contraseña es incorrecta, lanza el mismo error genérico (Seguridad)
         if(!userFound || userFound.pass !== passVal) { 
             showAlert(currentLang === 'es' ? "Usuario o contraseña incorrectos." : "Incorrect username or password."); 
         } else {
@@ -718,7 +729,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // ====================================================================
-    // --- LÓGICA DEL CHATBOT BILINGÜE Y MANUAL DE INSTRUCCIONES ---
+    // --- LÓGICA DEL CHATBOT ESTRICTO (DEPENDE DEL IDIOMA DE LA WEB) ---
     // ====================================================================
     const chatToggle = document.getElementById('chat-toggle');
     const chatWindow = document.getElementById('chat-window');
@@ -752,78 +763,114 @@ document.addEventListener("DOMContentLoaded", () => {
             const cleanText = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); 
             let reply = "";
             let isHTML = false;
-            let name = usuarioActual ? usuarioActual.user : "Agente";
+            let name = usuarioActual ? usuarioActual.user : (currentLang === 'es' ? "Agente" : "Agent");
 
             const check = (keywords) => keywords.some(word => cleanText.includes(word));
             
-            const isEnglishQuery = check(["how", "what", "where", "can i", "my", "history", "buy", "sell", "thank", "hello", "hi ", "logout", "login", "sign", "refund", "return", "issue", "pass", "forgot", "order", "purchase"]);
-
-            if (isEnglishQuery) {
-                name = usuarioActual ? usuarioActual.user : "Agent";
+            // SI LA WEB ESTÁ EN INGLÉS, CONTESTA EN INGLÉS (ESTRICTO)
+            if (currentLang === 'en') {
+                if (check(["thank", "thx", "appreciate"])) {
+                    reply = `You're welcome, ${name}! Tactical Reparations is here for you. Anything else?`;
                 
-                if (check(["thank", "thx"])) {
-                    reply = `You're welcome, ${name}! Let me know if you need anything else.`;
                 } else if (check(["history", "past order", "previous order", "my order"])) {
                     reply = `To check your purchase and sales history, ${name}, click on your name at the top right corner and select 'Order History'. You will see all your past transactions and order codes there.`;
-                } else if (check(["claim", "return", "refund", "problem", "issue", "complain", "broken"])) {
-                    reply = `I'm sorry you have an issue, ${name}. Please fill out our form here: <a href="reclamaciones.html" style="color:var(--primary-color); font-weight:bold; text-decoration:underline;">Official Support Center</a>. You can find your Order ID in your History.`;
+                
+                } else if (check(["claim", "return", "refund", "problem", "issue", "complain", "broken", "reclamation", "wrong"])) {
+                    reply = `I'm sorry you are experiencing an issue, ${name}. Please fill out our form at the <a href="reclamaciones.html" style="color:var(--primary-color); font-weight:bold; text-decoration:underline;">Official Support Center</a>. Don't forget to include your Order ID!`;
                     isHTML = true;
+                
                 } else if (check(["repair", "fix", "workshop", "modify", "mechanic"])) {
                     reply = `For repairs or modifications, ${name}, please submit a request using the 'Workshop' form on our main page. A mechanic will contact you shortly.`;
+                
                 } else if (check(["gallery", "upload photo", "add photo", "picture"])) {
                     reply = `To upload a photo of your vehicle, ${name}, make sure you are logged in, scroll down to the 'Gallery' section, and click the '+ Add Photo' button.`;
+                
                 } else if (check(["discount", "coupon", "code", "promo", "level", "rank"])) {
                     reply = `You earn discounts by leveling up through purchases, ${name}. Click your name at the top right and select 'My Discounts' to see your rank and active codes. Note: Codes have a 14-day cooldown!`;
-                } else if (check(["buy", "purchase", "pay", "cart", "cost", "price"])) {
+                
+                } else if (check(["buy", "purchase", "pay", "cart", "cost", "price", "shop"])) {
                     reply = `To buy items, browse our 'Buy/Sell' section, add products to your cart, and click the Cart button at the top right to checkout. Make sure your card is exactly 12 digits!`;
+                
                 } else if (check(["sell", "add item", "post item"])) {
                     reply = `To sell your own items, ${name}, log in and go to the 'Buy/Sell' market, then click the '+ Upload Item' button.`;
+                
                 } else if (check(["pass", "forgot", "recover"])) {
                     reply = `If you forgot your password, ${name}, click the 'Login' button at the top right, and then click 'Forgot your password?'. Enter your username and registration email to reset it.`;
+                
                 } else if (check(["log out", "logout", "sign out"])) {
                     reply = `To log out, click your name at the top right of the screen and select 'Logout' in red.`;
+                
                 } else if (check(["sign up", "register", "create account", "join"])) {
                     reply = `To create an account, click the 'Login' button at the top right, then click 'Register here'. Registration allows you to buy, sell, and earn discounts!`;
-                } else if (check(["log in", "login", "sign in"])) {
+                
+                } else if (check(["log in", "login", "sign in", "enter"])) {
                     reply = `To log in, ${name}, click the 'Login' button in the top right navigation bar.`;
+                
+                } else if (check(["product", "info", "item", "engine", "motor", "tire", "suspension", "paint", "armor", "light", "brake", "seat", "glass", "catalog"])) {
+                    reply = `We offer top-tier tactical gear: Armored V8 Engines, Off-Road Tires, Reinforced Suspensions, Radar-Absorbent Paint, Door Armor, LED Lights, Ceramic Brakes, Recaro Seats, and Bulletproof Glass. Check the 'Buy/Sell' section!`;
+                
+                } else if (check(["how to use", "how this works", "what is this", "guide"])) {
+                    reply = `This is Tactical Reparations, ${name}. You can Buy/Sell tactical vehicle parts, request Workshop repairs, upload photos to the Gallery, and earn Discounts by leveling up your account!`;
+                
                 } else if (check(["hello", "hi", "hey", "greetings"])) {
                     reply = `Hello, ${name}! I can help you with your order history, uploading photos, buying/selling, or password recovery. What do you need?`;
+                
                 } else {
                     reply = `I am your virtual assistant, ${name}. I can guide you on how to check your history, buy, sell, upload photos, or manage claims. Could you rephrase your question?`;
                 }
 
             } else {
-                if (check(["gracia", "mersi"])) {
-                    reply = `¡Gracias a ti por confiar en Tactical Reparations, ${name}! Si necesitas algo mas, aqui me tienes.`;
+                // SI LA WEB ESTÁ EN ESPAÑOL, CONTESTA EN ESPAÑOL (ESTRICTO)
+                if (check(["gracia", "mersi", "agradezco"])) {
+                    reply = `¡Gracias a ti por confiar en Tactical Reparations, ${name}! ¿Puedo ayudarte con algo mas?`;
+                
                 } else if (check(["historial", "pedidos", "compras hechas", "he comprado", "pasado", "mis compras", "mis ventas"])) {
                     reply = `Para ver tu historial de compras y ventas, ${name}, haz clic en tu nombre arriba a la derecha y selecciona "Historial". Alli veras tus tickets y codigos de pedido.`;
-                } else if (check(["reclam", "recalam", "devolu", "queja", "sugeren", "problema", "roto", "mal"])) {
+                
+                } else if (check(["reclam", "recalam", "devolu", "queja", "sugeren", "problema", "roto", "mal", "incidencia"])) {
                     reply = `Siento mucho tu problema, ${name}. Por favor rellena el formulario en nuestro <a href="reclamaciones.html" style="color:var(--primary-color); font-weight:bold; text-decoration:underline;">Centro de Soporte Oficial</a>. Necesitaras el codigo de pedido que esta en tu Historial.`;
                     isHTML = true; 
+                
                 } else if (check(["reparar", "taller", "cita", "arreglo", "modificar", "mecanico"])) {
                     reply = `Para modificar o reparar tu vehiculo, ${name}, utiliza el formulario de la seccion 'Taller' indicando tu modelo. Te responderemos al instante.`;
+                
                 } else if (check(["galeria", "subir foto", "añadir foto", "imagen", "poner foto"])) {
                     reply = `Para subir una foto, ${name}, inicia sesion primero. Luego baja a la seccion 'Galeria' y pulsa el boton gris '+ Añadir Foto'.`;
+                
                 } else if (check(["cupon", "codigo", "descuento", "promocion", "nivel", "rango"])) {
                     reply = `Al comprar subes de nivel y ganas descuentos. Abre tu perfil arriba a la derecha y haz clic en "Mis Descuentos" para ver tu codigo. Recuerda que solo se pueden usar 1 vez cada 14 dias habiles.`;
-                } else if (check(["comprar", "carrito", "pagar", "precio", "cuesta", "adquirir"])) {
+                
+                } else if (check(["comprar", "carrito", "pagar", "precio", "cuesta", "adquirir", "tienda"])) {
                     reply = `Para comprar, ${name}, busca el articulo en el mercado y pulsa 'Añadir'. Luego ve al 'Carrito' arriba a la derecha para pagar. La tarjeta debe tener 12 digitos por motivos de seguridad del sistema.`;
+                
                 } else if (check(["vender", "subir articulo", "añadir articulo", "publicar"])) {
                     reply = `Para poner a la venta una pieza, ${name}, inicia sesion, ve a 'Compra/Venta' y pulsa el boton '+ Subir Articulo'.`;
+                
                 } else if (check(["cerrar", "salir", "desconectar", "apagar", "sesion"])) {
                     if (check(["iniciar", "entrar", "acceder", "loguear"])) {
                         reply = `Para iniciar sesion, ${name}, haz clic en el boton verde de "Iniciar Sesion" situado en la barra superior derecha.`;
                     } else {
                         reply = `Para cerrar tu sesion, ${name}, haz clic en el boton de arriba a la derecha que dice tu nombre y pulsa en "Cerrar Sesion" (en rojo).`;
                     }
+                
                 } else if (check(["olvida", "perdi", "recuperar", "contra"])) {
                     reply = `Para recuperar tu contraseña, ${name}, ve al boton de Iniciar Sesion y pincha en "¿Has olvidado tu contraseña?". Introduce tu usuario y correo de registro exactos para cambiarla.`;
+                
                 } else if (check(["registrar", "crear cuenta", "hacer cuenta", "ventaja", "beneficio"])) {
                     reply = `Registrarte te permite subir de nivel, conseguir codigos de descuento de hasta el 25%, vender piezas, ver tu historial y usar la Galeria. Haz clic en "Iniciar Sesion" y luego en "Registrate aqui".`;
+                
                 } else if (check(["iniciar", "entrar", "acceder", "loguear"])) {
                     reply = `Para iniciar sesion, ${name}, haz clic en el boton verde de "Iniciar Sesion" situado en la barra superior derecha.`;
+                
+                } else if (check(["producto", "info", "articulo", "motor", "neumatico", "rueda", "suspension", "pintura", "blindaje", "luce", "freno", "asiento", "cristal", "catalogo"])) {
+                    reply = `Ofrecemos equipo tactico de elite: Motores V8 Blindados, Neumaticos Off-Road, Suspension Reforzada, Pintura Absorbe-Radar, Blindaje, Luces LED, Frenos Ceramicos, Asientos Recaro y Cristales Antibalas. ¡Visita 'Compra/Venta'!`;
+                
+                } else if (check(["como se usa", "como funciona", "que es esto", "guia"])) {
+                    reply = `Esto es Tactical Reparations, ${name}. Aqui puedes Comprar/Vender piezas tacticas, pedir cita en el Taller, subir fotos a la Galeria y ganar Descuentos subiendo de nivel con tus compras.`;
+                
                 } else if(check(["hola", "buenas", "ey", "saludo", "que tal"])) {
                     reply = `¡Hola, ${name}! Preguntame como ver tu historial, subir una foto, usar codigos de descuento, recuperar contraseñas o hacer devoluciones.`;
+                
                 } else {
                     reply = `Soy la IA de soporte, ${name}. Entiendo preguntas sobre como ver tu historial, subir fotos a la galeria, aplicar cupones, el taller o reclamaciones. ¿Me lo dices de otra manera?`;
                 }
