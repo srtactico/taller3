@@ -6,7 +6,7 @@
     <title>Soporte y Reclamaciones - Tactical Reparations</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        .claims-container { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 120px 20px 40px 20px; }
+        .claims-container { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 140px 20px 40px 20px; }
         .claims-box { background: var(--bg-panel); padding: 40px; border: 1px solid #333; border-radius: 8px; max-width: 600px; width: 100%; border-top: 4px solid var(--primary-color); box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .claims-box h1 { margin-bottom: 10px; color: var(--primary-color); }
         .claims-box p { color: var(--text-muted); margin-bottom: 25px; line-height: 1.5; }
@@ -14,7 +14,7 @@
 </head>
 <body>
 
-    <header style="position: absolute; top: 20px; background: transparent; border: none; width: 100%;">
+    <header style="position: absolute; top: 40px; background: transparent; border: none; width: 100%;">
         <div class="container header-content" style="justify-content: center;">
             <div class="logo-text">TACTICAL <span>REPARATIONS</span></div>
         </div>
@@ -51,7 +51,7 @@
         document.getElementById("form-reclamaciones").addEventListener("submit", (e) => {
             e.preventDefault();
             alert("Formulario enviado con exito. El equipo de Tactical Reparations se pondra en contacto contigo pronto.");
-            window.location.href = "index.html"; 
+            window.location.href = "index.html#reparacion"; // Te devuelve directo a la seccion del taller
         });
     </script>
 </body>
