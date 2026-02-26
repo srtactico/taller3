@@ -73,22 +73,27 @@
         <div class="popup-box">
             <h2 data-i18n="profileTitle">Editar Perfil</h2>
             <p style="font-size: 0.9rem; color: var(--text-muted);" data-i18n="profileDesc">Actualiza tus credenciales.</p>
-            
             <label style="display:block; text-align:left; color:var(--primary-color); margin-bottom:5px;" data-i18n="newEmailLabel">Nuevo Email:</label>
             <input type="email" id="edit-email" class="input-field">
             <label style="display:block; text-align:left; color:var(--primary-color); margin-bottom:5px;" data-i18n="newPassLabel">Nueva Contraseña (Opcional):</label>
             <input type="password" id="edit-new-pass" class="input-field">
-            
-            <hr style="border: 0; border-top: 1px solid #333; margin: 20px 0;">
-            <h3 style="color:var(--primary-color); margin-bottom:10px; font-size:1.1rem; text-align: left;" data-i18n="discountsTitle">Mis Descuentos</h3>
-            <div id="user-discounts-container" style="background: #111; padding: 15px; border-radius: 4px; color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; text-align: left; line-height: 1.5;">
-                </div>
-
             <hr style="border: 0; border-top: 1px solid #333; margin: 20px 0;">
             <label style="display:block; text-align:left; color:#ff4c4c; margin-bottom:5px;" data-i18n="currentPassLabel">* Contraseña ACTUAL (Requerida):</label>
             <input type="password" id="edit-current-pass" class="input-field" style="border-color: #ff4c4c;">
             <button id="btn-save-profile" class="btn-primary" data-i18n="saveChanges">Guardar Cambios</button>
             <button class="btn-secondary btn-close-popup" style="width: 100%;" data-i18n="cancelBtn">Cancelar</button>
+        </div>
+    </div>
+
+    <div id="discounts-popup" class="overlay">
+        <div class="popup-box">
+            <h2 data-i18n="discountsMenu" style="margin-bottom: 5px;">Mis Descuentos</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;" data-i18n="discountsSubtitle">Aumenta tu nivel realizando compras.</p>
+            
+            <div id="user-discounts-container" style="background: #111; padding: 20px; border-radius: 6px; border: 1px solid #333; text-align: left; line-height: 1.6; margin-bottom: 20px;">
+                </div>
+
+            <button class="btn-secondary btn-close-popup" style="width: 100%;" data-i18n="closeBtn">Cerrar</button>
         </div>
     </div>
 
@@ -130,24 +135,40 @@
     <div id="cart-popup" class="overlay">
         <div class="popup-box modal-box" style="max-width: 600px;">
             <h2 data-i18n="cartTitle">Carrito</h2>
-            <div id="cart-items-container" style="max-height: 250px; overflow-y: auto; text-align: left; margin: 20px 0;"></div>
+            <div id="cart-items-container" style="max-height: 200px; overflow-y: auto; text-align: left; margin: 15px 0;"></div>
+            
+            <div id="discount-section" style="display: flex; gap: 10px; margin-bottom: 15px;">
+                <input type="text" id="discount-code" placeholder="Código de descuento" data-i18n-placeholder="discountPlaceholder" class="input-field" style="margin-bottom: 0;">
+                <button id="btn-apply-discount" class="btn-secondary" style="margin-top: 0; padding: 10px 20px;" data-i18n="applyCodeBtn">Aplicar</button>
+            </div>
+
             <div style="text-align: right; font-size: 1.3rem; margin-bottom: 20px; border-top: 1px solid #333; padding-top: 10px;">
-                Total: <span id="cart-total-price" style="color: var(--primary-color); font-weight: bold;">0€</span>
+                Total: <span id="cart-total-price" style="color: var(--primary-color); font-weight: bold; transition: all 0.3s;">0€</span>
+                <span id="cart-discounted-price" style="color: #ff4c4c; font-weight: bold; margin-left:10px; display:none;">0€</span>
             </div>
             
             <div id="payment-section" style="text-align: left; margin-bottom: 20px; display: none;">
                 <h4 style="margin-bottom: 10px; color: var(--text-main);" data-i18n="payMethod">Método de Pago:</h4>
                 <select id="payment-method" class="input-field">
-                    <option value="tarjeta">💳 Tarjeta</option>
+                    <option value="tarjeta">💳 Tarjeta de Crédito/Débito</option>
                     <option value="paypal">🅿️ PayPal</option>
-                    <option value="cripto">🪙 Cripto</option>
+                    <option value="cripto">🪙 Criptomonedas</option>
                 </select>
+                
                 <div id="card-details" style="display: block; margin-top: 10px;">
-                    <input type="text" placeholder="Número Tarjeta" data-i18n-placeholder="cardNum" class="input-field" maxlength="16">
+                    <input type="text" id="card-num" placeholder="Número Tarjeta (16 dígitos)" data-i18n-placeholder="cardNum" class="input-field" maxlength="16">
                     <div style="display: flex; gap: 10px;">
-                        <input type="text" placeholder="MM/AA" class="input-field" style="width: 50%;" maxlength="5">
-                        <input type="password" placeholder="CVC" class="input-field" style="width: 50%;" maxlength="3">
+                        <input type="text" id="card-date" placeholder="MM/AA" class="input-field" style="width: 50%;" maxlength="5">
+                        <input type="password" id="card-cvc" placeholder="CVC" class="input-field" style="width: 50%;" maxlength="3">
                     </div>
+                </div>
+
+                <div id="paypal-details" style="display: none; margin-top: 10px;">
+                    <input type="email" id="paypal-email" placeholder="Email de PayPal asociado" class="input-field">
+                </div>
+
+                <div id="cripto-details" style="display: none; margin-top: 10px;">
+                    <input type="text" id="cripto-wallet" placeholder="Dirección de tu Wallet (BTC/ETH)" class="input-field">
                 </div>
             </div>
 
@@ -173,6 +194,7 @@
                         <button id="btn-user-menu-trigger" class="btn-secondary" style="padding: 8px 15px; font-size: 0.9rem; border-color: var(--primary-color); color: var(--primary-color);">Agente</button>
                         <div id="user-dropdown-content" class="dropdown-content">
                             <a href="#" id="btn-menu-profile" data-i18n="profileBtn">Mi Perfil</a>
+                            <a href="#" id="btn-menu-discounts" data-i18n="discountsMenu">Mis Descuentos</a>
                             <a href="#" id="btn-menu-config" data-i18n="configBtn">Configuración</a>
                             <hr style="border:0; border-top:1px solid #333; margin: 5px 0;">
                             <a href="#" id="btn-menu-logout" style="color: #ff4c4c;" data-i18n="logoutBtn">Cerrar Sesión</a>
