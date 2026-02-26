@@ -24,7 +24,7 @@ body { background-color: var(--bg-dark); color: var(--text-main); overflow-x: hi
 .popup-box h2 { margin-bottom: 15px; }
 .popup-box p { margin-bottom: 20px; color: var(--text-muted); line-height: 1.5; }
 
-#privacy-popup .modal-box, #cart-popup .modal-box, #privacy-policy-popup .modal-box { max-width: 800px; max-height: 80vh; overflow-y: auto; text-align: left; }
+#privacy-popup .modal-box, #cart-popup .modal-box, #privacy-policy-popup .modal-box, #history-popup .modal-box { max-width: 800px; max-height: 80vh; overflow-y: auto; text-align: left; }
 #privacy-popup h3, #privacy-policy-popup h3 { color: var(--primary-color); margin-top: 15px; margin-bottom: 5px; }
 
 .input-field { width: 100%; padding: 12px; margin-bottom: 15px; background: #000; border: 1px solid #333; color: white; border-radius: 4px; }
@@ -37,9 +37,15 @@ body { background-color: var(--bg-dark); color: var(--text-main); overflow-x: hi
 .btn-secondary:hover { background: rgba(122, 179, 23, 0.1); }
 
 header { background: rgba(10, 10, 10, 0.95); position: fixed; width: 100%; z-index: 100; border-bottom: 1px solid #222; padding: 15px 0; }
-.header-content { display: flex; justify-content: space-between; align-items: center; }
+.header-content { display: flex; justify-content: space-between; align-items: center; position: relative; }
+
+/* Menú de Navegación */
+.nav-menu { display: flex; align-items: center; gap: 25px; }
 .nav-link { color: var(--text-main); text-decoration: none; font-weight: 600; font-size: 0.9rem; }
 .nav-link:hover { color: var(--primary-color); }
+
+/* Botón Hamburguesa Móvil (oculto en PC) */
+.menu-toggle { display: none; background: transparent; border: none; color: var(--primary-color); font-size: 32px; cursor: pointer; }
 
 .dropdown-content { display: none; position: absolute; top: 100%; right: 0; background-color: var(--bg-panel); min-width: 160px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5); z-index: 1; border: 1px solid #333; border-radius: 4px; text-align: left; }
 .dropdown-content a { color: var(--text-main); padding: 12px 16px; text-decoration: none; display: block; font-size: 0.9rem; }
@@ -79,33 +85,12 @@ section { padding: 100px 0 50px 0; text-align: center; }
 
 .card h3 { color: var(--primary-color); font-size: 1.1rem; margin-top: 10px; }
 
-.img-container {
-    width: 100%;
-    height: 180px;
-    border-radius: 4px;
-    margin-bottom: 5px;
-    overflow: hidden;
-}
+.img-container { width: 100%; height: 180px; border-radius: 4px; margin-bottom: 5px; overflow: hidden; }
+.img-container img { width: 100%; height: 100%; object-fit: cover; }
 
-.img-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+.card-details-hidden { max-height: 0; opacity: 0; transition: all 0.5s ease-in-out; }
 
-.card-details-hidden {
-    max-height: 0;
-    opacity: 0;
-    transition: all 0.5s ease-in-out;
-}
-
-.card:hover .card-details-hidden {
-    max-height: 500px;
-    opacity: 1;
-    margin-top: 15px;
-    padding-top: 15px; 
-    border-top: 1px solid #333;
-}
+.card:hover .card-details-hidden { max-height: 500px; opacity: 1; margin-top: 15px; padding-top: 15px; border-top: 1px solid #333; }
 
 /* FORMULARIOS */
 .tactical-form { max-width: 600px; margin: 30px auto 0 auto; display: flex; flex-direction: column; gap: 15px; text-align: left; }
@@ -114,22 +99,8 @@ section { padding: 100px 0 50px 0; text-align: center; }
 
 /* CARRUSEL */
 .swiper { width: 100%; padding-top: 30px; padding-bottom: 50px; }
-.swiper-slide { 
-    width: 300px; 
-    height: 400px; 
-    border-radius: 12px; 
-    border: 2px solid #333; 
-    overflow: hidden; 
-    background: #111 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" fill="none" stroke="%237ab317" stroke-width="8" r="35" stroke-dasharray="164 56"><animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;360 50 50"/></circle></svg>') center/40px no-repeat; 
-    user-select: none; 
-}
-.swiper-slide img { 
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
-    -webkit-user-drag: none; 
-    user-select: none;
-}
+.swiper-slide { width: 300px; height: 400px; border-radius: 12px; border: 2px solid #333; overflow: hidden; background: #111 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" fill="none" stroke="%237ab317" stroke-width="8" r="35" stroke-dasharray="164 56"><animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;360 50 50"/></circle></svg>') center/40px no-repeat; user-select: none; }
+.swiper-slide img { width: 100%; height: 100%; object-fit: cover; -webkit-user-drag: none; user-select: none; }
 .swiper-button-next, .swiper-button-prev { color: var(--primary-color) !important; }
 .swiper-pagination-bullet-active { background: var(--primary-color) !important; }
 .swiper-pagination-bullet { background: #555; opacity: 1; }
@@ -157,3 +128,40 @@ footer { text-align: center; padding: 30px 0; background: #050505; color: #555; 
 #chat-input-area { display: flex; border-top: 1px solid #333; padding: 10px; background: #0a0a0a;}
 #chat-input-area input { flex-grow: 1; padding: 10px; background: #222; border: 1px solid #444; color: white; border-radius: 4px; outline:none; }
 #chat-input-area button { background: var(--primary-color); border: none; padding: 10px 15px; margin-left: 8px; cursor: pointer; border-radius: 4px; font-weight: bold; color:#000;}
+
+/* ========================================= */
+/* --- RESPONSIVE DESIGN (Móvil, Tablet, TV) --- */
+/* ========================================= */
+
+/* Tablet y Móvil */
+@media (max-width: 900px) {
+    .menu-toggle { display: block; }
+    
+    .nav-menu {
+        display: none; /* Oculto por defecto en móvil */
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(10, 10, 10, 0.98);
+        padding: 20px 0;
+        border-top: 2px solid var(--primary-color);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.8);
+    }
+    
+    .nav-menu.mobile-active { display: flex; }
+    
+    .dropdown-content { position: static; box-shadow: none; border: none; border-top: 1px solid #333; margin-top: 10px; background: #050505; }
+    .hero-content h1 { font-size: 2.2rem; }
+    
+    #tactical-chat-widget { bottom: 15px; right: 15px; }
+    #chat-window { width: 300px; height: 380px; }
+}
+
+/* Smart TV y Pantallas Gigantes */
+@media (min-width: 1600px) {
+    .container { max-width: 1500px; }
+    .hero-content h1 { font-size: 4rem; }
+    .hero-content p { font-size: 1.5rem; max-width: 800px; }
+}

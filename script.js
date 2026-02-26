@@ -24,9 +24,26 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // --- MENÚ RESPONSIVE MÓVIL ---
+    const mobileBtn = document.getElementById("mobile-menu-btn");
+    const navMenu = document.getElementById("nav-menu");
+    
+    if(mobileBtn && navMenu) {
+        mobileBtn.addEventListener("click", () => {
+            navMenu.classList.toggle("mobile-active");
+        });
+    }
+
+    // Cerrar menú móvil al hacer click en un enlace normal
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            if(navMenu) navMenu.classList.remove("mobile-active");
+        });
+    });
+
     // --- SISTEMA DE ALERTAS PERSONALIZADO ---
     const showCustomAlert = (msg, callback) => {
-        document.getElementById("custom-alert-message").innerHTML = msg; // innerHTML para soportar saltos de linea
+        document.getElementById("custom-alert-message").innerHTML = msg; 
         const alertBox = document.getElementById("custom-alert");
         alertBox.classList.add("active");
         
@@ -81,18 +98,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const translations = {
         es: {
             navHome: "Inicio", navMarket: "Compra/Venta", navRepair: "Taller", navGallery: "Galeria", loginBtn: "Iniciar Sesion", registerBtn: "Registrar Cuenta", logoutBtn: "Cerrar Sesion", profileBtn: "Mi Perfil", configBtn: "Configuracion", privacyMenuBtn: "Condiciones de Privacidad", heroTitle: "Precision absoluta. Rendimiento tactico.", heroText: "Tu vehiculo no es solo un transporte; es tu mejor herramienta.", 
-            heroBtn: "Solicitar cita previa", marketTitle: "1. Compra/Venta", uploadItemBtn: "+ Subir Articulo", repairTitle: "2. Unidad de Reparacion / Modificacion", sendBtn: "Enviar Solicitud", galleryTitle: "Operaciones (Galeria)", uploadPhotoBtn: "+ Añadir Foto", cookiesTitle: "Aviso Tactico (Cookies)", cookiesText: "Utilizamos cookies para mejorar la precision de nuestros servicios. ¿Aceptas?", cookiesAccept: "Afirmativo, aceptar", loginTitle: "Acceso Restringido", noAccount: "¿No tienes cuenta?", registerHere: "Registrate aqui", registerTitle: "Nuevo Recluta", hasAccount: "¿Ya tienes cuenta?", profileTitle: "Editar Perfil", profileDesc: "Actualiza tus credenciales.", saveChanges: "Guardar Cambios", configTitle: "Configuracion", configDesc: "Selecciona el idioma.", applyBtn: "Aplicar", closeBtn: "Cerrar", cancelBtn: "Cancelar", uploadItemTitle: "Añadir al Mercado", publishBtn: "Publicar", uploadPhotoTitle: "Añadir Foto", addBtn: "Añadir", cartTitle: "Carrito", checkoutBtn: "Confirmar Transaccion", continueBtn: "Seguir Comprando", privacyTitle: "Protocolos de Privacidad y Terminos", selectService: "-- Selecciona el Servicio --", optRepair: "Reparacion Tecnica", optMod: "Modificacion y Mejoras", payMethod: "Metodo de Pago:", newEmailLabel: "Nuevo Email:", newPassLabel: "Nueva Contraseña (Opcional):", currentPassLabel: "* Contraseña ACTUAL (Requerida):", sellerLabel: "Vendedor", catLabel: "Categoria", emptyCart: "El carrito esta vacio.", userHolder: "Usuario", passHolder: "Contraseña", emailHolder: "Email (Obligatorio)", itemNameHolder: "Nombre", itemCatHolder: "Categoria", itemPriceHolder: "Precio", itemImgHolder: "URL Imagen", itemDescHolder: "Descripcion del articulo...", cardNum: "Numero Tarjeta (12 digitos)", vehicleHolder: "Vehiculo (Marca y Modelo)", descHolder: "Describe el daño o las modificaciones requeridas...", benefitsTitle: "Ventajas de Unirte", benefit1: "Vender tus propios articulos en el Mercado.", benefit2: "Comprar equipamiento exclusivo.", benefit3: "Subir fotos a la Galeria.", benefit4: "Acceso a descuentos exclusivos.", continueRegisterBtn: "Continuar al Registro", policyTitle: "Politica de Privacidad y Cookies", footerPrivacy: "Protocolos de Privacidad y Terminos", footerCookiesTitle: "Uso de Cookies Activo", footerCookiesInfo: "Nota: Usamos cookies indispensables.", seeMoreBtn: "Ver todos los articulos", seeLessBtn: "Ver menos", chatTitle: "Soporte Tactico", chatWelcome: "Agente en linea. ¿En que puedo ayudarte hoy?", chatInput: "Escribe tu mensaje...",
-            discountsMenu: "Mis Descuentos", discountsSubtitle: "Aumenta tu rango realizando compras.", discountPlaceholder: "Codigo de descuento", applyCodeBtn: "Aplicar", noDiscounts: "Aun no tienes descuentos. ¡Realiza compras en el Mercado para subir de nivel y desbloquear codigos tacticos!",
-            bronze: "10% de descuento en la tienda.", silver: "15% de descuento en la tienda.", gold: "20% de descuento en la tienda.", elite: "25% de descuento absoluto.", historyMenu: "Historial",
+            heroBtn: "Solicitar cita previa", marketTitle: "1. Compra/Venta", uploadItemBtn: "+ Subir Articulo", repairTitle: "2. Unidad de Reparacion / Modificacion", sendBtn: "Enviar Solicitud", galleryTitle: "Operaciones (Galeria)", uploadPhotoBtn: "+ Añadir Foto", cookiesTitle: "Aviso Tactico (Cookies)", cookiesText: "Utilizamos cookies para mejorar la precision de nuestros servicios. ¿Aceptas?", cookiesAccept: "Afirmativo, aceptar", loginTitle: "Acceso Restringido", noAccount: "¿No tienes cuenta?", registerHere: "Registrate aqui", registerTitle: "Nuevo Recluta", hasAccount: "¿Ya tienes cuenta?", profileTitle: "Editar Perfil", profileDesc: "Actualiza tus credenciales.", saveChanges: "Guardar Cambios", configTitle: "Configuracion", configDesc: "Selecciona el idioma.", applyBtn: "Aplicar", closeBtn: "Cerrar", cancelBtn: "Cancelar", uploadItemTitle: "Añadir al Mercado", publishBtn: "Publicar", uploadPhotoTitle: "Añadir Foto", addBtn: "Añadir", cartTitle: "Carrito", checkoutBtn: "Confirmar Transaccion", continueBtn: "Seguir Comprando", privacyTitle: "Protocolos de Privacidad y Terminos", selectService: "-- Selecciona el Servicio --", optRepair: "Reparacion Tecnica", optMod: "Modificacion y Mejoras", payMethod: "Metodo de Pago:", newEmailLabel: "Nuevo Email:", newPassLabel: "Nueva Contraseña (Opcional):", currentPassLabel: "* Contraseña ACTUAL (Requerida):", sellerLabel: "Vendedor", catLabel: "Categoria", emptyCart: "El carrito esta vacio.", userHolder: "Usuario", passHolder: "Contraseña", emailHolder: "Email (Obligatorio)", itemNameHolder: "Nombre", itemCatHolder: "Categoria", itemPriceHolder: "Precio", itemImgHolder: "URL Imagen", itemDescHolder: "Descripcion del articulo...", cardNum: "Numero Tarjeta (12 digitos)", vehicleHolder: "Vehiculo (Marca y Modelo)", descHolder: "Describe el daño o las modificaciones requeridas...", benefitsTitle: "Ventajas de Unirte", benefit1: "Vender tus propios articulos en el Mercado.", benefit2: "Comprar equipamiento exclusivo.", benefit3: "Subir fotos a la Galeria.", benefit4: "Acceso a descuentos exclusivos.", benefit5: "Bono exclusivo del 20% de bienvenida en tu primera compra.", continueRegisterBtn: "Continuar al Registro", policyTitle: "Politica de Privacidad y Cookies", footerPrivacy: "Protocolos de Privacidad y Terminos", footerCookiesTitle: "Uso de Cookies Activo", footerCookiesInfo: "Nota: Usamos cookies indispensables.", seeMoreBtn: "Ver todos los articulos", seeLessBtn: "Ver menos", chatTitle: "Soporte Tactico", chatWelcome: "Agente en linea. ¿En que puedo ayudarte hoy?", chatInput: "Escribe tu mensaje...",
+            discountsMenu: "Mis Descuentos", discountsSubtitle: "Aumenta tu rango realizando compras.", discountPlaceholder: "Codigo de descuento", applyCodeBtn: "Aplicar", noDiscounts: "Aun no tienes descuentos.",
+            welcomeDiscount: "20% de descuento en tu primer pedido.", bronze: "10% de descuento en la tienda.", silver: "15% de descuento en la tienda.", gold: "20% de descuento en la tienda.", elite: "25% de descuento absoluto.", historyMenu: "Historial",
             forgotPass: "¿Has olvidado tu contraseña?", forgotTitle: "Recuperar Contraseña", resetBtn: "Cambiar Contraseña", backLogin: "Volver a Iniciar Sesion", forgotUserHolder: "Usuario", forgotEmailHolder: "Email de registro", forgotNewPassHolder: "Nueva Contraseña",
             payOptCard: "Tarjeta de Credito/Debito", payOptPayPal: "PayPal", payOptCrypto: "Criptomonedas", paypalHolder: "Email de PayPal asociado", cryptoHolder: "Direccion de tu Wallet (BTC/ETH)", cartTotalLabel: "Total:",
             historyDesc: "Tus operaciones en Tactical Reparations.", historyMyPurchases: "Mis Compras", historyMySales: "Mis Ventas (Mercado)", alertTitle: "Aviso del Sistema", alertBtn: "ENTENDIDO", footerContact: "Contacto:"
         },
         en: {
             navHome: "Home", navMarket: "Buy/Sell", navRepair: "Workshop", navGallery: "Gallery", loginBtn: "Login", registerBtn: "Register", logoutBtn: "Logout", profileBtn: "My Profile", configBtn: "Settings", heroTitle: "Absolute precision. Tactical performance.", heroText: "Your vehicle is a tool. We prepare it for any mission.", 
-            heroBtn: "Request appointment", marketTitle: "1. Buy/Sell", uploadItemBtn: "+ Upload Item", repairTitle: "2. Repair / Modification Unit", sendBtn: "Send Request", galleryTitle: "Operations (Gallery)", uploadPhotoBtn: "+ Add Photo", cookiesTitle: "Tactical Notice (Cookies)", cookiesText: "We use cookies to improve our services accuracy. Accept?", cookiesAccept: "Affirmative, accept", loginTitle: "Restricted Access", noAccount: "No account?", registerHere: "Register here", registerTitle: "New Recruit", hasAccount: "Already have an account?", profileTitle: "Edit Profile", profileDesc: "Update your credentials.", saveChanges: "Save Changes", configTitle: "Settings", configDesc: "Select interface language.", applyBtn: "Apply", closeBtn: "Close", cancelBtn: "Cancel", uploadItemTitle: "Add to Market", publishBtn: "Publish", uploadPhotoTitle: "Add Photo", addBtn: "Add", cartTitle: "Cart", checkoutBtn: "Confirm Checkout", continueBtn: "Continue Shopping", privacyTitle: "Privacy Protocols & Terms", selectService: "-- Select Service --", optRepair: "Technical Repair", optMod: "Modification & Upgrades", payMethod: "Payment Method:", newEmailLabel: "New Email:", newPassLabel: "New Password (Optional):", currentPassLabel: "* CURRENT Password (Required):", sellerLabel: "Seller", catLabel: "Category", emptyCart: "The cart is empty.", userHolder: "Username", passHolder: "Password", emailHolder: "Email (Required)", itemNameHolder: "Name", itemCatHolder: "Category", itemPriceHolder: "Price", itemImgHolder: "Image URL", itemDescHolder: "Item description...", cardNum: "Card Number (12 digits)", vehicleHolder: "Vehicle (Brand & Model)", descHolder: "Describe the damage...", benefitsTitle: "Join Advantages", benefit1: "Sell your own items.", benefit2: "Buy exclusive equipment.", benefit3: "Upload photos.", benefit4: "Access to exclusive discounts.", continueRegisterBtn: "Continue to Registration", policyTitle: "Privacy Policy & Cookies", footerPrivacy: "Privacy Protocols & Terms", footerCookiesTitle: "Active Cookie Usage", footerCookiesInfo: "Note: We use essential cookies.", seeMoreBtn: "See all items", seeLessBtn: "See less", chatTitle: "Tactical Support", chatWelcome: "Agent online. How can I help you today?", chatInput: "Type your message...",
-            discountsMenu: "My Discounts", discountsSubtitle: "Level up by making purchases.", discountPlaceholder: "Discount code", applyCodeBtn: "Apply", noDiscounts: "No discounts yet. Make purchases in the Market to level up and unlock tactical codes!",
-            bronze: "10% store discount.", silver: "15% store discount.", gold: "20% store discount.", elite: "25% absolute discount.", historyMenu: "Order History",
+            heroBtn: "Request appointment", marketTitle: "1. Buy/Sell", uploadItemBtn: "+ Upload Item", repairTitle: "2. Repair / Modification Unit", sendBtn: "Send Request", galleryTitle: "Operations (Gallery)", uploadPhotoBtn: "+ Add Photo", cookiesTitle: "Tactical Notice (Cookies)", cookiesText: "We use cookies to improve our services accuracy. Accept?", cookiesAccept: "Affirmative, accept", loginTitle: "Restricted Access", noAccount: "No account?", registerHere: "Register here", registerTitle: "New Recruit", hasAccount: "Already have an account?", profileTitle: "Edit Profile", profileDesc: "Update your credentials.", saveChanges: "Save Changes", configTitle: "Settings", configDesc: "Select interface language.", applyBtn: "Apply", closeBtn: "Close", cancelBtn: "Cancel", uploadItemTitle: "Add to Market", publishBtn: "Publish", uploadPhotoTitle: "Add Photo", addBtn: "Add", cartTitle: "Cart", checkoutBtn: "Confirm Checkout", continueBtn: "Continue Shopping", privacyTitle: "Privacy Protocols & Terms", selectService: "-- Select Service --", optRepair: "Technical Repair", optMod: "Modification & Upgrades", payMethod: "Payment Method:", newEmailLabel: "New Email:", newPassLabel: "New Password (Optional):", currentPassLabel: "* CURRENT Password (Required):", sellerLabel: "Seller", catLabel: "Category", emptyCart: "The cart is empty.", userHolder: "Username", passHolder: "Password", emailHolder: "Email (Required)", itemNameHolder: "Name", itemCatHolder: "Category", itemPriceHolder: "Price", itemImgHolder: "Image URL", itemDescHolder: "Item description...", cardNum: "Card Number (12 digits)", vehicleHolder: "Vehicle (Brand & Model)", descHolder: "Describe the damage...", benefitsTitle: "Join Advantages", benefit1: "Sell your own items.", benefit2: "Buy exclusive equipment.", benefit3: "Upload photos.", benefit4: "Access to exclusive discounts.", benefit5: "Exclusive 20% welcome bonus on your first purchase.", continueRegisterBtn: "Continue to Registration", policyTitle: "Privacy Policy & Cookies", footerPrivacy: "Privacy Protocols & Terms", footerCookiesTitle: "Active Cookie Usage", footerCookiesInfo: "Note: We use essential cookies.", seeMoreBtn: "See all items", seeLessBtn: "See less", chatTitle: "Tactical Support", chatWelcome: "Agent online. How can I help you today?", chatInput: "Type your message...",
+            discountsMenu: "My Discounts", discountsSubtitle: "Level up by making purchases.", discountPlaceholder: "Discount code", applyCodeBtn: "Apply", noDiscounts: "No discounts yet.",
+            welcomeDiscount: "20% discount on your first order.", bronze: "10% store discount.", silver: "15% store discount.", gold: "20% store discount.", elite: "25% absolute discount.", historyMenu: "Order History",
             forgotPass: "Forgot your password?", forgotTitle: "Recover Password", resetBtn: "Reset Password", backLogin: "Back to Login", forgotUserHolder: "Username", forgotEmailHolder: "Registration Email", forgotNewPassHolder: "New Password",
             payOptCard: "Credit/Debit Card", payOptPayPal: "PayPal", payOptCrypto: "Cryptocurrency", paypalHolder: "Linked PayPal Email", cryptoHolder: "Wallet Address (BTC/ETH)", cartTotalLabel: "Total:",
             historyDesc: "Your operations at Tactical Reparations.", historyMyPurchases: "My Purchases", historyMySales: "My Sales (Market)", alertTitle: "System Notice", alertBtn: "UNDERSTOOD", footerContact: "Contact:"
@@ -110,10 +127,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         document.getElementById("language-selector").value = lang;
         if(mercadoActual) renderizarMercado();
-        actualizarCarritoUI(); // Refresca los textos dinámicos del carrito
+        actualizarCarritoUI(); 
     };
 
-    const closeAllPopups = () => Object.values(popups).forEach(p => p.classList.remove("active"));
+    const closeAllPopups = () => {
+        Object.values(popups).forEach(p => p.classList.remove("active"));
+        if(navMenu) navMenu.classList.remove("mobile-active");
+    };
     document.querySelectorAll(".btn-close-popup").forEach(btn => btn.addEventListener("click", closeAllPopups));
 
     if (localStorage.getItem("tactical_cookies_accepted") === "true") {
@@ -128,9 +148,16 @@ document.addEventListener("DOMContentLoaded", () => {
         if(typeof swiper !== 'undefined') swiper.update();
     });
 
-    nav.loginBtn?.addEventListener("click", () => popups.login.classList.add("active"));
+    nav.loginBtn?.addEventListener("click", () => {
+        popups.login.classList.add("active");
+        if(navMenu) navMenu.classList.remove("mobile-active");
+    });
     document.getElementById("link-footer-privacy")?.addEventListener("click", (e) => { e.preventDefault(); popups.privacyPolicy.classList.add("active"); });
-    nav.userTrigger?.addEventListener("click", (e) => { e.stopPropagation(); nav.userContent.classList.toggle("show"); });
+    
+    nav.userTrigger?.addEventListener("click", (e) => { 
+        e.stopPropagation(); 
+        nav.userContent.classList.toggle("show"); 
+    });
     
     window.addEventListener("click", (e) => {
         if (!e.target.matches('#btn-user-menu-trigger') && nav.userContent) nav.userContent.classList.remove('show');
@@ -139,18 +166,21 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("btn-menu-profile")?.addEventListener("click", (e) => {
         e.preventDefault(); popups.editProfile.classList.add("active");
         document.getElementById("edit-email").value = usuarioActual.email;
+        if(navMenu) navMenu.classList.remove("mobile-active");
     });
 
+    // --- POPUP DESCUENTOS Y NIVELES (CON BONO BIENVENIDA) ---
     document.getElementById("btn-menu-discounts")?.addEventListener("click", (e) => {
         e.preventDefault(); 
         popups.discounts.classList.add("active");
+        if(navMenu) navMenu.classList.remove("mobile-active");
         
         const descContainer = document.getElementById("user-discounts-container");
         const compras = usuarioActual.compras || 0;
         const lang = currentLang;
         
         if (compras === 0) {
-            descContainer.innerHTML = translations[lang].noDiscounts;
+            descContainer.innerHTML = `<span style="color:#00ffcc; font-size:1.1rem; font-weight:bold;">${lang==='es'?'Rango Novato':'Rookie Rank'}:</span> ${translations[lang].welcomeDiscount} <br><br><span style="color:var(--text-main);">${lang==='es'?'Codigo valido':'Valid Code'}:</span> <strong style="color:var(--primary-color);">WELCOME20</strong><br><br><small style="color:#666;">${lang==='es'?'Haz tu primera compra para desbloquear los niveles de socio.':'Make your first purchase to unlock membership tiers.'}</small>`;
         } else if (compras >= 1 && compras <= 2) {
             descContainer.innerHTML = `<span style="color:#cd7f32; font-size:1.1rem; font-weight:bold;">${lang==='es'?'Rango Bronce':'Bronze Rank'}:</span> ${translations[lang].bronze} <br><br><span style="color:var(--text-main);">${lang==='es'?'Codigo valido':'Valid Code'}:</span> <strong style="color:var(--primary-color);">BRONCE10</strong><br><br><small style="color:#666;">${lang==='es'?`Compras realizadas: ${compras}/3 para ascender a Plata`:`Purchases: ${compras}/3 to reach Silver`}</small>`;
         } else if (compras >= 3 && compras <= 5) {
@@ -166,6 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("btn-menu-history")?.addEventListener("click", (e) => {
         e.preventDefault();
         popups.history.classList.add("active");
+        if(navMenu) navMenu.classList.remove("mobile-active");
         
         const boxCompras = document.getElementById("history-purchases");
         const boxVentas = document.getElementById("history-sales");
@@ -197,7 +228,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    document.getElementById("btn-menu-config")?.addEventListener("click", (e) => { e.preventDefault(); popups.config.classList.add("active"); });
+    document.getElementById("btn-menu-config")?.addEventListener("click", (e) => { 
+        e.preventDefault(); 
+        popups.config.classList.add("active"); 
+        if(navMenu) navMenu.classList.remove("mobile-active");
+    });
     
     document.getElementById("btn-menu-logout")?.addEventListener("click", (e) => { 
         e.preventDefault(); 
@@ -341,7 +376,7 @@ document.addEventListener("DOMContentLoaded", () => {
         popups.config.classList.remove("active");
     });
 
-    // --- MERCADO (CON DESCRIPCIONES EN INGLÉS) ---
+    // --- MERCADO ---
     const fallbackImage = "https://placehold.co/600x400/111111/7ab317?text=Articulo+Tactico";
 
     const productosBase = [
@@ -413,6 +448,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("btn-open-upload-item")?.addEventListener("click", () => {
         if(!usuarioActual) { showCustomAlert(currentLang === 'es' ? "Inicia sesion para publicar." : "Log in to publish."); popups.login.classList.add("active"); return; }
         popups.uploadItem.classList.add("active");
+        if(navMenu) navMenu.classList.remove("mobile-active");
     });
     
     document.getElementById("btn-submit-item")?.addEventListener("click", () => {
@@ -485,7 +521,8 @@ document.addEventListener("DOMContentLoaded", () => {
         let validCodeForUser = "";
         let expDiscount = 0;
 
-        if (compras >= 1 && compras <= 2) { validCodeForUser = "BRONCE10"; expDiscount = 0.10; }
+        if (compras === 0 && code === "WELCOME20") { validCodeForUser = "WELCOME20"; expDiscount = 0.20; }
+        else if (compras >= 1 && compras <= 2) { validCodeForUser = "BRONCE10"; expDiscount = 0.10; }
         else if (compras >= 3 && compras <= 5) { validCodeForUser = "PLATA15"; expDiscount = 0.15; }
         else if (compras >= 6 && compras <= 9) { validCodeForUser = "ORO20"; expDiscount = 0.20; }
         else if (compras >= 10) { validCodeForUser = "ELITE25"; expDiscount = 0.25; }
@@ -524,7 +561,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const pc = carrito.find(i => i.id === id); if(pc) pc.cantidad +=1; else carrito.push({...pdb, cantidad:1}); actualizarCarritoUI();
     };
     
-    document.getElementById("btn-open-cart")?.addEventListener("click", () => popups.cart.classList.add("active"));
+    document.getElementById("btn-open-cart")?.addEventListener("click", () => {
+        popups.cart.classList.add("active");
+        if(navMenu) navMenu.classList.remove("mobile-active");
+    });
 
     // EVENTOS DE FORMATO DE PAGO ESTRICTOS
     const cardNumInput = document.getElementById("card-num");
@@ -715,7 +755,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const check = (keywords) => keywords.some(word => cleanText.includes(word));
             
-            // Deteccion de idioma basado en el input (mas preciso)
+            // Deteccion de idioma basado en el input
             const isEnglishQuery = check(["how", "what", "where", "can i", "my", "history", "buy", "sell", "thank", "hello", "hi ", "logout", "login", "sign", "refund", "return", "issue", "pass", "forgot", "order", "purchase"]);
 
             if (isEnglishQuery) {
@@ -780,7 +820,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else if (check(["olvida", "perdi", "recuperar", "contra"])) {
                     reply = `Para recuperar tu contraseña, ${name}, ve al boton de Iniciar Sesion y pincha en "¿Has olvidado tu contraseña?". Introduce tu usuario y correo de registro exactos para cambiarla.`;
                 } else if (check(["registrar", "crear cuenta", "hacer cuenta", "ventaja", "beneficio"])) {
-                    reply = `Registrarte te permite subir de nivel, conseguir codigos de descuento, vender piezas, ver tu historial y usar la Galeria. Haz clic en "Iniciar Sesion" y luego en "Registrate aqui".`;
+                    reply = `Registrarte te permite subir de nivel, conseguir codigos de descuento de hasta el 25%, vender piezas, ver tu historial y usar la Galeria. Haz clic en "Iniciar Sesion" y luego en "Registrate aqui".`;
                 } else if (check(["iniciar", "entrar", "acceder", "loguear"])) {
                     reply = `Para iniciar sesion, ${name}, haz clic en el boton verde de "Iniciar Sesion" situado en la barra superior derecha.`;
                 } else if(check(["hola", "buenas", "ey", "saludo", "que tal"])) {
