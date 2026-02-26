@@ -37,7 +37,7 @@
                     <option value="otro">Otro problema tecnico</option>
                 </select>
                 
-                <input type="text" id="claim-order" placeholder="Numero de pedido (Opcional)" class="input-field">
+                <input type="text" id="claim-order" placeholder="Numero de pedido (Ej: TR-123456)" class="input-field">
                 
                 <textarea id="claim-message" placeholder="Describe tu situacion con el mayor detalle posible..." class="input-field" required style="min-height: 120px;"></textarea>
                 
@@ -47,11 +47,20 @@
         </div>
     </div>
 
+    <footer style="margin-top: auto; width: 100%;">
+        <div class="container">
+            <p>&copy; 2026 Tactical Reparations. Todos los derechos reservados.</p>
+            <p style="margin-top: 10px; font-size: 0.9rem; color: var(--text-muted);">
+                Contacto: <span style="color: var(--primary-color); font-weight: bold;">639 12 75 28</span> | Email: <a href="mailto:tacticalreparations@gmail.com" style="color: var(--primary-color); text-decoration: none;">tacticalreparations@gmail.com</a>
+            </p>
+        </div>
+    </footer>
+
     <script>
         document.getElementById("form-reclamaciones").addEventListener("submit", (e) => {
             e.preventDefault();
             alert("Formulario enviado con exito. El equipo de Tactical Reparations se pondra en contacto contigo pronto.");
-            window.location.href = "index.html#reparacion"; // Te devuelve directo a la seccion del taller
+            window.location.href = "index.html#reparacion"; 
         });
     </script>
 </body>
