@@ -41,6 +41,17 @@
                 <button id="btn-login" class="btn-primary" data-i18n="loginBtn">Iniciar Sesion</button>
                 <button class="btn-secondary btn-close-popup" style="width: 100%;" data-i18n="cancelBtn">Cancelar</button>
                 <p style="margin-top: 15px; font-size: 0.9rem; color: var(--text-muted);"><span data-i18n="noAccount">¿No tienes cuenta?</span> <a href="#" id="link-to-register-start" style="color: var(--primary-color);" data-i18n="registerHere">Registrate aqui</a></p>
+                <p style="margin-top: 5px; font-size: 0.9rem;"><a href="#" id="link-forgot-pass" style="color: var(--primary-color);" data-i18n="forgotPass">¿Has olvidado tu contraseña?</a></p>
+            </div>
+
+            <div id="forgot-form-container" style="display: none;">
+                <h2 style="margin-top: 10px;" data-i18n="forgotTitle">Recuperar Contraseña</h2>
+                <input type="text" id="forgot-username" placeholder="Usuario" data-i18n-placeholder="forgotUserHolder" class="input-field">
+                <input type="email" id="forgot-email" placeholder="Email de registro" data-i18n-placeholder="forgotEmailHolder" class="input-field">
+                <input type="password" id="forgot-new-pass" placeholder="Nueva Contraseña" data-i18n-placeholder="forgotNewPassHolder" class="input-field">
+                <button id="btn-reset-pass" class="btn-primary" data-i18n="resetBtn">Cambiar Contraseña</button>
+                <button class="btn-secondary btn-close-popup" style="width: 100%;" data-i18n="cancelBtn">Cancelar</button>
+                <p style="margin-top: 15px; font-size: 0.9rem;"><a href="#" id="link-back-login" style="color: var(--primary-color);" data-i18n="backLogin">Volver a Iniciar Sesion</a></p>
             </div>
 
             <div id="register-form-container" style="display: none;">
@@ -171,7 +182,7 @@
                 </select>
                 
                 <div id="card-details" style="display: block; margin-top: 10px;">
-                    <input type="text" id="card-num" placeholder="Numero Tarjeta (16 digitos)" data-i18n-placeholder="cardNum" class="input-field" maxlength="16">
+                    <input type="text" id="card-num" placeholder="Numero Tarjeta (12 digitos)" data-i18n-placeholder="cardNum" class="input-field" maxlength="14">
                     <div style="display: flex; gap: 10px;">
                         <input type="text" id="card-date" placeholder="MM/AA" class="input-field" style="width: 50%;" maxlength="5">
                         <input type="password" id="card-cvc" placeholder="CVC" class="input-field" style="width: 50%;" maxlength="3">

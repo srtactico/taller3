@@ -40,7 +40,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const mainContent = document.getElementById("main-content");
     const authForms = {
         login: document.getElementById("login-form-container"),
-        register: document.getElementById("register-form-container")
+        register: document.getElementById("register-form-container"),
+        forgot: document.getElementById("forgot-form-container")
     };
     const nav = {
         loginBtn: document.getElementById("btn-nav-login"),
@@ -62,15 +63,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const translations = {
         es: {
             navHome: "Inicio", navMarket: "Compra/Venta", navRepair: "Taller", navGallery: "Galeria", loginBtn: "Iniciar Sesion", registerBtn: "Registrar Cuenta", logoutBtn: "Cerrar Sesion", profileBtn: "Mi Perfil", configBtn: "Configuracion", privacyMenuBtn: "Condiciones de Privacidad", heroTitle: "Precision absoluta. Rendimiento tactico.", heroText: "Tu vehiculo no es solo un transporte; es tu mejor herramienta.", 
-            heroBtn: "Solicitar cita previa", marketTitle: "1. Compra/Venta", uploadItemBtn: "+ Subir Articulo", repairTitle: "2. Unidad de Reparacion / Modificacion", sendBtn: "Enviar Solicitud", galleryTitle: "Operaciones (Galeria)", uploadPhotoBtn: "+ Añadir Foto", cookiesTitle: "Aviso Tactico (Cookies)", cookiesText: "Utilizamos cookies para mejorar la precision de nuestros servicios. ¿Aceptas?", cookiesAccept: "Afirmativo, aceptar", loginTitle: "Acceso Restringido", noAccount: "¿No tienes cuenta?", registerHere: "Registrate aqui", registerTitle: "Nuevo Recluta", hasAccount: "¿Ya tienes cuenta?", profileTitle: "Editar Perfil", profileDesc: "Actualiza tus credenciales.", saveChanges: "Guardar Cambios", configTitle: "Configuracion", configDesc: "Selecciona el idioma.", applyBtn: "Aplicar", closeBtn: "Cerrar", cancelBtn: "Cancelar", uploadItemTitle: "Añadir al Mercado", publishBtn: "Publicar", uploadPhotoTitle: "Añadir Foto", addBtn: "Añadir", cartTitle: "Carrito", checkoutBtn: "Confirmar Transaccion", continueBtn: "Seguir Comprando", privacyTitle: "Protocolos de Privacidad y Terminos", selectService: "-- Selecciona el Servicio --", optRepair: "Reparacion Tecnica", optMod: "Modificacion y Mejoras", payMethod: "Metodo de Pago:", newEmailLabel: "Nuevo Email:", newPassLabel: "Nueva Contraseña (Opcional):", currentPassLabel: "* Contraseña ACTUAL (Requerida):", sellerLabel: "Vendedor", catLabel: "Categoria", emptyCart: "Tu carrito esta vacio.", userHolder: "Usuario", passHolder: "Contraseña", emailHolder: "Email (Obligatorio)", itemNameHolder: "Nombre", itemCatHolder: "Categoria", itemPriceHolder: "Precio", itemImgHolder: "URL Imagen", itemDescHolder: "Descripcion del articulo...", cardNum: "Numero Tarjeta", vehicleHolder: "Vehiculo (Marca y Modelo)", descHolder: "Describe el daño o las modificaciones requeridas...", benefitsTitle: "Ventajas de Unirte", benefit1: "Vender tus propios articulos en el Mercado.", benefit2: "Comprar equipamiento exclusivo.", benefit3: "Subir fotos a la Galeria.", benefit4: "Acceso a descuentos exclusivos.", continueRegisterBtn: "Continuar al Registro", policyTitle: "Politica de Privacidad y Cookies", footerPrivacy: "Protocolos de Privacidad y Terminos", footerCookiesTitle: "Uso de Cookies Activo", footerCookiesInfo: "Nota: Usamos cookies indispensables.", seeMoreBtn: "Ver todos los articulos", seeLessBtn: "Ver menos", chatTitle: "Soporte Tactico", chatWelcome: "Agente en linea. ¿En que puedo ayudarte hoy?", chatInput: "Escribe tu mensaje...",
+            heroBtn: "Solicitar cita previa", marketTitle: "1. Compra/Venta", uploadItemBtn: "+ Subir Articulo", repairTitle: "2. Unidad de Reparacion / Modificacion", sendBtn: "Enviar Solicitud", galleryTitle: "Operaciones (Galeria)", uploadPhotoBtn: "+ Añadir Foto", cookiesTitle: "Aviso Tactico (Cookies)", cookiesText: "Utilizamos cookies para mejorar la precision de nuestros servicios. ¿Aceptas?", cookiesAccept: "Afirmativo, aceptar", loginTitle: "Acceso Restringido", noAccount: "¿No tienes cuenta?", registerHere: "Registrate aqui", registerTitle: "Nuevo Recluta", hasAccount: "¿Ya tienes cuenta?", profileTitle: "Editar Perfil", profileDesc: "Actualiza tus credenciales.", saveChanges: "Guardar Cambios", configTitle: "Configuracion", configDesc: "Selecciona el idioma.", applyBtn: "Aplicar", closeBtn: "Cerrar", cancelBtn: "Cancelar", uploadItemTitle: "Añadir al Mercado", publishBtn: "Publicar", uploadPhotoTitle: "Añadir Foto", addBtn: "Añadir", cartTitle: "Carrito", checkoutBtn: "Confirmar Transaccion", continueBtn: "Seguir Comprando", privacyTitle: "Protocolos de Privacidad y Terminos", selectService: "-- Selecciona el Servicio --", optRepair: "Reparacion Tecnica", optMod: "Modificacion y Mejoras", payMethod: "Metodo de Pago:", newEmailLabel: "Nuevo Email:", newPassLabel: "Nueva Contraseña (Opcional):", currentPassLabel: "* Contraseña ACTUAL (Requerida):", sellerLabel: "Vendedor", catLabel: "Categoria", emptyCart: "Tu carrito esta vacio.", userHolder: "Usuario", passHolder: "Contraseña", emailHolder: "Email (Obligatorio)", itemNameHolder: "Nombre", itemCatHolder: "Categoria", itemPriceHolder: "Precio", itemImgHolder: "URL Imagen", itemDescHolder: "Descripcion del articulo...", cardNum: "Numero Tarjeta (12 digitos)", vehicleHolder: "Vehiculo (Marca y Modelo)", descHolder: "Describe el daño o las modificaciones requeridas...", benefitsTitle: "Ventajas de Unirte", benefit1: "Vender tus propios articulos en el Mercado.", benefit2: "Comprar equipamiento exclusivo.", benefit3: "Subir fotos a la Galeria.", benefit4: "Acceso a descuentos exclusivos.", continueRegisterBtn: "Continuar al Registro", policyTitle: "Politica de Privacidad y Cookies", footerPrivacy: "Protocolos de Privacidad y Terminos", footerCookiesTitle: "Uso de Cookies Activo", footerCookiesInfo: "Nota: Usamos cookies indispensables.", seeMoreBtn: "Ver todos los articulos", seeLessBtn: "Ver menos", chatTitle: "Soporte Tactico", chatWelcome: "Agente en linea. ¿En que puedo ayudarte hoy?", chatInput: "Escribe tu mensaje...",
             discountsMenu: "Mis Descuentos", discountsSubtitle: "Aumenta tu rango realizando compras.", discountPlaceholder: "Codigo de descuento", applyCodeBtn: "Aplicar", noDiscounts: "Aun no tienes descuentos. ¡Realiza compras en el Mercado para subir de nivel y desbloquear codigos tacticos!",
-            bronze: "10% de descuento en la tienda.", silver: "15% de descuento en la tienda.", gold: "20% de descuento en la tienda.", elite: "25% de descuento absoluto.", historyMenu: "Historial"
+            bronze: "10% de descuento en la tienda.", silver: "15% de descuento en la tienda.", gold: "20% de descuento en la tienda.", elite: "25% de descuento absoluto.", historyMenu: "Historial",
+            // RECUPERAR CONTRASEÑA
+            forgotPass: "¿Has olvidado tu contraseña?", forgotTitle: "Recuperar Contraseña", resetBtn: "Cambiar Contraseña", backLogin: "Volver a Iniciar Sesion", forgotUserHolder: "Usuario", forgotEmailHolder: "Email de registro", forgotNewPassHolder: "Nueva Contraseña"
         },
         en: {
             navHome: "Home", navMarket: "Buy/Sell", navRepair: "Workshop", navGallery: "Gallery", loginBtn: "Login", registerBtn: "Register", logoutBtn: "Logout", profileBtn: "My Profile", configBtn: "Settings", heroTitle: "Absolute precision. Tactical performance.", heroText: "Your vehicle is a tool. We prepare it for any mission.", 
-            heroBtn: "Request appointment", marketTitle: "1. Buy/Sell", uploadItemBtn: "+ Upload Item", repairTitle: "2. Repair / Modification Unit", sendBtn: "Send Request", galleryTitle: "Operations (Gallery)", uploadPhotoBtn: "+ Add Photo", cookiesTitle: "Tactical Notice (Cookies)", cookiesText: "We use cookies to improve our services accuracy. Accept?", cookiesAccept: "Affirmative, accept", loginTitle: "Restricted Access", noAccount: "No account?", registerHere: "Register here", registerTitle: "New Recruit", hasAccount: "Already have an account?", profileTitle: "Edit Profile", profileDesc: "Update your credentials.", saveChanges: "Save Changes", configTitle: "Settings", configDesc: "Select interface language.", applyBtn: "Apply", closeBtn: "Close", cancelBtn: "Cancel", uploadItemTitle: "Add to Market", publishBtn: "Publish", uploadPhotoTitle: "Add Photo", addBtn: "Add", cartTitle: "Cart", checkoutBtn: "Confirm Checkout", continueBtn: "Continue Shopping", privacyTitle: "Privacy Protocols & Terms", selectService: "-- Select Service --", optRepair: "Technical Repair", optMod: "Modification & Upgrades", payMethod: "Payment Method:", newEmailLabel: "New Email:", newPassLabel: "New Password (Optional):", currentPassLabel: "* CURRENT Password (Required):", sellerLabel: "Seller", catLabel: "Category", emptyCart: "Your cart is empty.", userHolder: "Username", passHolder: "Password", emailHolder: "Email (Required)", itemNameHolder: "Name", itemCatHolder: "Category", itemPriceHolder: "Price", itemImgHolder: "Image URL", itemDescHolder: "Item description...", cardNum: "Card Number", vehicleHolder: "Vehicle (Brand & Model)", descHolder: "Describe the damage...", benefitsTitle: "Join Advantages", benefit1: "Sell your own items.", benefit2: "Buy exclusive equipment.", benefit3: "Upload photos.", benefit4: "Access to exclusive discounts.", continueRegisterBtn: "Continue to Registration", policyTitle: "Privacy Policy & Cookies", footerPrivacy: "Privacy Protocols & Terms", footerCookiesTitle: "Active Cookie Usage", footerCookiesInfo: "Note: We use essential cookies.", seeMoreBtn: "See all items", seeLessBtn: "See less", chatTitle: "Tactical Support", chatWelcome: "Agent online. How can I help you today?", chatInput: "Type your message...",
+            heroBtn: "Request appointment", marketTitle: "1. Buy/Sell", uploadItemBtn: "+ Upload Item", repairTitle: "2. Repair / Modification Unit", sendBtn: "Send Request", galleryTitle: "Operations (Gallery)", uploadPhotoBtn: "+ Add Photo", cookiesTitle: "Tactical Notice (Cookies)", cookiesText: "We use cookies to improve our services accuracy. Accept?", cookiesAccept: "Affirmative, accept", loginTitle: "Restricted Access", noAccount: "No account?", registerHere: "Register here", registerTitle: "New Recruit", hasAccount: "Already have an account?", profileTitle: "Edit Profile", profileDesc: "Update your credentials.", saveChanges: "Save Changes", configTitle: "Settings", configDesc: "Select interface language.", applyBtn: "Apply", closeBtn: "Close", cancelBtn: "Cancel", uploadItemTitle: "Add to Market", publishBtn: "Publish", uploadPhotoTitle: "Add Photo", addBtn: "Add", cartTitle: "Cart", checkoutBtn: "Confirm Checkout", continueBtn: "Continue Shopping", privacyTitle: "Privacy Protocols & Terms", selectService: "-- Select Service --", optRepair: "Technical Repair", optMod: "Modification & Upgrades", payMethod: "Payment Method:", newEmailLabel: "New Email:", newPassLabel: "New Password (Optional):", currentPassLabel: "* CURRENT Password (Required):", sellerLabel: "Seller", catLabel: "Category", emptyCart: "Your cart is empty.", userHolder: "Username", passHolder: "Password", emailHolder: "Email (Required)", itemNameHolder: "Name", itemCatHolder: "Category", itemPriceHolder: "Price", itemImgHolder: "Image URL", itemDescHolder: "Item description...", cardNum: "Card Number (12 digits)", vehicleHolder: "Vehicle (Brand & Model)", descHolder: "Describe the damage...", benefitsTitle: "Join Advantages", benefit1: "Sell your own items.", benefit2: "Buy exclusive equipment.", benefit3: "Upload photos.", benefit4: "Access to exclusive discounts.", continueRegisterBtn: "Continue to Registration", policyTitle: "Privacy Policy & Cookies", footerPrivacy: "Privacy Protocols & Terms", footerCookiesTitle: "Active Cookie Usage", footerCookiesInfo: "Note: We use essential cookies.", seeMoreBtn: "See all items", seeLessBtn: "See less", chatTitle: "Tactical Support", chatWelcome: "Agent online. How can I help you today?", chatInput: "Type your message...",
             discountsMenu: "My Discounts", discountsSubtitle: "Level up by making purchases.", discountPlaceholder: "Discount code", applyCodeBtn: "Apply", noDiscounts: "No discounts yet. Make purchases in the Market to level up and unlock tactical codes!",
-            bronze: "10% store discount.", silver: "15% store discount.", gold: "20% store discount.", elite: "25% absolute discount.", historyMenu: "Order History"
+            bronze: "10% store discount.", silver: "15% store discount.", gold: "20% store discount.", elite: "25% absolute discount.", historyMenu: "Order History",
+            // RECUPERAR CONTRASEÑA EN INGLES
+            forgotPass: "Forgot your password?", forgotTitle: "Recover Password", resetBtn: "Reset Password", backLogin: "Back to Login", forgotUserHolder: "Username", forgotEmailHolder: "Registration Email", forgotNewPassHolder: "New Password"
         }
     };
 
@@ -178,9 +183,69 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const saveUsers = () => localStorage.setItem("tactical_users", JSON.stringify(usuariosRegistrados));
 
-    document.getElementById("link-to-register-start").addEventListener("click", (e) => { e.preventDefault(); popups.login.classList.remove("active"); popups.benefits.classList.add("active"); });
-    document.getElementById("btn-continue-register").addEventListener("click", () => { popups.benefits.classList.remove("active"); authForms.login.style.display = "none"; authForms.register.style.display = "block"; popups.login.classList.add("active"); });
-    document.getElementById("link-to-login").addEventListener("click", (e) => { e.preventDefault(); authForms.register.style.display = "none"; authForms.login.style.display = "block"; });
+    // --- LOGICA DE NAVEGACION DE LOGIN/REGISTRO/RECUPERAR ---
+    document.getElementById("link-to-register-start")?.addEventListener("click", (e) => { 
+        e.preventDefault(); 
+        popups.login.classList.remove("active"); 
+        popups.benefits.classList.add("active"); 
+    });
+    
+    document.getElementById("btn-continue-register")?.addEventListener("click", () => { 
+        popups.benefits.classList.remove("active"); 
+        authForms.login.style.display = "none"; 
+        authForms.forgot.style.display = "none";
+        authForms.register.style.display = "block"; 
+        popups.login.classList.add("active"); 
+    });
+    
+    document.getElementById("link-to-login")?.addEventListener("click", (e) => { 
+        e.preventDefault(); 
+        authForms.register.style.display = "none"; 
+        authForms.forgot.style.display = "none";
+        authForms.login.style.display = "block"; 
+    });
+
+    // Abrir recuperar contraseña
+    document.getElementById("link-forgot-pass")?.addEventListener("click", (e) => {
+        e.preventDefault();
+        authForms.login.style.display = "none";
+        authForms.register.style.display = "none";
+        authForms.forgot.style.display = "block";
+    });
+
+    // Volver desde recuperar contraseña
+    document.getElementById("link-back-login")?.addEventListener("click", (e) => {
+        e.preventDefault();
+        authForms.forgot.style.display = "none";
+        authForms.register.style.display = "none";
+        authForms.login.style.display = "block";
+    });
+
+    // Cambiar la contraseña
+    document.getElementById("btn-reset-pass")?.addEventListener("click", () => {
+        const user = document.getElementById("forgot-username").value.trim();
+        const email = document.getElementById("forgot-email").value.trim();
+        const newPass = document.getElementById("forgot-new-pass").value.trim();
+        
+        if(!user || !email || !newPass) { 
+            alert(currentLang === 'es' ? "Completa todos los campos obligatorios." : "Please fill in all fields."); 
+            return; 
+        }
+        
+        let foundUser = usuariosRegistrados.find(u => u.user === user && u.email === email);
+        if(foundUser) {
+            foundUser.pass = newPass;
+            saveUsers();
+            alert(currentLang === 'es' ? "Contraseña actualizada con exito." : "Password updated successfully.");
+            authForms.forgot.style.display = "none";
+            authForms.login.style.display = "block";
+            document.getElementById("forgot-username").value = "";
+            document.getElementById("forgot-email").value = "";
+            document.getElementById("forgot-new-pass").value = "";
+        } else {
+            alert(currentLang === 'es' ? "Usuario o email incorrectos. No coinciden los datos de registro." : "Incorrect username or email. Registration data does not match.");
+        }
+    });
 
     document.getElementById("btn-register")?.addEventListener("click", () => {
         const userVal = document.getElementById("reg-username").value.trim();
@@ -252,19 +317,19 @@ document.addEventListener("DOMContentLoaded", () => {
         popups.config.classList.remove("active");
     });
 
-    // --- MERCADO ---
+    // --- MERCADO (CON DESCRIPCIONES EN INGLÉS) ---
     const fallbackImage = "https://placehold.co/600x400/111111/7ab317?text=Articulo+Tactico";
 
     const productosBase = [
-        { id: 1, nombre: "Motor V8 Blindado", nombreEn: "Armored V8 Engine", tipo: "Mecanica Pesada", tipoEn: "Heavy Mechanics", precio: 4500, vendedor: "Tactical HQ", imagen: "https://media.istockphoto.com/id/528918828/es/foto/motor-de-automoci%C3%B3n-3d-ilustraci%C3%B3n.jpg?s=612x612&w=0&k=20&c=o5ejIooVV10-5hFTbCv1l1IETRzSaHqupWhT-LRPbGc=", descripcion: "Motor de bloque grande optimizado para resistir impactos y mantener el rendimiento en condiciones extremas." },
-        { id: 2, nombre: "Neumaticos Tacticos Off-Road", nombreEn: "Tactical Off-Road Tires", tipo: "Movilidad", tipoEn: "Mobility", precio: 800, vendedor: "Tactical HQ", imagen: "https://www.muchoneumatico.com/blog/wp-content/uploads/2020/01/Neum%C3%A1ticos-4x4-extremos-MT-MS.jpg", descripcion: "Juego de 4 neumaticos de compuesto militar con diseño de banda de rodadura agresivo para barro y roca." },
-        { id: 3, nombre: "Kit de Suspension Reforzada", nombreEn: "Reinforced Suspension Kit", tipo: "Modificacion", tipoEn: "Upgrades", precio: 1200, vendedor: "Tactical HQ", imagen: "https://www.tot4x4.com/2269-large_default/kit-de-suspension-reforzada-30mm-efs-diesel.jpg", descripcion: "Sistema de suspension de largo recorrido con amortiguadores de nitrogeno presurizado." },
-        { id: 4, nombre: "Pintura Absorbe-Radar (Mate)", nombreEn: "Radar-Absorbent Paint (Matte)", tipo: "Estetica / Camuflaje", tipoEn: "Aesthetics / Camo", precio: 1500, vendedor: "Tactical HQ", imagen: "https://montopinturas.com/public/Image/2023/7/502230.png", descripcion: "Recubrimiento ceramico avanzado con propiedades de absorcion de ondas de radar." },
-        { id: 5, nombre: "Blindaje Ligero de Puertas", nombreEn: "Light Door Armor", tipo: "Defensa", tipoEn: "Defense", precio: 2100, vendedor: "Tactical HQ", imagen: "https://images.unsplash.com/photo-1592853625601-bb9d23da12fc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", descripcion: "Paneles de blindaje compuesto de nivel III+ para instalacion interna en puertas de vehiculos." },
-        { id: 6, nombre: "Luces LED de Alta Intensidad", nombreEn: "High-Intensity LED Lights", tipo: "Vision", tipoEn: "Vision", precio: 450, vendedor: "Tactical HQ", imagen: "https://asxstore.com/cdn/shop/files/pop-up.png?v=1685366963&width=1080", descripcion: "Barra de luz LED de grado tactico con una salida combinada de 30,000 lumenes." },
-        { id: 7, nombre: "Kit de Frenos Ceramicos", nombreEn: "Ceramic Brake Kit", tipo: "Mecanica Pesada", tipoEn: "Heavy Mechanics", precio: 1800, vendedor: "Tactical HQ", imagen: "https://www.gt2i.es/175814-medium_default/vwr-kit-freno-stage-3-para-bastidor-mqb-mqb-evo-discos-380mm-carbono-ceramica-pinza-6-pistones.jpg", descripcion: "Discos de freno carbono-ceramicos perforados y ventilados. Resisten temperaturas extremas." },
-        { id: 8, nombre: "Asientos Tacticos Recaro", nombreEn: "Tactical Recaro Seats", tipo: "Estetica / Camuflaje", tipoEn: "Aesthetics / Camo", precio: 950, vendedor: "Tactical HQ", imagen: "https://www.recarospain.com/wp-content/uploads/2018/06/recaro_sportster_cs_kule_schw_di_silber.jpg", descripcion: "Asientos deportivos tipo baquet con arneses de 5 puntos. Tejido ignifugo." },
-        { id: 9, nombre: "Cristales Antibalas Nivel 4", nombreEn: "Level 4 Bulletproof Glass", tipo: "Defensa", tipoEn: "Defense", precio: 3200, vendedor: "Tactical HQ", imagen: "https://s.alicdn.com/@sc04/kf/He66a4cd8b98b47358fa1093334495a72D/High-Quality-Bulletproof-Auto-Glass-Shield-Bullet-Resistance-Glass-Windshield-for-Car-Windows.jpg_300x300.jpg", descripcion: "Juego de cristales de policarbonato laminado ultragrueso. Capaces de detener impactos de calibres pesados." }
+        { id: 1, nombre: "Motor V8 Blindado", nombreEn: "Armored V8 Engine", tipo: "Mecanica Pesada", tipoEn: "Heavy Mechanics", precio: 4500, vendedor: "Tactical HQ", imagen: "https://media.istockphoto.com/id/528918828/es/foto/motor-de-automoci%C3%B3n-3d-ilustraci%C3%B3n.jpg?s=612x612&w=0&k=20&c=o5ejIooVV10-5hFTbCv1l1IETRzSaHqupWhT-LRPbGc=", descripcion: "Motor de bloque grande optimizado para resistir impactos y mantener el rendimiento en condiciones extremas.", descripcionEn: "Big block engine optimized to withstand impacts and maintain performance under extreme conditions." },
+        { id: 2, nombre: "Neumaticos Tacticos Off-Road", nombreEn: "Tactical Off-Road Tires", tipo: "Movilidad", tipoEn: "Mobility", precio: 800, vendedor: "Tactical HQ", imagen: "https://www.muchoneumatico.com/blog/wp-content/uploads/2020/01/Neum%C3%A1ticos-4x4-extremos-MT-MS.jpg", descripcion: "Juego de 4 neumaticos de compuesto militar con diseño de banda de rodadura agresivo para barro y roca.", descripcionEn: "Set of 4 military compound tires with aggressive tread design for mud and rock." },
+        { id: 3, nombre: "Kit de Suspension Reforzada", nombreEn: "Reinforced Suspension Kit", tipo: "Modificacion", tipoEn: "Upgrades", precio: 1200, vendedor: "Tactical HQ", imagen: "https://www.tot4x4.com/2269-large_default/kit-de-suspension-reforzada-30mm-efs-diesel.jpg", descripcion: "Sistema de suspension de largo recorrido con amortiguadores de nitrogeno presurizado.", descripcionEn: "Long-travel suspension system with pressurized nitrogen shocks." },
+        { id: 4, nombre: "Pintura Absorbe-Radar (Mate)", nombreEn: "Radar-Absorbent Paint (Matte)", tipo: "Estetica / Camuflaje", tipoEn: "Aesthetics / Camo", precio: 1500, vendedor: "Tactical HQ", imagen: "https://montopinturas.com/public/Image/2023/7/502230.png", descripcion: "Recubrimiento ceramico avanzado con propiedades de absorcion de ondas de radar.", descripcionEn: "Advanced ceramic coating with radar wave absorption properties." },
+        { id: 5, nombre: "Blindaje Ligero de Puertas", nombreEn: "Light Door Armor", tipo: "Defensa", tipoEn: "Defense", precio: 2100, vendedor: "Tactical HQ", imagen: "https://images.unsplash.com/photo-1592853625601-bb9d23da12fc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", descripcion: "Paneles de blindaje compuesto de nivel III+ para instalacion interna en puertas de vehiculos.", descripcionEn: "Level III+ composite armor panels for internal installation in vehicle doors." },
+        { id: 6, nombre: "Luces LED de Alta Intensidad", nombreEn: "High-Intensity LED Lights", tipo: "Vision", tipoEn: "Vision", precio: 450, vendedor: "Tactical HQ", imagen: "https://asxstore.com/cdn/shop/files/pop-up.png?v=1685366963&width=1080", descripcion: "Barra de luz LED de grado tactico con una salida combinada de 30,000 lumenes.", descripcionEn: "Tactical-grade LED light bar with a combined output of 30,000 lumens." },
+        { id: 7, nombre: "Kit de Frenos Ceramicos", nombreEn: "Ceramic Brake Kit", tipo: "Mecanica Pesada", tipoEn: "Heavy Mechanics", precio: 1800, vendedor: "Tactical HQ", imagen: "https://www.gt2i.es/175814-medium_default/vwr-kit-freno-stage-3-para-bastidor-mqb-mqb-evo-discos-380mm-carbono-ceramica-pinza-6-pistones.jpg", descripcion: "Discos de freno carbono-ceramicos perforados y ventilados. Resisten temperaturas extremas.", descripcionEn: "Carbon-ceramic drilled and vented brake discs. Withstand extreme temperatures." },
+        { id: 8, nombre: "Asientos Tacticos Recaro", nombreEn: "Tactical Recaro Seats", tipo: "Estetica / Camuflaje", tipoEn: "Aesthetics / Camo", precio: 950, vendedor: "Tactical HQ", imagen: "https://www.recarospain.com/wp-content/uploads/2018/06/recaro_sportster_cs_kule_schw_di_silber.jpg", descripcion: "Asientos deportivos tipo baquet con arneses de 5 puntos. Tejido ignifugo.", descripcionEn: "Bucket-style sports seats with 5-point harnesses. Fire-retardant fabric." },
+        { id: 9, nombre: "Cristales Antibalas Nivel 4", nombreEn: "Level 4 Bulletproof Glass", tipo: "Defensa", tipoEn: "Defense", precio: 3200, vendedor: "Tactical HQ", imagen: "https://s.alicdn.com/@sc04/kf/He66a4cd8b98b47358fa1093334495a72D/High-Quality-Bulletproof-Auto-Glass-Shield-Bullet-Resistance-Glass-Windshield-for-Car-Windows.jpg_300x300.jpg", descripcion: "Juego de cristales de policarbonato laminado ultragrueso. Capaces de detener impactos de calibres pesados.", descripcionEn: "Ultra-thick laminated polycarbonate glass set. Capable of stopping heavy calibers." }
     ];
     
     let mercadoActual = JSON.parse(localStorage.getItem("tactical_mercado_100")) || productosBase;
@@ -359,7 +424,7 @@ document.addEventListener("DOMContentLoaded", () => {
             btnCheckout.style.display = "block";
             carrito.forEach(item => { 
                 totalP += (item.precio * item.cantidad); totalI += item.cantidad;
-                cont.innerHTML += `<div class="cart-item"><div class="cart-item-info"><h4>${item.nombre}</h4><p>${formatearPrecio(item.precio)}</p></div><div class="cart-controls"><button class="btn-qty btn-restar" data-id="${item.id}">-</button><span>${item.cantidad}</span><button class="btn-qty btn-sumar" data-id="${item.id}">+</button></div></div>`; 
+                cont.innerHTML += `<div class="cart-item"><div class="cart-item-info"><h4>${currentLang === 'en' && item.nombreEn ? item.nombreEn : item.nombre}</h4><p>${formatearPrecio(item.precio)}</p></div><div class="cart-controls"><button class="btn-qty btn-restar" data-id="${item.id}">-</button><span>${item.cantidad}</span><button class="btn-qty btn-sumar" data-id="${item.id}">+</button></div></div>`; 
             });
         }
 
@@ -435,6 +500,44 @@ document.addEventListener("DOMContentLoaded", () => {
     
     document.getElementById("btn-open-cart")?.addEventListener("click", () => popups.cart.classList.add("active"));
 
+    // EVENTOS DE FORMATO DE PAGO ESTRICTOS (TARJETA A 12 NUMEROS)
+    const cardNumInput = document.getElementById("card-num");
+    if(cardNumInput) {
+        cardNumInput.addEventListener("input", function(e) {
+            let v = e.target.value.replace(/\D/g, ''); // solo quita lo que no sea numero
+            if (v.length > 12) v = v.substring(0, 12); // Restringe a 12 numeros exactos
+            // Formatear agrupando cada 4 numeros
+            e.target.value = v.replace(/(\d{4})(?=\d)/g, '$1 ').trim();
+        });
+    }
+
+    const cardDateInput = document.getElementById("card-date");
+    if(cardDateInput) {
+        cardDateInput.addEventListener("input", function(e) {
+            let v = e.target.value.replace(/\D/g, '');
+            if (v.length > 4) v = v.substring(0, 4); // Maximo 4 numeros (MMAA)
+            
+            if (v.length >= 2) {
+                let m = parseInt(v.substring(0,2));
+                if (m === 0) m = 1; // El mes no puede ser 00
+                if (m > 12) m = 12; // El mes no puede ser mas de 12
+                let mStr = m.toString().padStart(2, '0');
+                e.target.value = mStr + '/' + v.substring(2);
+            } else {
+                e.target.value = v;
+            }
+        });
+    }
+
+    const cardCvcInput = document.getElementById("card-cvc");
+    if(cardCvcInput) {
+        cardCvcInput.addEventListener("input", function(e) {
+            let v = e.target.value.replace(/\D/g, '');
+            if (v.length > 3) v = v.substring(0, 3); // Maximo 3 numeros
+            e.target.value = v;
+        });
+    }
+
     document.getElementById("payment-method")?.addEventListener("change", (e) => { 
         document.getElementById("card-details").style.display = "none";
         document.getElementById("paypal-details").style.display = "none";
@@ -450,11 +553,12 @@ document.addEventListener("DOMContentLoaded", () => {
             
             const method = document.getElementById("payment-method").value;
             if(method === "tarjeta") {
-                const cNum = document.getElementById("card-num").value.trim();
+                const cNum = document.getElementById("card-num").value.replace(/\s/g, ''); // Contar sin espacios
                 const cDate = document.getElementById("card-date").value.trim();
                 const cCvc = document.getElementById("card-cvc").value.trim();
-                if(cNum.length < 16 || cDate.length < 5 || cCvc.length < 3) {
-                    alert("Faltan datos obligatorios de la Tarjeta (16 digitos, Fecha MM/AA, CVC)."); return;
+                // Validacion muy estricta a 12 numeros exactos
+                if(cNum.length < 12 || cDate.length < 5 || cCvc.length < 3) {
+                    alert(currentLang === 'es' ? "Faltan datos obligatorios de la Tarjeta (12 digitos, Fecha MM/AA, 3 digitos CVC)." : "Missing exact Card data (12 digits, Date MM/YY, 3-digit CVC)."); return;
                 }
             } else if(method === "paypal") {
                 const pEmail = document.getElementById("paypal-email").value.trim();
@@ -481,7 +585,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 pedido: orderId,
                 fecha: dateStr,
                 total: formatearPrecio(totalFinal),
-                items: carrito.map(i => i.nombre + " (x" + i.cantidad + ")").join(", ")
+                items: carrito.map(i => (currentLang === 'en' && i.nombreEn ? i.nombreEn : i.nombre) + " (x" + i.cantidad + ")").join(", ")
             });
 
             if (descuentoActual > 0 && codigoAplicado !== "") {
@@ -495,7 +599,7 @@ document.addEventListener("DOMContentLoaded", () => {
             saveUsers();
             localStorage.setItem("tactical_current_user", JSON.stringify(usuarioActual));
             
-            alert(`Transaccion aprobada, ${usuarioActual.user}.\n\nTU NUMERO DE PEDIDO ES: ${orderId}\n\nPor favor, guardalo para cualquier reclamacion. Tus articulos llegaran pronto.`);
+            alert(currentLang === 'es' ? `Transaccion aprobada, ${usuarioActual.user}.\n\nTU NUMERO DE PEDIDO ES: ${orderId}\n\nPor favor, guardalo para cualquier reclamacion. Tus articulos llegaran pronto.` : `Transaction approved, ${usuarioActual.user}.\n\nYOUR ORDER ID IS: ${orderId}\n\nPlease keep it for any claims. Your items will arrive soon.`);
             
             carrito = []; descuentoActual = 0; codigoAplicado = ""; document.getElementById("discount-code").value = "";
             actualizarCarritoUI(); popups.cart.classList.remove("active");
@@ -560,7 +664,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if(chatWindow.style.display === 'flex' && chatMessages.children.length === 1) {
                 const welcomeMsg = document.getElementById("chat-welcome");
                 const agentName = usuarioActual ? usuarioActual.user : "Agente";
-                welcomeMsg.textContent = `Bienvenido al sistema, ${agentName}. ¿En que te ayudo hoy?`;
+                welcomeMsg.textContent = currentLang === 'es' ? `Bienvenido al sistema, ${agentName}. ¿En que te ayudo hoy?` : `Welcome, ${agentName}. How can I help you today?`;
             }
         });
         
@@ -584,7 +688,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const incluye = (arr) => arr.some(palabra => cleanText.includes(palabra));
             
             // DETECCION DEL IDIOMA INGLES EN BASE A PALABRAS CLAVE DEL USUARIO
-            const isEnglish = incluye(["how", "what", "where", "can i", "my", "history", "buy", "sell", "thank", "hello", "hi ", "logout", "login", "sign", "refund", "return", "issue"]);
+            const isEnglish = incluye(["how", "what", "where", "can i", "my", "history", "buy", "sell", "thank", "hello", "hi ", "logout", "login", "sign", "refund", "return", "issue", "pass", "forgot"]);
 
             if (isEnglish) {
                 name = usuarioActual ? usuarioActual.user : "Agent";
@@ -609,10 +713,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     reply = `You earn discounts by leveling up through purchases, ${name}. Click your name at the top right and select 'Mis Descuentos' to see your rank and active codes. Note: Codes have a 14-day cooldown!`;
                 
                 } else if (incluye(["buy", "purchase", "pay", "cart", "cost", "price"])) {
-                    reply = `To buy items, browse our 'Buy/Sell' section, add products to your cart, and click the Cart button at the top right to checkout. Don't forget to enter your discount code if you have one!`;
+                    reply = `To buy items, browse our 'Buy/Sell' section, add products to your cart, and click the Cart button at the top right to checkout. Make sure your card is exactly 12 digits!`;
                 
                 } else if (incluye(["sell", "add item", "post item"])) {
                     reply = `To sell your own items, ${name}, log in and go to the 'Buy/Sell' market, then click the '+ Upload Item' button.`;
+                
+                } else if (incluye(["pass", "forgot", "recover"])) {
+                    reply = `If you forgot your password, ${name}, click the 'Login' button at the top right, and then click 'Forgot your password?'. Enter your username and registration email to reset it.`;
                 
                 } else if (incluye(["log out", "logout", "sign out"])) {
                     reply = `To log out, click your name at the top right of the screen and select 'Cerrar Sesion' (Logout).`;
@@ -624,7 +731,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     reply = `To log in, ${name}, click the 'Login' button in the top right navigation bar.`;
                 
                 } else if (incluye(["hello", "hi", "hey", "greetings"])) {
-                    reply = `Hello, ${name}! I can help you with your order history, uploading photos, buying/selling, or contacting support. What do you need?`;
+                    reply = `Hello, ${name}! I can help you with your order history, uploading photos, buying/selling, or password recovery. What do you need?`;
                 
                 } else {
                     reply = `I am your virtual assistant, ${name}. I can guide you on how to check your history, buy, sell, upload photos, or manage claims. Could you rephrase your question?`;
@@ -652,13 +759,16 @@ document.addEventListener("DOMContentLoaded", () => {
                     reply = `Al comprar subes de nivel y ganas descuentos. Abre tu perfil arriba a la derecha y haz clic en "Mis Descuentos" para ver tu codigo. Recuerda que solo se pueden usar 1 vez cada 14 dias habiles.`;
                 
                 } else if (incluye(["comprar", "carrito", "pagar", "precio", "cuesta", "adquirir"])) {
-                    reply = `Para comprar, ${name}, busca el articulo en el mercado y pulsa 'Añadir'. Luego ve al 'Carrito' arriba a la derecha para pagar. ¡Acuerdate de aplicar tu codigo de descuento!`;
+                    reply = `Para comprar, ${name}, busca el articulo en el mercado y pulsa 'Añadir'. Luego ve al 'Carrito' arriba a la derecha para pagar. La tarjeta debe tener 12 digitos por motivos de seguridad del sistema.`;
                 
                 } else if (incluye(["vender", "subir articulo", "añadir articulo", "publicar"])) {
                     reply = `Para poner a la venta una pieza, ${name}, inicia sesion, ve a 'Compra/Venta' y pulsa el boton '+ Subir Articulo'.`;
                 
                 } else if (incluye(["cerrar", "salir", "desconectar", "apagar"]) && incluye(["sesion", "cuenta", "usuario"])) {
                     reply = `Para cerrar tu sesion, ${name}, haz clic en el boton de arriba a la derecha que dice tu nombre y pulsa en "Cerrar Sesion" (en rojo).`;
+                
+                } else if (incluye(["olvida", "perdi", "recuperar", "contra"])) {
+                    reply = `Para recuperar tu contraseña, ${name}, ve al boton de Iniciar Sesion y pincha en "¿Has olvidado tu contraseña?". Introduce tu usuario y correo de registro exactos para cambiarla.`;
                 
                 } else if (incluye(["registrar", "crear cuenta", "hacer cuenta", "ventaja", "beneficio"])) {
                     reply = `Registrarte te permite subir de nivel, conseguir codigos de descuento, vender piezas, ver tu historial y usar la Galeria. Haz clic en "Iniciar Sesion" y luego en "Registrate aqui".`;
@@ -667,7 +777,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     reply = `Para iniciar sesion, ${name}, haz clic en el boton verde de "Iniciar Sesion" situado en la barra superior derecha.`;
                 
                 } else if(incluye(["hola", "buenas", "ey", "saludo", "que tal"])) {
-                    reply = `¡Hola, ${name}! Preguntame como ver tu historial, subir una foto, usar codigos de descuento, o como hacer devoluciones.`;
+                    reply = `¡Hola, ${name}! Preguntame como ver tu historial, subir una foto, usar codigos de descuento, recuperar contraseñas o hacer devoluciones.`;
                 
                 } else {
                     reply = `Soy la IA de soporte, ${name}. Entiendo preguntas sobre como ver tu historial, subir fotos a la galeria, aplicar cupones, el taller o reclamaciones. ¿Me lo dices de otra manera?`;
