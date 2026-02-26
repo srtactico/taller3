@@ -14,6 +14,14 @@
 </head>
 <body>
 
+    <div id="custom-alert" class="overlay">
+        <div class="popup-box" style="max-width: 400px; padding: 30px;">
+            <h3 style="color: var(--primary-color); margin-bottom: 15px; font-size: 1.3rem;" data-i18n="alertTitle">Soporte Táctico</h3>
+            <p id="custom-alert-message" style="color: #fff; margin-bottom: 20px; font-size: 1rem; line-height: 1.4;"></p>
+            <button id="btn-close-alert" class="btn-primary" data-i18n="alertBtn">ENTENDIDO</button>
+        </div>
+    </div>
+
     <header style="position: absolute; top: 40px; background: transparent; border: none; width: 100%;">
         <div class="container header-content" style="justify-content: center;">
             <div class="logo-text">TACTICAL <span>REPARATIONS</span></div>
@@ -22,45 +30,89 @@
 
     <div class="claims-container">
         <div class="claims-box">
-            <h1>Centro de Soporte Oficial</h1>
-            <p>Utiliza este formulario para solicitar devoluciones, poner una reclamacion formal o enviarnos sugerencias para mejorar la plataforma. Un agente superior revisara tu caso en menos de 24 horas.</p>
+            <h1 data-i18n="claimsTitle">Centro de Soporte Oficial</h1>
+            <p data-i18n="claimsDesc">Utiliza este formulario para solicitar devoluciones, poner una reclamacion formal o enviarnos sugerencias para mejorar la plataforma. Un agente superior revisara tu caso en menos de 24 horas.</p>
             
             <form class="tactical-form" id="form-reclamaciones" style="margin-top: 0;">
-                <input type="text" id="claim-name" placeholder="Nombre / Identificacion de Agente" class="input-field" required>
-                <input type="email" id="claim-email" placeholder="Email de contacto" class="input-field" required>
+                <input type="text" id="claim-name" placeholder="Nombre / Identificacion de Agente" data-i18n-placeholder="claimName" class="input-field" required>
+                <input type="email" id="claim-email" placeholder="Email de contacto" data-i18n-placeholder="claimEmail" class="input-field" required>
                 
                 <select id="claim-type" class="input-field" required>
-                    <option value="" disabled selected>-- Selecciona el tipo de tramite --</option>
-                    <option value="devolucion">Solicitud de Devolucion</option>
-                    <option value="reclamacion">Reclamacion / Queja</option>
-                    <option value="sugerencia">Sugerencia de Mejora</option>
-                    <option value="otro">Otro problema tecnico</option>
+                    <option value="" disabled selected data-i18n="claimOpt0">-- Selecciona el tipo de tramite --</option>
+                    <option value="devolucion" data-i18n="claimOpt1">Solicitud de Devolucion</option>
+                    <option value="reclamacion" data-i18n="claimOpt2">Reclamacion / Queja</option>
+                    <option value="sugerencia" data-i18n="claimOpt3">Sugerencia de Mejora</option>
+                    <option value="otro" data-i18n="claimOpt4">Otro problema tecnico</option>
                 </select>
                 
-                <input type="text" id="claim-order" placeholder="Numero de pedido (Ej: TR-123456)" class="input-field">
+                <input type="text" id="claim-order" placeholder="Numero de pedido (Ej: TR-123456)" data-i18n-placeholder="claimOrder" class="input-field">
                 
-                <textarea id="claim-message" placeholder="Describe tu situacion con el mayor detalle posible..." class="input-field" required style="min-height: 120px;"></textarea>
+                <textarea id="claim-message" placeholder="Describe tu situacion con el mayor detalle posible..." data-i18n-placeholder="claimMessage" class="input-field" required style="min-height: 120px;"></textarea>
                 
-                <button type="submit" class="btn-primary" style="margin-top: 10px;">Enviar Informe al Cuartel General</button>
-                <a href="index.html" class="btn-secondary" style="display: block; text-align: center; text-decoration: none; margin-top: 15px;">Volver al Inicio</a>
+                <button type="submit" class="btn-primary" style="margin-top: 10px;" data-i18n="claimSend">Enviar Informe al Cuartel General</button>
+                <a href="index.html" class="btn-secondary" style="display: block; text-align: center; text-decoration: none; margin-top: 15px;" data-i18n="claimBack">Volver al Inicio</a>
             </form>
         </div>
     </div>
 
     <footer style="margin-top: auto; width: 100%;">
-        <div class="container">
+        <div class="container" style="text-align: center;">
             <p>&copy; 2026 Tactical Reparations. Todos los derechos reservados.</p>
             <p style="margin-top: 10px; font-size: 0.9rem; color: var(--text-muted);">
-                Contacto: <span style="color: var(--primary-color); font-weight: bold;">639 12 75 28</span> | Email: <a href="mailto:tacticalreparations@gmail.com" style="color: var(--primary-color); text-decoration: none;">tacticalreparations@gmail.com</a>
+                <span data-i18n="footerContact">Contacto:</span> <span style="color: var(--primary-color); font-weight: bold;">639 12 75 28</span> | Email: <a href="mailto:tacticalreparations@gmail.com" style="color: var(--primary-color); text-decoration: none;">tacticalreparations@gmail.com</a>
             </p>
         </div>
     </footer>
 
     <script>
+        // TRADUCTOR DE LA PÁGINA DE RECLAMACIONES
+        const currentLang = localStorage.getItem("tactical_lang") || "es";
+        const translations = {
+            es: {
+                claimsTitle: "Centro de Soporte Oficial", claimsDesc: "Utiliza este formulario para solicitar devoluciones, poner una reclamacion formal o enviarnos sugerencias para mejorar la plataforma. Un agente superior revisara tu caso en menos de 24 horas.", claimOpt0: "-- Selecciona el tipo de tramite --", claimOpt1: "Solicitud de Devolucion", claimOpt2: "Reclamacion / Queja", claimOpt3: "Sugerencia de Mejora", claimOpt4: "Otro problema tecnico", claimSend: "Enviar Informe al Cuartel General", claimBack: "Volver al Inicio", footerContact: "Contacto:", alertTitle: "Soporte Táctico", alertBtn: "ENTENDIDO",
+                claimName: "Nombre / Identificacion de Agente", claimEmail: "Email de contacto", claimOrder: "Numero de pedido (Ej: TR-123456)", claimMessage: "Describe tu situacion con el mayor detalle posible...", successMsg: "Formulario enviado con exito. El equipo de Tactical Reparations se pondra en contacto contigo pronto."
+            },
+            en: {
+                claimsTitle: "Official Support Center", claimsDesc: "Use this form to request returns, file a formal complaint, or send us suggestions to improve the platform. A senior agent will review your case in less than 24 hours.", claimOpt0: "-- Select request type --", claimOpt1: "Return Request", claimOpt2: "Complaint / Claim", claimOpt3: "Improvement Suggestion", claimOpt4: "Other technical issue", claimSend: "Send Report to HQ", claimBack: "Back to Home", footerContact: "Contact:", alertTitle: "Tactical Support", alertBtn: "UNDERSTOOD",
+                claimName: "Name / Agent ID", claimEmail: "Contact Email", claimOrder: "Order Number (e.g. TR-123456)", claimMessage: "Describe your situation in as much detail as possible...", successMsg: "Form successfully submitted. The Tactical Reparations team will contact you shortly."
+            }
+        };
+
+        const applyLanguage = () => {
+            document.querySelectorAll("[data-i18n]").forEach(el => {
+                const key = el.getAttribute("data-i18n");
+                if(translations[currentLang][key]) el.textContent = translations[currentLang][key];
+            });
+            document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+                const key = el.getAttribute("data-i18n-placeholder");
+                if(translations[currentLang][key]) el.placeholder = translations[currentLang][key];
+            });
+        };
+        applyLanguage();
+
+        // SISTEMA DE ALERTAS PERSONALIZADO
+        const showAlert = (msg, callback) => {
+            document.getElementById("custom-alert-message").textContent = msg;
+            const alertBox = document.getElementById("custom-alert");
+            alertBox.classList.add("active");
+            
+            const closeBtn = document.getElementById("btn-close-alert");
+            // Limpiar eventos anteriores
+            const newCloseBtn = closeBtn.cloneNode(true);
+            closeBtn.parentNode.replaceChild(newCloseBtn, closeBtn);
+            
+            newCloseBtn.addEventListener("click", () => {
+                alertBox.classList.remove("active");
+                if(callback) callback();
+            });
+        };
+
         document.getElementById("form-reclamaciones").addEventListener("submit", (e) => {
             e.preventDefault();
-            alert("Formulario enviado con exito. El equipo de Tactical Reparations se pondra en contacto contigo pronto.");
-            window.location.href = "index.html#reparacion"; 
+            const msg = translations[currentLang].successMsg;
+            showAlert(msg, () => {
+                window.location.href = "index.html#reparacion"; 
+            });
         });
     </script>
 </body>
