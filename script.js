@@ -2,14 +2,14 @@
 const usuariosGuardados = localStorage.getItem("tactical_users");
 const idiomaGuardado = localStorage.getItem("tactical_lang");
 const cookiesAceptadas = localStorage.getItem("tactical_cookies_accepted");
-const sesionActual = localStorage.getItem("tactical_current_user"); // Guardamos la sesion
+const sesionActual = localStorage.getItem("tactical_current_user");
 
 localStorage.clear();
 
 if (usuariosGuardados) localStorage.setItem("tactical_users", usuariosGuardados);
 if (idiomaGuardado) localStorage.setItem("tactical_lang", idiomaGuardado);
 if (cookiesAceptadas) localStorage.setItem("tactical_cookies_accepted", cookiesAceptadas);
-if (sesionActual) localStorage.setItem("tactical_current_user", sesionActual); // Restauramos la sesion
+if (sesionActual) localStorage.setItem("tactical_current_user", sesionActual);
 
 document.addEventListener("DOMContentLoaded", () => {
     
@@ -49,11 +49,8 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     let usuariosRegistrados = JSON.parse(localStorage.getItem("tactical_users")) || [];
-    
-    // --- RECUPERACION DE SESION PERSISTENTE ---
     let usuarioActual = JSON.parse(localStorage.getItem("tactical_current_user")) || null;
     
-    // Si ya habia alguien logueado al cargar la pagina, cambiamos la barra de navegacion
     if (usuarioActual) {
         nav.loginBtn.style.display = "none";
         nav.userDropdown.style.display = "block";
@@ -92,7 +89,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const closeAllPopups = () => Object.values(popups).forEach(p => p.classList.remove("active"));
     document.querySelectorAll(".btn-close-popup").forEach(btn => btn.addEventListener("click", closeAllPopups));
 
-    // Si ya acepto las cookies antes, no mostrar el popup
     if (localStorage.getItem("tactical_cookies_accepted") === "true") {
         popups.cookie.classList.remove("active");
         mainContent.style.display = "block";
@@ -118,7 +114,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("edit-email").value = usuarioActual.email;
     });
 
-    // --- POPUP DESCUENTOS Y NIVELES ---
     document.getElementById("btn-menu-discounts")?.addEventListener("click", (e) => {
         e.preventDefault(); 
         popups.discounts.classList.add("active");
@@ -177,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
         else if(userFound.pass !== passVal) { alert("Contraseña incorrecta."); }
         else {
             usuarioActual = userFound;
-            localStorage.setItem("tactical_current_user", JSON.stringify(usuarioActual)); // Guarda la sesion permanentemente
+            localStorage.setItem("tactical_current_user", JSON.stringify(usuarioActual)); 
             closeAllPopups();
             nav.loginBtn.style.display = "none";
             nav.userDropdown.style.display = "block";
@@ -187,7 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const logout = () => { 
         usuarioActual = null; 
-        localStorage.removeItem("tactical_current_user"); // Borra la sesion
+        localStorage.removeItem("tactical_current_user"); 
         nav.userDropdown.style.display = "none"; 
         nav.loginBtn.style.display = "block"; 
         alert("Sesion cerrada correctamente."); 
@@ -207,7 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const index = usuariosRegistrados.findIndex(u => u.user === usuarioActual.user);
         usuariosRegistrados[index] = usuarioActual;
         saveUsers();
-        localStorage.setItem("tactical_current_user", JSON.stringify(usuarioActual)); // Actualizar en sesion
+        localStorage.setItem("tactical_current_user", JSON.stringify(usuarioActual)); 
         
         alert("Perfil actualizado.");
         popups.editProfile.classList.remove("active");
@@ -295,7 +290,18 @@ document.addEventListener("DOMContentLoaded", () => {
         popups.uploadItem.classList.add("active");
     });
     
-    // --- CARRITO, PAGOS Y CÓDIGOS DE DESCUENTO ---
+    document.getElementById("btn-submit-item")?.addEventListener("click", () => {
+        const nombre = document.getElementById("new-item-name").value; 
+        const precio = parseFloat(document.getElementById("new-item-price").value); 
+        const imagen = document.getElementById("new-item-img").value;
+        if(nombre && precio && imagen) {
+            mercadoActual.push({ id: Date.now(), nombre: nombre, tipo: document.getElementById("new-item-type").value, precio: precio, vendedor: usuarioActual.user, imagen: imagen, descripcion: document.getElementById("new-item-desc").value });
+            localStorage.setItem("tactical_mercado_100", JSON.stringify(mercadoActual));
+            renderizarMercado(); popups.uploadItem.classList.remove("active");
+        } else { alert("Faltan campos obligatorios."); }
+    });
+
+    // --- CARRITO Y PAGOS ---
     let carrito = [];
     const actualizarCarritoUI = () => {
         const cont = document.getElementById("cart-items-container");
@@ -342,7 +348,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll('.btn-restar').forEach(btn => btn.addEventListener('click', (e) => modCan(parseInt(e.target.dataset.id), -1)));
     };
     
-    // VALIDACION DE CODIGO DE DESCUENTO CON COOLDOWN (14 DIAS)
     document.getElementById("btn-apply-discount")?.addEventListener("click", () => {
         if(!usuarioActual) {
             alert("Debes iniciar sesion para usar descuentos.");
@@ -354,7 +359,6 @@ document.addEventListener("DOMContentLoaded", () => {
         let validCodeForUser = "";
         let expDiscount = 0;
 
-        // Comprobamos cual es el codigo que le corresponde a su nivel
         if (compras >= 1 && compras <= 2) { validCodeForUser = "BRONCE10"; expDiscount = 0.10; }
         else if (compras >= 3 && compras <= 5) { validCodeForUser = "PLATA15"; expDiscount = 0.15; }
         else if (compras >= 6 && compras <= 9) { validCodeForUser = "ORO20"; expDiscount = 0.20; }
@@ -368,7 +372,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // Logica de Cooldown: Si ha usado EL MISMO codigo en los ultimos 14 dias lo bloquea
         if (usuarioActual.ultimoUsoCupon && usuarioActual.ultimoCuponUsado === code) {
             const diasPasados = (Date.now() - usuarioActual.ultimoUsoCupon) / (1000 * 60 * 60 * 24);
             if (diasPasados < 14) {
@@ -430,13 +433,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
 
-            // Guardamos la fecha si ha usado un codigo
             if (descuentoActual > 0 && codigoAplicado !== "") {
                 usuarioActual.ultimoUsoCupon = Date.now();
                 usuarioActual.ultimoCuponUsado = codigoAplicado;
             }
 
-            // Aumentar compras y guardar persistente
             usuarioActual.compras = (usuarioActual.compras || 0) + 1;
             const index = usuariosRegistrados.findIndex(u => u.user === usuarioActual.user);
             usuariosRegistrados[index] = usuarioActual;
@@ -450,17 +451,51 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- GALERÍA ---
+    // --- GALERÍA ARREGLADA ---
     const galeriaBase = ["https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800","https://images.unsplash.com/photo-1503376763066-2067ee4e9b69?auto=format&fit=crop&w=800","https://images.unsplash.com/photo-1542282088-fe8426682b8f?auto=format&fit=crop&w=800","https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=800","https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=800"];
     let galeriaActual = JSON.parse(localStorage.getItem("tactical_galeria_100")) || galeriaBase;
     
     let swiper;
     const renderizarGaleria = () => {
-        const wrapper = document.getElementById("gallery-wrapper"); if(!wrapper) return; wrapper.innerHTML = "";
-        galeriaActual.forEach(url => { wrapper.innerHTML += `<div class="swiper-slide"><img src="${url}" onerror="this.src='${fallbackImage}';"></div>`; });
-        if(swiper) swiper.destroy(true, true);
-        swiper = new Swiper(".mySwiper", { effect: "coverflow", grabCursor: true, centeredSlides: true, slidesPerView: "auto", loop: true });
+        const wrapper = document.getElementById("gallery-wrapper"); if(!wrapper) return; 
+        wrapper.innerHTML = "";
+        galeriaActual.forEach(url => { 
+            wrapper.innerHTML += `<div class="swiper-slide"><img src="${url}" onerror="this.src='${fallbackImage}';"></div>`; 
+        });
+        
+        if(swiper) { swiper.destroy(true, true); }
+        
+        // Micro-retraso para evitar que la libreria se congele al renderizar nuevas fotos
+        setTimeout(() => {
+            swiper = new Swiper(".mySwiper", { 
+                effect: "coverflow", 
+                grabCursor: true, 
+                centeredSlides: true, 
+                slidesPerView: "auto", 
+                loop: galeriaActual.length > 3 
+            });
+        }, 50);
     };
+
+    document.getElementById("btn-open-upload-photo")?.addEventListener("click", () => { 
+        if(!usuarioActual) { alert("Inicia sesion para publicar."); popups.login.classList.add("active"); return; } 
+        popups.uploadPhoto.classList.add("active"); 
+    });
+
+    document.getElementById("btn-submit-photo")?.addEventListener("click", () => { 
+        const urlInput = document.getElementById("new-photo-url");
+        const url = urlInput.value.trim(); 
+        if(url) { 
+            galeriaActual.push(url); 
+            localStorage.setItem("tactical_galeria_100", JSON.stringify(galeriaActual)); 
+            renderizarGaleria(); 
+            popups.uploadPhoto.classList.remove("active"); 
+            urlInput.value = ""; // Vaciamos la barra de texto
+            alert("Foto añadida a la galeria con exito.");
+        } else {
+            alert("Por favor, introduce una URL valida.");
+        }
+    });
 
     // --- TALLER ---
     document.getElementById("form-servicio")?.addEventListener("submit", (e) => { 
@@ -470,7 +505,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // ====================================================================
-    // --- LÓGICA DEL CHATBOT SUPER INTELIGENTE (VERSIÓN 4.0) ---
+    // --- LÓGICA DEL CHATBOT BILINGÜE Y MANUAL DE INSTRUCCIONES ---
     // ====================================================================
     const chatToggle = document.getElementById('chat-toggle');
     const chatWindow = document.getElementById('chat-window');
@@ -501,52 +536,81 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         const botReply = (text) => {
-            // Normalizar: quita tildes, mayusculas, etc. para entender cualquier cosa que escriban
             const cleanText = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); 
             let reply = "";
             let isHTML = false;
             let name = usuarioActual ? usuarioActual.user : "Agente";
 
-            // Funcion auxiliar para comprobar si contiene ALGUNA de las palabras
             const incluyeAlguna = (arrayPalabras) => arrayPalabras.some(palabra => cleanText.includes(palabra));
+            
+            // DETECCIÓN DE INGLÉS: Si el usuario escribe palabras en inglés, contestamos en inglés independientemente del idioma de la web.
+            const isEnglishInput = incluyeAlguna(["how", "what", "where", "why", "who", "login", "register", "buy", "sell", "price", "hello", "hi", "thank", "help", "upload", "photo", "cart", "account", "claim", "return", "refund"]);
 
-            if (incluyeAlguna(["gracia", "mersi", "thank"])) {
-                reply = `Gracias a ti por visitar Tactical Reparations, ${name}. Si necesitas algo mas, aqui me tienes.`;
-            
-            } else if (incluyeAlguna(["iniciar", "entrar", "acceder", "log"]) && incluyeAlguna(["sesion", "cuenta"])) {
-                reply = `Para iniciar sesion, ${name}, haz clic en el boton verde de "Iniciar Sesion" situado en la barra superior. Ahi podras meter tus datos o registrarte.`;
-            
-            } else if (incluyeAlguna(["cerrar", "salir", "desconectar", "apagar"]) && incluyeAlguna(["sesion", "cuenta", "usuario"])) {
-                reply = `Para cerrar tu sesion de forma segura, haz clic en el boton de arriba a la derecha que dice "${name}" y, en el menu, pulsa en "Cerrar Sesion" (el texto rojo).`;
-            
-            } else if (incluyeAlguna(["nivel", "rango", "cuantas compras", "estoy"])) {
-                if(usuarioActual) {
-                    reply = `Tienes un total de ${usuarioActual.compras || 0} compras en el sistema, ${name}. Abre tu perfil desplegando tu nombre arriba y haz clic en "Mis Descuentos" para ver tu rango.`;
+            if (isEnglishInput) {
+                if (incluyeAlguna(["thank"])) {
+                    reply = `Thanks for visiting Tactical Reparations, ${name}! Let me know if you need anything else.`;
+                } else if (incluyeAlguna(["upload", "photo", "gallery"])) {
+                    reply = `To upload a photo, ${name}, log in first, scroll down to the 'Gallery' section, and click the gray '+ Add Photo' button.`;
+                } else if (incluyeAlguna(["sell", "add item", "post"])) {
+                    reply = `To sell an item, ${name}, log in, go to the 'Buy/Sell' section, and click the '+ Upload Item' button.`;
+                } else if (incluyeAlguna(["buy", "cart", "pay", "purchase"])) {
+                    reply = `To buy, simply add items from the 'Buy/Sell' market to your cart, then open the Cart button at the top right to complete the payment.`;
+                } else if (incluyeAlguna(["login", "sign in", "enter"])) {
+                    reply = "To log in, click the green 'Login' button in the top right navigation bar. You can also register there.";
+                } else if (incluyeAlguna(["claim", "return", "problem", "complain", "refund"])) {
+                    reply = `I'm sorry you have an issue, ${name}. Please fill out the form at our <a href="reclamaciones.html" style="color:var(--primary-color); font-weight:bold; text-decoration:underline;">Official Support Center</a>.`;
+                    isHTML = true;
+                } else if (incluyeAlguna(["hello", "hi"])) {
+                    reply = `Hello, ${name}! I can help you find out how to upload photos, buy, sell, or contact support.`;
                 } else {
-                    reply = "Para consultar tu rango de fidelidad y compras, primero debes iniciar sesion en la plataforma.";
+                    reply = `I am your virtual assistant, ${name}. I can guide you on how to buy, sell, upload photos, or manage claims. How can I help?`;
                 }
-            
-            } else if (incluyeAlguna(["registrar", "crear", "hacer"]) && incluyeAlguna(["cuenta", "ventaja", "beneficio", "por que"])) {
-                reply = `Registrarte es vital, ${name}. Te permite subir de nivel al hacer compras y conseguir codigos de descuento de hasta el 25%. Ademas, podras subir fotos a la Galeria.`;
-            
-            } else if (incluyeAlguna(["reclam", "recalam", "devolu", "queja", "sugeren", "problema", "roto", "mal"])) {
-                reply = `Siento mucho tu problema, ${name}. Para tramitar cualquier reclamacion, devolucion o darnos sugerencias, por favor rellena el formulario en nuestro <a href="reclamaciones.html" style="color:var(--primary-color); font-weight:bold; text-decoration:underline;">Centro de Soporte Oficial</a>.`;
-                isHTML = true; 
-            
-            } else if (incluyeAlguna(["precio", "comprar", "cuesta", "catalogo", "mercado", "vender"])) {
-                reply = "Puedes adquirir o vender articulos en la seccion 'Compra/Venta'. Recuerda rellenar correctamente los datos bancarios en el carrito para que la compra se apruebe.";
-            
-            } else if (incluyeAlguna(["reparar", "taller", "cita", "arreglo", "modificar"])) {
-                reply = `Para modificar o reparar tu vehiculo, ${name}, utiliza el formulario de la seccion 'Taller' indicando tu modelo. Te responderemos al instante.`;
-            
-            } else if (incluyeAlguna(["cupon", "codigo", "descuento", "promocion"])) {
-                reply = "Si tienes un codigo de tu rango, metelo en el Carrito. Recuerda la norma del cuartel: Los codigos tienen un tiempo de enfriamiento de 14 dias (solo puedes usarlos 1 vez cada dos semanas).";
-            
-            } else if(incluyeAlguna(["hola", "buenas", "ey", "saludo"])) {
-                reply = `¡Hola, ${name}! Puedes preguntarme como cerrar sesion, consultar tu rango, buscar el taller o pedirme el enlace para reclamaciones.`;
-            
             } else {
-                reply = `Soy la IA de soporte, ${name}. Entiendo palabras clave sobre cerrar/iniciar sesion, nivel de cuenta, devoluciones, reclamaciones, taller y cupones. ¿Podrias formular la pregunta de otra forma?`;
+                // LÓGICA EN ESPAÑOL
+                if (incluyeAlguna(["gracia", "mersi"])) {
+                    reply = `Gracias a ti por visitar Tactical Reparations, ${name}. Si necesitas algo mas, aqui me tienes.`;
+                
+                } else if (incluyeAlguna(["subir", "añadir", "poner"] ) && incluyeAlguna(["foto", "imagen", "galeria"])) {
+                    reply = `Para subir una foto, ${name}, inicia sesion primero. Luego baja a la seccion 'Galeria' (abajo del todo) y pulsa el boton gris que dice '+ Añadir Foto'. Pegas la URL y listo.`;
+                
+                } else if (incluyeAlguna(["vender", "subir", "añadir"]) && incluyeAlguna(["articulo", "producto", "mercado", "pieza"])) {
+                    reply = `Para vender un articulo en el mercado, ${name}, inicia sesion, ve a la seccion 'Compra/Venta' (Unidad 1) y pulsa el boton '+ Subir Articulo'. Rellena los datos y aparecera en la tienda.`;
+                
+                } else if (incluyeAlguna(["comprar", "carrito", "pagar"]) && incluyeAlguna(["como", "donde", "forma", "hacer"])) {
+                    reply = `Para comprar, ${name}, baja a la seccion 'Compra/Venta', busca el articulo que quieras y pulsa 'Añadir'. Luego ve al boton verde de 'Carrito' arriba a la derecha para realizar el pago.`;
+                
+                } else if (incluyeAlguna(["iniciar", "entrar", "acceder", "log"]) && incluyeAlguna(["sesion", "cuenta"])) {
+                    reply = `Para iniciar sesion, ${name}, haz clic en el boton verde de "Iniciar Sesion" situado en la barra superior. Ahi podras meter tus datos o registrarte.`;
+                
+                } else if (incluyeAlguna(["cerrar", "salir", "desconectar", "apagar"]) && incluyeAlguna(["sesion", "cuenta", "usuario"])) {
+                    reply = `Para cerrar tu sesion de forma segura, haz clic en el boton de arriba a la derecha que dice "${name}" y, en el menu desplegable, pulsa en "Cerrar Sesion".`;
+                
+                } else if (incluyeAlguna(["nivel", "rango", "cuantas compras", "estoy"])) {
+                    if(usuarioActual) {
+                        reply = `Tienes un total de ${usuarioActual.compras || 0} compras en el sistema, ${name}. Abre tu perfil desplegando tu nombre arriba y haz clic en "Mis Descuentos" para ver tu rango.`;
+                    } else {
+                        reply = "Para consultar tu rango de fidelidad y compras, primero debes iniciar sesion en la plataforma.";
+                    }
+                
+                } else if (incluyeAlguna(["registrar", "crear", "hacer"]) && incluyeAlguna(["cuenta", "ventaja", "beneficio", "por que"])) {
+                    reply = `Registrarte es vital, ${name}. Te permite subir de nivel al hacer compras, conseguir codigos de descuento, vender piezas y subir fotos a la Galeria.`;
+                
+                } else if (incluyeAlguna(["reclam", "recalam", "devolu", "queja", "sugeren", "problema", "roto", "mal"])) {
+                    reply = `Siento mucho tu problema, ${name}. Para tramitar cualquier reclamacion, devolucion o darnos sugerencias, por favor rellena el formulario en nuestro <a href="reclamaciones.html" style="color:var(--primary-color); font-weight:bold; text-decoration:underline;">Centro de Soporte Oficial</a>.`;
+                    isHTML = true; 
+                
+                } else if (incluyeAlguna(["reparar", "taller", "cita", "arreglo", "modificar"])) {
+                    reply = `Para modificar o reparar tu vehiculo, ${name}, utiliza el formulario de la seccion 'Taller' indicando tu modelo. Te responderemos al instante.`;
+                
+                } else if (incluyeAlguna(["cupon", "codigo", "descuento", "promocion"])) {
+                    reply = "Si tienes un codigo de tu rango, metelo en el Carrito. Recuerda la norma del cuartel: Los codigos tienen un tiempo de enfriamiento de 14 dias para evitar abusos.";
+                
+                } else if(incluyeAlguna(["hola", "buenas", "ey", "saludo"])) {
+                    reply = `¡Hola, ${name}! Preguntame como subir una foto, como vender un articulo, tu nivel de rango, o si necesitas ir a reclamaciones.`;
+                
+                } else {
+                    reply = `Soy la IA de soporte, ${name}. Entiendo preguntas como "¿Como subo una foto?", "¿Como comprar?", o cosas sobre reclamaciones y cuentas. ¿Como te ayudo?`;
+                }
             }
             
             setTimeout(() => addMessage(reply, 'bot', isHTML), 800);
