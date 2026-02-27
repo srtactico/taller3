@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Mercado Completo - Tactical Reparations</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div id="custom-alert" class="overlay">
+        <div class="popup-box" style="max-width: 400px; padding: 30px;">
+            <h3 style="color: var(--primary-color); margin-bottom: 15px; font-size: 1.3rem;" data-i18n="alertTitle">Soporte Tactico</h3>
+            <p id="custom-alert-message" style="color: #fff; margin-bottom: 20px; font-size: 1rem; line-height: 1.4;"></p>
+            <button id="btn-close-alert" class="btn-primary" data-i18n="alertBtn">ENTENDIDO</button>
+        </div>
+    </div>
+    <div id="login-popup" class="overlay">
+        <div class="popup-box">
+            <div class="logo-text clickable-logo">TACTICAL <span>REPARATIONS</span></div>
+            <div id="login-form-container">
+                <h2 style="margin-top: 10px;" data-i18n="loginTitle">Acceso Restringido</h2>
+                <input type="text" id="username" placeholder="Usuario" data-i18n-placeholder="userHolder" class="input-field">
+                <input type="password" id="password" placeholder="Contraseña" data-i18n-placeholder="passHolder" class="input-field">
+                <button id="btn-login" class="btn-primary" data-i18n="loginBtn">Iniciar Sesion</button>
+                <button class="btn-secondary btn-close-popup" style="width: 100%;" data-i18n="cancelBtn">Cancelar</button>
+            </div>
+        </div>
+    </div>
+    <div id="cart-popup" class="overlay">
+        <div class="popup-box modal-box" style="max-width: 600px;">
+            <h2 data-i18n="cartTitle">Carrito</h2>
+            <div id="cart-items-container" style="max-height: 200px; overflow-y: auto; text-align: left; margin: 15px 0;"></div>
+            <div style="text-align: right; font-size: 1.3rem; margin-bottom: 20px; border-top: 1px solid #333; padding-top: 10px;">
+                <span data-i18n="cartTotalLabel">Total:</span> <span id="cart-total-price" style="color: var(--primary-color); font-weight: bold; transition: all 0.3s;">0€</span>
+            </div>
+            <button id="btn-checkout" class="btn-primary" style="display: none; margin-bottom: 10px;" data-i18n="checkoutBtn">Confirmar Transaccion</button>
+            <button class="btn-secondary btn-close-popup" data-i18n="continueBtn" style="width: 100%;">Cerrar</button>
+        </div>
+    </div>
+    <div id="main-content" style="display: block;">
+        
+        <header>
+            <div class="container header-content">
+                <div class="logo-text clickable-logo" style="cursor: pointer;">TACTICAL <span>REPARATIONS</span></div>
+                
+                <button id="mobile-menu-btn" class="menu-toggle">☰</button>
+
+                <nav id="nav-menu" class="nav-menu">
+                    <a href="index.html" class="nav-link" data-i18n="navHome">Inicio</a>
+                    <a href="index.html#reparacion" class="nav-link" data-i18n="navRepair">Taller</a>
+                    
+                    <button id="btn-nav-login" class="btn-secondary" style="padding: 8px 15px; font-size: 0.9rem;" data-i18n="loginBtn">Iniciar Sesion</button>
+                    
+                    <div id="user-controls" style="display: none; position: relative;" class="user-controls">
+                        <button id="btn-user-menu-trigger" class="btn-secondary" style="padding: 8px 15px; font-size: 0.9rem; border-color: var(--primary-color); color: var(--primary-color);">Agente</button>
+                        <div id="user-dropdown-content" class="dropdown-content">
+                            <a href="#" id="btn-menu-profile" data-i18n="profileBtn">Mi Perfil</a>
+                            <a href="#" id="btn-menu-logout" style="color: #ff4c4c;" data-i18n="logoutBtn">Cerrar Sesion</a>
+                        </div>
+                    </div>
+
+                    <button id="btn-open-cart" class="btn-secondary" style="padding: 8px 15px; font-size: 0.9rem; background: var(--primary-color); color: #000; border: none;">
+                        <span data-i18n="cartTitle">Carrito</span> (<span id="cart-count" style="font-weight: bold;">0</span>)
+                    </button>
+                </nav>
+            </div>
+        </header>
+
+        <div class="container main-sections-container" style="padding-top: 120px;">
+            <section id="mercado-full">
+                <h1 data-i18n="marketTitle" style="color:var(--primary-color); margin-bottom: 20px;">Catálogo Completo de Equipamiento</h1>
+                <p style="color:var(--text-muted); margin-bottom: 40px;">Explora nuestra base de datos entera de componentes tácticos y mecánicos de élite.</p>
+                <div class="grid" id="productos-db-full"></div>
+                <div style="margin-top: 40px;">
+                    <a href="index.html" class="btn-secondary" style="display:inline-block; width:auto; text-decoration: none;">Volver al Inicio</a>
+                </div>
+            </section>
+        </div>
+        
+        <footer>
+            <div class="container">
+                <p data-i18n="copyrightText">&copy; 2026 Tactical Reparations. Todos los derechos reservados.</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <script src="script.js"></script> <script>
+        // Lógica para renderizar TODO el mercado en esta página con bilingüismo inteligente
+        document.addEventListener("DOMContentLoaded", function() {
+            var currentLang = localStorage.getItem("tactical_lang") || "es";
+            
+            // Función helper copiar/pegar de script.js para formatear precio € <-> $ numerico dinamico
+            var EUR_TO_USD_RATE = 1.18125;
+            var formatearPrecioMkt = function(pBase) {
+                var lang = localStorage.getItem("tactical_lang") || "es";
+                if (lang === 'en') {
+                    var precioConvertido = pBase * EUR_TO_USD_RATE;
+                    return "$" + precioConvertido.toLocaleString("en-US", {minimumFractionDigits: 0, maximumFractionDigits: 0});
+                } else {
+                    return pBase.toLocaleString("es-ES") + "€"; 
+                }
+            };
+
+            // Volver a declarar o acceder al translator si fuera necesario, pero el script.js base ya lo hace al cargar.
+            // Aquí simplemente renderizamos el mercado completo guardado en localStorage.
+            var mercadoActualMkt = JSON.parse(localStorage.getItem("tactical_mercado_100"));
+            var contenedorFull = document.getElementById("productos-db-full");
+            
+            if(contenedorFull && mercadoActualMkt) {
+                contenedorFull.innerHTML = "";
+                var catLabel = currentLang === 'es' ? "Categoria" : "Category";
+                var sellerLabel = currentLang === 'es' ? "Vendedor" : "Seller";
+                var btnText = currentLang === 'es' ? "Añadir" : "Add";
+                var fallbackImage = "https://placehold.co/600x400/111111/7ab317?text=Articulo+Tactico";
+
+                for(var i=0; i<mercadoActualMkt.length; i++) {
+                    var p = mercadoActualMkt[i];
+                    // TRADUCCION INTELIGENTE: Priorizar versión traducida guardada dinamicamente al subir
+                    var nombre = currentLang === 'en' && p.nombreEn ? p.nombreEn : p.nombre;
+                    var desc = currentLang === 'en' && p.descripcionEn ? p.descripcionEn : p.descripcion;
+                    var tipo = currentLang === 'en' && p.tipoEn ? p.tipoEn : p.tipo;
+                    
+                    contenedorFull.innerHTML += 
+                    '<div class="card">' +
+                        '<div class="img-container"><img src="'+p.imagen+'" alt="'+nombre+'" onerror="this.onerror=null;this.src=\''+fallbackImage+'\';"></div>' +
+                        '<h3 style="margin-top:5px;">'+nombre+'</h3>' +
+                        '<p style="color:#888;font-size:0.9rem;">'+catLabel+': '+tipo+'</p>' +
+                        '<div class="card-details-hidden">' +
+                            '<p style="font-size:0.8rem; margin-bottom:10px; color:#aaa;">'+sellerLabel+': <span style="color:var(--primary-color);">'+p.vendedor+'</span></p>' +
+                            '<p style="font-size:0.95rem; color:#fff; margin-bottom:15px; line-height:1.4; text-align: left;">'+desc+'</p>' +
+                            // PRECIO CON CONVERSION DINÁMICA € <-> $
+                            '<p class="price" style="font-size: 1.8rem; font-weight: bold; margin-bottom: 15px; color: white;">'+formatearPrecioMkt(p.precio)+'</p>' +
+                            '<button class="btn-primary btn-add-cart-full" data-id="'+p.id+'" style="width:100%; padding:12px;">'+btnText+'</button>' +
+                        '</div>' +
+                    '</div>';
+                }
+
+                // Activar botones de añadir al carrito en esta página
+                var addBtnsFull = document.querySelectorAll('.btn-add-cart-full');
+                for(var j=0; j<addBtnsFull.length; j++) {
+                    addBtnsFull[j].addEventListener('click', function(e) {
+                        // Usar la función añadirAlCarrito global declarada en script.js base
+                        if(typeof añadirAlCarrito === 'function') {
+                            añadirAlCarrito(parseInt(e.target.dataset.id));
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>

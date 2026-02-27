@@ -59,9 +59,9 @@ body {
     width: 100%; 
     padding: 12px; 
     margin-bottom: 15px; 
-    background-color: #111 !important; /* Fuerza fondo oscuro */
+    background-color: #111 !important; /* Fuerza fondo oscuro táctico */
     border: 1px solid #333 !important; 
-    color: #fff !important; /* Fuerza texto blanco */
+    color: #fff !important; /* Fuerza texto blanco para escribir */
     border-radius: 4px; 
     font-size: 16px !important; 
     outline: none;
@@ -110,8 +110,10 @@ section { padding: 100px 0 50px 0; text-align: center; }
 .tactical-form { max-width: 600px; margin: 30px auto 0 auto; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; gap: 15px; text-align: left; }
 .tactical-form textarea { resize: vertical; min-height: 150px; }
 
-.swiper { width: 100%; padding-top: 30px; padding-bottom: 50px; }
-.swiper-slide { width: 300px; height: 400px; border-radius: 12px; border: 2px solid #333; overflow: hidden; background: #111 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" fill="none" stroke="%237ab317" stroke-width="8" r="35" stroke-dasharray="164 56"><animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;360 50 50"/></circle></svg>') center/40px no-repeat; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+/* AJUSTES PARA SWIPER INFINITO */
+.swiper { width: 100%; padding-top: 30px; padding-bottom: 50px; overflow: hidden;}
+.swiper-wrapper { display: -webkit-box; display: -ms-flexbox; display: flex; }
+.swiper-slide { width: 300px; height: 400px; border-radius: 12px; border: 2px solid #333; overflow: hidden; background: #111; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; -ms-flex-negative: 0; flex-shrink: 0;}
 .swiper-slide img { width: 100%; height: 100%; object-fit: cover; -webkit-user-drag: none; user-select: none; }
 .swiper-button-next, .swiper-button-prev { color: var(--primary-color) !important; }
 .swiper-pagination-bullet-active { background: var(--primary-color) !important; }
@@ -126,7 +128,6 @@ section { padding: 100px 0 50px 0; text-align: center; }
 footer { text-align: center; padding: 30px 0; background: #050505; color: #555; border-top: 1px solid #222; }
 .popup-box ul li::marker { color: var(--primary-color); }
 
-/* --- ESTILOS DEL CHAT FLOTANTE --- */
 #tactical-chat-widget { position: fixed; bottom: 30px; right: 30px; z-index: 9999; }
 #chat-toggle { background: var(--primary-color); color: #000; border: none; border-radius: 50%; width: 60px; height: 60px; font-size: 28px; cursor: pointer; -webkit-box-shadow: 0 4px 15px rgba(0,0,0,0.6); box-shadow: 0 4px 15px rgba(0,0,0,0.6); display:-webkit-box; display:-ms-flexbox; display:flex; -webkit-box-align:center; -ms-flex-align:center; align-items:center; -webkit-box-pack:center; -ms-flex-pack:center; justify-content:center; -webkit-transition: -webkit-transform 0.2s; transition: transform 0.2s; outline: none; -webkit-appearance: none;}
 @media (hover: hover) { #chat-toggle:hover { -webkit-transform: scale(1.1); transform: scale(1.1); } }

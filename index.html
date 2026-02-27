@@ -264,8 +264,9 @@
 
             <section id="mercado">
                 <h2 data-i18n="marketTitle">1. Compra/Venta</h2>
-                <div class="controls" style="margin-top: 20px;">
+                <div class="controls" style="margin-top: 20px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
                     <button class="btn-secondary" id="btn-open-upload-item" data-i18n="uploadItemBtn">+ Subir Articulo</button>
+                    <a href="marketplace.html" class="btn-primary" style="display:inline-block; width:auto; text-decoration: none;" data-i18n="seeMoreBtn">Ver todos los articulos</a>
                 </div>
                 <div class="grid" id="productos-db"></div>
             </section>
@@ -278,8 +279,8 @@
                         <option value="Reparacion" data-i18n="optRepair">Reparacion Tecnica</option>
                         <option value="Modificacion" data-i18n="optMod">Modificacion y Mejoras</option>
                     </select>
-                    <input type="text" placeholder="Vehiculo (Marca y Modelo)" data-i18n-placeholder="vehicleHolder" required>
-                    <textarea placeholder="Describe el daño o las modificaciones requeridas..." data-i18n-placeholder="descHolder" required></textarea>
+                    <input type="text" placeholder="Vehiculo (Marca y Modelo)" data-i18n-placeholder="vehicleHolder" required class="input-field">
+                    <textarea placeholder="Describe el daño o las modificaciones requeridas..." data-i18n-placeholder="descHolder" required class="input-field"></textarea>
                     <button type="submit" class="btn-primary" data-i18n="sendBtn">Enviar Solicitud</button>
                 </form>
             </section>
