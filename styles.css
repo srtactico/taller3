@@ -14,7 +14,7 @@
     box-sizing: border-box; 
     font-family: 'Segoe UI', Tahoma, Arial, sans-serif; 
     scroll-behavior: smooth; 
-    -webkit-tap-highlight-color: transparent; /* Evita parpadeos grises al tocar en móvil */
+    -webkit-tap-highlight-color: transparent; 
 }
 
 body { 
@@ -31,7 +31,6 @@ body {
 .logo-text { font-size: 24px; font-weight: 900; letter-spacing: 2px; color: var(--text-main); -webkit-transition: transform 0.2s; transition: transform 0.2s; }
 .logo-text span { color: var(--primary-color); }
 
-/* Solo aplicar hover si el dispositivo tiene raton (evita que se quede atascado en moviles) */
 @media (hover: hover) {
     .clickable-logo:hover { -webkit-transform: scale(1.05); transform: scale(1.05); }
     .nav-link:hover { color: var(--primary-color); }
@@ -39,6 +38,10 @@ body {
     .btn-secondary:hover { background: rgba(122, 179, 23, 0.1); }
     .dropdown-content a:hover { background-color: #000; color: var(--primary-color); }
     .btn-qty:hover { background: var(--primary-color); color: black;}
+}
+
+@media (hover: none) {
+    .card-details-hidden { max-height: none; opacity: 1; margin-top: 15px; padding-top: 15px; border-top: 1px solid #333; }
 }
 
 .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; -webkit-box-align: center; -ms-flex-align: center; align-items: center; z-index: 1000; opacity: 0; pointer-events: none; -webkit-transition: opacity 0.3s ease; transition: opacity 0.3s ease; }
@@ -51,23 +54,21 @@ body {
 #privacy-popup .modal-box, #cart-popup .modal-box, #privacy-policy-popup .modal-box, #history-popup .modal-box { max-width: 800px; max-height: 85vh; overflow-y: auto; text-align: left; -webkit-overflow-scrolling: touch; }
 #privacy-popup h3, #privacy-policy-popup h3 { color: var(--primary-color); margin-top: 15px; margin-bottom: 5px; }
 
-/* REGLAS ESTRICTAS PARA INPUTS EN IOS/ANDROID (Evita auto-zoom y estilos feos de Apple) */
+/* REGLAS ESTRICTAS PARA INPUTS (Soluciona el fondo blanco) */
 .input-field { 
     width: 100%; 
     padding: 12px; 
     margin-bottom: 15px; 
-    background: #000; 
-    border: 1px solid #333; 
-    color: white; 
+    background-color: #111 !important; /* Fuerza fondo oscuro */
+    border: 1px solid #333 !important; 
+    color: #fff !important; /* Fuerza texto blanco */
     border-radius: 4px; 
-    font-size: 16px !important; /* El 16px bloquea el zoom automatico en iPhones */
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
+    font-size: 16px !important; 
     outline: none;
 }
-.input-field:focus { border-color: var(--primary-color); }
+.input-field:focus { border-color: var(--primary-color) !important; }
 .input-field option { background-color: #111; color: white; } 
+select.input-field { cursor: pointer; }
 
 .btn-primary, .btn-secondary { padding: 12px 24px; border: none; cursor: pointer; font-weight: bold; text-transform: uppercase; -webkit-transition: 0.2s; transition: 0.2s; border-radius: 4px; margin-top: 10px; font-size: 16px; -webkit-appearance: none; appearance: none; }
 .btn-primary { background: var(--primary-color); color: #000; width: 100%; }
@@ -92,7 +93,6 @@ section { padding: 100px 0 50px 0; text-align: center; }
 .hero-content h1 { font-size: 3rem; margin-bottom: 20px; text-transform: uppercase; }
 .hero-content p { font-size: 1.2rem; margin-bottom: 30px; max-width: 600px; color: var(--text-muted); }
 
-/* GRID UNIVERSAL */
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 20px; margin-top: 40px; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; -webkit-box-align: start; -ms-flex-align: start; align-items: start; }
 
 .card { background: var(--bg-panel); padding: 15px; border: 1px solid #222; border-radius: 8px; text-align: center; -webkit-transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; position: relative; z-index: 1; overflow: hidden; }
@@ -100,11 +100,6 @@ section { padding: 100px 0 50px 0; text-align: center; }
 @media (hover: hover) {
     .card:hover { border-color: var(--primary-color); -webkit-transform: scale(1.03) translateY(-5px); transform: scale(1.03) translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 15px rgba(122, 179, 23, 0.2); z-index: 10; }
     .card:hover .card-details-hidden { max-height: 500px; opacity: 1; margin-top: 15px; padding-top: 15px; border-top: 1px solid #333; }
-}
-
-/* Fallback para moviles: mostrar siempre los detalles en lugar de depender del hover */
-@media (hover: none) {
-    .card-details-hidden { max-height: none; opacity: 1; margin-top: 15px; padding-top: 15px; border-top: 1px solid #333; }
 }
 
 .card h3 { color: var(--primary-color); font-size: 1.1rem; margin-top: 10px; }
@@ -144,50 +139,22 @@ footer { text-align: center; padding: 30px 0; background: #050505; color: #555; 
 #chat-input-area input { -webkit-box-flex: 1; -ms-flex-positive: 1; flex-grow: 1; padding: 10px; background: #222; border: 1px solid #444; color: white; border-radius: 4px; outline:none; font-size: 16px !important; -webkit-appearance: none;}
 #chat-input-area button { background: var(--primary-color); border: none; padding: 10px 15px; margin-left: 8px; cursor: pointer; border-radius: 4px; font-weight: bold; color:#000; -webkit-appearance: none;}
 
-/* ========================================= */
-/* --- RESPONSIVE DESIGN UNIVERSAL --- */
-/* ========================================= */
-
-/* Telefonos y Tablets (Cualquier marca) */
 @media screen and (max-width: 900px) {
     .menu-toggle { display: block; }
-    
-    .nav-menu {
-        display: none; 
-        -webkit-box-orient: vertical; 
-        -webkit-box-direction: normal; 
-        -ms-flex-direction: column; 
-        flex-direction: column;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background: rgba(10, 10, 10, 0.98);
-        padding: 20px 0;
-        border-top: 2px solid var(--primary-color);
-        -webkit-box-shadow: 0 10px 20px rgba(0,0,0,0.8);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.8);
-    }
-    
+    .nav-menu { display: none; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background: rgba(10, 10, 10, 0.98); padding: 20px 0; border-top: 2px solid var(--primary-color); -webkit-box-shadow: 0 10px 20px rgba(0,0,0,0.8); box-shadow: 0 10px 20px rgba(0,0,0,0.8); }
     .nav-menu.mobile-active { display: -webkit-box; display: -ms-flexbox; display: flex; }
-    
     .dropdown-content { position: static; -webkit-box-shadow: none; box-shadow: none; border: none; border-top: 1px solid #333; margin-top: 10px; background: #050505; }
     .hero-content h1 { font-size: 2.2rem; }
-    
-    /* Evita que el chat se salga de pantallas moviles muy pequeñas */
     #tactical-chat-widget { bottom: 15px; right: 15px; z-index: 999999;}
     #chat-window { width: calc(100vw - 30px); max-width: 320px; height: 380px; max-height: 60vh; }
-    
     .popup-box { padding: 25px 15px; }
 }
 
-/* Pantallas Pequeñas Extras (iPhone SE, etc) */
 @media screen and (max-width: 380px) {
     .hero-content h1 { font-size: 1.8rem; }
     .card { padding: 10px; }
 }
 
-/* Smart TV y Pantallas Gigantes */
 @media screen and (min-width: 1600px) {
     .container { max-width: 1500px; }
     .hero-content h1 { font-size: 4.5rem; }

@@ -21,6 +21,24 @@ function getClass(cls) {
     return document.querySelectorAll('.' + cls);
 }
 
+// SIMULADOR IA DE TRADUCCION AUTOMATICA (De ES a EN)
+var translateToEnglish = function(text) {
+    if(!text) return "";
+    var dict = {
+        "motor": "engine", "blindado": "armored", "neumatico": "tire", "neumaticos": "tires",
+        "llanta": "wheel", "llantas": "wheels", "suspension": "suspension", "reforzada": "reinforced",
+        "pintura": "paint", "freno": "brake", "frenos": "brakes", "asiento": "seat",
+        "asientos": "seats", "cristal": "glass", "cristales": "glasses", "antibalas": "bulletproof",
+        "pistones": "pistons", "juego de": "set of", "para": "for", "tactico": "tactical",
+        "coche": "car", "vehiculo": "vehicle", "pieza": "part", "modificacion": "modification"
+    };
+    var res = text.toLowerCase();
+    for(var key in dict) {
+        res = res.split(key).join(dict[key]);
+    }
+    return res.charAt(0).toUpperCase() + res.slice(1);
+};
+
 document.addEventListener("DOMContentLoaded", function() {
     
     var verTodosMercado = false; 
@@ -28,7 +46,6 @@ document.addEventListener("DOMContentLoaded", function() {
     var codigoAplicado = "";
     var currentLang = localStorage.getItem("tactical_lang") || "es";
 
-    // --- INYECCIÓN DINÁMICA DEL POPUP DE ALERTAS PERSONALIZADO ---
     if (!document.getElementById("custom-alert-box")) {
         var alertHTML = 
         '<div id="custom-alert-box" class="overlay" style="z-index: 99999;">' +
@@ -59,10 +76,9 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     };
 
-    // --- ACCION DEL LOGO AL INICIO ---
     var logos = getClass('clickable-logo');
-    for (var i = 0; i < logos.length; i++) {
-        logos[i].addEventListener('click', function() {
+    for (var l = 0; l < logos.length; l++) {
+        logos[l].addEventListener('click', function() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
@@ -156,7 +172,6 @@ document.addEventListener("DOMContentLoaded", function() {
         closeBtns[k].addEventListener("click", closeAllPopups);
     }
 
-    // --- MENÚ RESPONSIVE MÓVIL ---
     bindEvent("mobile-menu-btn", "click", function() {
         if(nav.navMenu) nav.navMenu.classList.toggle("mobile-active");
     });
@@ -210,7 +225,6 @@ document.addEventListener("DOMContentLoaded", function() {
         if(nav.navMenu) nav.navMenu.classList.remove("mobile-active");
     });
 
-    // --- POPUP DESCUENTOS BILINGÜE ---
     bindEvent("btn-menu-discounts", "click", function(e) {
         e.preventDefault(); 
         if(popups.discounts) popups.discounts.classList.add("active");
@@ -222,20 +236,20 @@ document.addEventListener("DOMContentLoaded", function() {
         
         if(descContainer) {
             if (compras === 0) {
-                descContainer.innerHTML = `<span style="color:#00ffcc; font-size:1.1rem; font-weight:bold;">${lang==='es'?'Rango Novato':'Rookie Rank'}:</span> ${translations[lang].welcomeDiscount} <br><br><span style="color:var(--text-main);">${lang==='es'?'Codigo valido':'Valid Code'}:</span> <strong style="color:var(--primary-color);">WELCOME20</strong><br><br><small style="color:#666;">${lang==='es'?'Haz tu primera compra para desbloquear los niveles de socio.':'Make your first purchase to unlock membership tiers.'}</small>`;
+                descContainer.innerHTML = '<span style="color:#00ffcc; font-size:1.1rem; font-weight:bold;">' + (lang==='es'?'Rango Novato':'Rookie Rank') + ':</span> ' + translations[lang].welcomeDiscount + ' <br><br><span style="color:var(--text-main);">' + (lang==='es'?'Codigo valido':'Valid Code') + ':</span> <strong style="color:var(--primary-color);">WELCOME20</strong><br><br><small style="color:#666;">' + (lang==='es'?'Haz tu primera compra para desbloquear los niveles de socio.':'Make your first purchase to unlock membership tiers.') + '</small>';
             } else if (compras >= 1 && compras <= 2) {
-                descContainer.innerHTML = `<span style="color:#cd7f32; font-size:1.1rem; font-weight:bold;">${lang==='es'?'Rango Bronce':'Bronze Rank'}:</span> ${translations[lang].bronze} <br><br><span style="color:var(--text-main);">${lang==='es'?'Codigo valido':'Valid Code'}:</span> <strong style="color:var(--primary-color);">BRONCE10</strong><br><br><small style="color:#666;">${lang==='es'?`Compras realizadas: ${compras}/3 para ascender a Plata`:`Purchases: ${compras}/3 to reach Silver Rank`}</small>`;
+                descContainer.innerHTML = '<span style="color:#cd7f32; font-size:1.1rem; font-weight:bold;">' + (lang==='es'?'Rango Bronce':'Bronze Rank') + ':</span> ' + translations[lang].bronze + ' <br><br><span style="color:var(--text-main);">' + (lang==='es'?'Codigo valido':'Valid Code') + ':</span> <strong style="color:var(--primary-color);">BRONCE10</strong><br><br><small style="color:#666;">' + (lang==='es'? ('Compras realizadas: ' + compras + '/3 para ascender a Plata') : ('Purchases: ' + compras + '/3 to reach Silver Rank')) + '</small>';
             } else if (compras >= 3 && compras <= 5) {
-                descContainer.innerHTML = `<span style="color:#c0c0c0; font-size:1.1rem; font-weight:bold;">${lang==='es'?'Rango Plata':'Silver Rank'}:</span> ${translations[lang].silver} <br><br><span style="color:var(--text-main);">${lang==='es'?'Codigo valido':'Valid Code'}:</span> <strong style="color:var(--primary-color);">PLATA15</strong><br><br><small style="color:#666;">${lang==='es'?`Compras realizadas: ${compras}/6 para ascender a Oro`:`Purchases: ${compras}/6 to reach Gold Rank`}</small>`;
+                descContainer.innerHTML = '<span style="color:#c0c0c0; font-size:1.1rem; font-weight:bold;">' + (lang==='es'?'Rango Plata':'Silver Rank') + ':</span> ' + translations[lang].silver + ' <br><br><span style="color:var(--text-main);">' + (lang==='es'?'Codigo valido':'Valid Code') + ':</span> <strong style="color:var(--primary-color);">PLATA15</strong><br><br><small style="color:#666;">' + (lang==='es'? ('Compras realizadas: ' + compras + '/6 para ascender a Oro') : ('Purchases: ' + compras + '/6 to reach Gold Rank')) + '</small>';
             } else if (compras >= 6 && compras <= 9) {
-                descContainer.innerHTML = `<span style="color:#ffd700; font-size:1.1rem; font-weight:bold;">${lang==='es'?'Rango Oro':'Gold Rank'}:</span> ${translations[lang].gold} <br><br><span style="color:var(--text-main);">${lang==='es'?'Codigo valido':'Valid Code'}:</span> <strong style="color:var(--primary-color);">ORO20</strong><br><br><small style="color:#666;">${lang==='es'?`Compras realizadas: ${compras}/10 para ascender a Elite`:`Purchases: ${compras}/10 to reach Elite Rank`}</small>`;
+                descContainer.innerHTML = '<span style="color:#ffd700; font-size:1.1rem; font-weight:bold;">' + (lang==='es'?'Rango Oro':'Gold Rank') + ':</span> ' + translations[lang].gold + ' <br><br><span style="color:var(--text-main);">' + (lang==='es'?'Codigo valido':'Valid Code') + ':</span> <strong style="color:var(--primary-color);">ORO20</strong><br><br><small style="color:#666;">' + (lang==='es'? ('Compras realizadas: ' + compras + '/10 para ascender a Elite') : ('Purchases: ' + compras + '/10 to reach Elite Rank')) + '</small>';
             } else {
-                descContainer.innerHTML = `<span style="color:#e5e4e2; font-size:1.1rem; font-weight:bold; text-shadow: 0 0 5px #fff;">${lang==='es'?'Rango Elite':'Elite Rank'}:</span> ${translations[lang].elite} <br><br><span style="color:var(--text-main);">${lang==='es'?'Codigo valido':'Valid Code'}:</span> <strong style="color:var(--primary-color);">ELITE25</strong><br><br><small style="color:#666;">${lang==='es'?`Agente legendario. Compras totales: ${compras}`:`Legendary Agent. Total purchases: ${compras}`}</small>`;
+                descContainer.innerHTML = '<span style="color:#e5e4e2; font-size:1.1rem; font-weight:bold; text-shadow: 0 0 5px #fff;">' + (lang==='es'?'Rango Elite':'Elite Rank') + ':</span> ' + translations[lang].elite + ' <br><br><span style="color:var(--text-main);">' + (lang==='es'?'Codigo valido':'Valid Code') + ':</span> <strong style="color:var(--primary-color);">ELITE25</strong><br><br><small style="color:#666;">' + (lang==='es'? ('Agente legendario. Compras totales: ' + compras) : ('Legendary Agent. Total purchases: ' + compras)) + '</small>';
             }
         }
     });
 
-    // --- POPUP HISTORIAL BILINGÜE ---
+    // --- POPUP HISTORIAL DINÁMICO ---
     bindEvent("btn-menu-history", "click", function(e) {
         e.preventDefault();
         if(popups.history) popups.history.classList.add("active");
@@ -247,27 +261,38 @@ document.addEventListener("DOMContentLoaded", function() {
         
         if(boxCompras && boxVentas && usuarioActual) {
             if (!usuarioActual.historialCompras || usuarioActual.historialCompras.length === 0) {
-                boxCompras.innerHTML = `<p style='color:var(--text-muted);'>${lang==='es'?'No has realizado compras aun.':'You have not made any purchases yet.'}</p>`;
+                boxCompras.innerHTML = "<p style='color:var(--text-muted);'>" + (lang==='es'?'No has realizado compras aun.':'You have not made any purchases yet.') + "</p>";
             } else {
+                // Generar HTML leyendo el Cart original guardado para que traduzca dinamicamente
                 boxCompras.innerHTML = usuarioActual.historialCompras.map(function(compra) {
-                    return `<div style="border-bottom:1px solid #333; padding-bottom:10px; margin-bottom:10px;">
-                        <strong style="color:var(--primary-color);">${lang==='es'?'ID Pedido:':'Order ID:'} ${compra.pedido}</strong> <span style="color:#aaa;">(${compra.fecha})</span><br>
-                        <span style="color:#aaa;">${lang==='es'?'Articulos:':'Items:'}</span> <span style="color:#fff;">${compra.items}</span><br>
-                        <span style="color:#aaa;">${lang==='es'?'Total Pagado:':'Total Paid:'}</span> <span style="color:#fff;">${compra.total}</span>
-                    </div>`;
+                    var itemsText = "";
+                    if (compra.cartOriginal) {
+                        itemsText = compra.cartOriginal.map(function(item) {
+                            var n = lang === 'en' && item.nombreEn ? item.nombreEn : item.nombre;
+                            return "<span style='color:#fff;'>" + n + " (x" + item.cantidad + ")</span>";
+                        }).join(", ");
+                    } else {
+                        itemsText = "<span style='color:#fff;'>" + compra.items + "</span>"; // Fallback viejos
+                    }
+
+                    return '<div style="border-bottom:1px solid #333; padding-bottom:10px; margin-bottom:10px;">' +
+                        '<strong style="color:var(--primary-color);">' + (lang==='es'?'ID Pedido:':'Order ID:') + ' ' + compra.pedido + '</strong> <span style="color:#aaa;">(' + compra.fecha + ')</span><br>' +
+                        '<span style="color:#aaa;">' + (lang==='es'?'Articulos:':'Items:') + '</span> ' + itemsText + '<br>' +
+                        '<span style="color:#aaa;">' + (lang==='es'?'Total Pagado:':'Total Paid:') + '</span> <span style="color:#fff;">' + compra.total + '</span>' +
+                    '</div>';
                 }).reverse().join("");
             }
 
             var misVentas = mercadoActual.filter(function(p) { return p.vendedor === usuarioActual.user; });
             if (misVentas.length === 0) {
-                boxVentas.innerHTML = `<p style='color:var(--text-muted);'>${lang==='es'?'No has publicado articulos en el mercado.':'You have not published any items in the market.'}</p>`;
+                boxVentas.innerHTML = "<p style='color:var(--text-muted);'>" + (lang==='es'?'No has publicado articulos en el mercado.':'You have not published any items in the market.') + "</p>";
             } else {
                 boxVentas.innerHTML = misVentas.map(function(venta) {
                     var nombreItem = lang === 'en' && venta.nombreEn ? venta.nombreEn : venta.nombre;
-                    return `<div style="border-bottom:1px solid #333; padding-bottom:10px; margin-bottom:10px;">
-                        <strong style="color:#fff;">${nombreItem}</strong><br>
-                        <span style="color:#aaa;">${lang==='es'?'Precio:':'Price:'}</span> <span style="color:var(--primary-color); font-weight:bold;">${formatearPrecio(venta.precio)}</span>
-                    </div>`;
+                    return '<div style="border-bottom:1px solid #333; padding-bottom:10px; margin-bottom:10px;">' +
+                        '<strong style="color:#fff;">' + nombreItem + '</strong><br>' +
+                        '<span style="color:#aaa;">' + (lang==='es'?'Precio:':'Price:') + '</span> <span style="color:var(--primary-color); font-weight:bold;">' + formatearPrecio(venta.precio) + '</span>' +
+                    '</div>';
                 }).reverse().join("");
             }
         }
@@ -294,7 +319,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var saveUsers = function() { localStorage.setItem("tactical_users", JSON.stringify(usuariosRegistrados)); };
 
-    // --- LOGICA DE NAVEGACION DE LOGIN/REGISTRO/RECUPERAR ---
     bindEvent("link-to-register-start", "click", function(e) { 
         e.preventDefault(); 
         if(popups.login) popups.login.classList.remove("active"); 
@@ -441,7 +465,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if(popups.config) popups.config.classList.remove("active");
     });
 
-    // --- MERCADO (CON DESCRIPCIONES EN INGLÉS) ---
+    // --- MERCADO ---
     var fallbackImage = "https://placehold.co/600x400/111111/7ab317?text=Articulo+Tactico";
 
     var productosBase = [
@@ -522,12 +546,29 @@ document.addEventListener("DOMContentLoaded", function() {
     
     bindEvent("btn-submit-item", "click", function() {
         var nombre = document.getElementById("new-item-name").value; 
+        var tipo = document.getElementById("new-item-type").value;
         var precio = parseFloat(document.getElementById("new-item-price").value); 
         var imagen = document.getElementById("new-item-img").value;
+        var descripcion = document.getElementById("new-item-desc").value;
+
         if(nombre && precio && imagen) {
-            mercadoActual.push({ id: Date.now(), nombre: nombre, tipo: document.getElementById("new-item-type").value, precio: precio, vendedor: usuarioActual.user, imagen: imagen, descripcion: document.getElementById("new-item-desc").value });
+            // TRADUCCION AUTOMATICA AL INGLES
+            var nombreEn = translateToEnglish(nombre);
+            var descEn = translateToEnglish(descripcion);
+            var tipoEn = translateToEnglish(tipo);
+
+            mercadoActual.push({ 
+                id: Date.now(), 
+                nombre: nombre, nombreEn: nombreEn,
+                tipo: tipo, tipoEn: tipoEn,
+                precio: precio, 
+                vendedor: usuarioActual.user, 
+                imagen: imagen, 
+                descripcion: descripcion, descripcionEn: descEn
+            });
             localStorage.setItem("tactical_mercado_100", JSON.stringify(mercadoActual));
-            renderizarMercado(); if(popups.uploadItem) popups.uploadItem.classList.remove("active");
+            renderizarMercado(); 
+            if(popups.uploadItem) popups.uploadItem.classList.remove("active");
         } else { showAlert(currentLang === 'es' ? "Faltan campos obligatorios." : "Missing required fields."); }
     });
 
@@ -658,7 +699,6 @@ document.addEventListener("DOMContentLoaded", function() {
         for(var j=0; j<carrito.length; j++) { if(carrito[j].id === id) pc = carrito[j]; }
 
         if(pc) { pc.cantidad +=1; } else { 
-            // Crear copia
             var nP = JSON.parse(JSON.stringify(pdb));
             nP.cantidad = 1;
             carrito.push(nP); 
@@ -671,7 +711,6 @@ document.addEventListener("DOMContentLoaded", function() {
         if(nav.navMenu) nav.navMenu.classList.remove("mobile-active");
     });
 
-    // EVENTOS DE FORMATO DE PAGO ESTRICTOS
     bindEvent("card-num", "input", function(e) {
         var v = e.target.value.replace(/\D/g, ''); 
         if (v.length > 12) v = v.substring(0, 12); 
@@ -738,24 +777,23 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             }
 
+            // CREACIÓN DE PEDIDO GUARDANDO EL CARRITO ENTERO (Para traduccion dinamica)
             var totalP = 0;
-            var cItems = [];
-            for(var i=0; i<carrito.length; i++) { 
-                totalP += (carrito[i].precio * carrito[i].cantidad); 
-                var nn = currentLang === 'en' && carrito[i].nombreEn ? carrito[i].nombreEn : carrito[i].nombre;
-                cItems.push(nn + " (x" + carrito[i].cantidad + ")");
-            }
+            for(var i=0; i<carrito.length; i++) { totalP += (carrito[i].precio * carrito[i].cantidad); }
             var totalFinal = totalP - (totalP * descuentoActual);
             
             var orderId = "TR-" + Math.floor(100000 + Math.random() * 900000);
             var dateStr = new Date().toLocaleDateString();
 
             if (!usuarioActual.historialCompras) usuarioActual.historialCompras = [];
+            
+            // Guardar datos
             usuarioActual.historialCompras.push({
                 pedido: orderId,
                 fecha: dateStr,
                 total: formatearPrecio(totalFinal),
-                items: cItems.join(", ")
+                cartOriginal: JSON.parse(JSON.stringify(carrito)), // Se guarda el array completo
+                items: "Legacy" // Ya no se usa
             });
 
             if (descuentoActual > 0 && codigoAplicado !== "") {
@@ -836,7 +874,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // ====================================================================
-    // --- LÓGICA DEL CHATBOT BILINGÜE Y MANUAL DE INSTRUCCIONES ---
+    // --- LÓGICA DEL CHATBOT - ESTRICTO AL IDIOMA SELECCIONADO ---
     // ====================================================================
     var chatToggle = document.getElementById('chat-toggle');
     var chatWindow = document.getElementById('chat-window');
@@ -870,7 +908,7 @@ document.addEventListener("DOMContentLoaded", function() {
             var cleanText = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); 
             var reply = "";
             var isHTML = false;
-            var name = usuarioActual ? usuarioActual.user : "Agente";
+            var name = usuarioActual ? usuarioActual.user : (currentLang === 'es' ? "Agente" : "Agent");
 
             var check = function(keywords) {
                 for(var i=0; i<keywords.length; i++) {
@@ -879,16 +917,14 @@ document.addEventListener("DOMContentLoaded", function() {
                 return false;
             };
             
-            var isEnglishQuery = check(["how", "what", "where", "can i", "my", "history", "buy", "sell", "thank", "hello", "hi ", "logout", "login", "sign", "refund", "return", "issue", "pass", "forgot", "order", "purchase"]);
-
-            if (isEnglishQuery) {
-                name = usuarioActual ? usuarioActual.user : "Agent";
+            // SI EL IDIOMA DE LA PÁGINA ES INGLÉS (NO MÁS ADIVINANZAS)
+            if (currentLang === 'en') {
                 
                 if (check(["thank", "thx"])) {
                     reply = "You're welcome, " + name + "! Let me know if you need anything else.";
-                } else if (check(["history", "past order", "previous order", "my order"])) {
+                } else if (check(["history", "past order", "previous order", "my order", "purchases"])) {
                     reply = "To check your purchase and sales history, " + name + ", click on your name at the top right corner and select 'Order History'. You will see all your past transactions and order codes there.";
-                } else if (check(["claim", "return", "refund", "problem", "issue", "complain", "broken"])) {
+                } else if (check(["claim", "return", "refund", "problem", "issue", "complain", "broken", "reclamation"])) {
                     reply = "I'm sorry you have an issue, " + name + ". Please fill out our form here: <a href='reclamaciones.html' style='color:var(--primary-color); font-weight:bold; text-decoration:underline;'>Official Support Center</a>. You can find your Order ID in your History.";
                     isHTML = true;
                 } else if (check(["repair", "fix", "workshop", "modify", "mechanic"])) {
@@ -898,10 +934,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 } else if (check(["discount", "coupon", "code", "promo", "level", "rank"])) {
                     reply = "You earn discounts by leveling up through purchases, " + name + ". Click your name at the top right and select 'My Discounts' to see your rank and active codes. Note: Codes have a 14-day cooldown!";
                 } else if (check(["buy", "purchase", "pay", "cart", "cost", "price"])) {
-                    reply = "To buy items, browse our 'Buy/Sell' section, add products to your cart, and click the Cart button at the top right to checkout. Make sure your card is exactly 12 digits!";
+                    reply = "To buy items, browse our 'Buy/Sell' market, add products to your cart, and click the Cart button at the top right to checkout. Make sure your card is exactly 12 digits!";
                 } else if (check(["sell", "add item", "post item"])) {
                     reply = "To sell your own items, " + name + ", log in and go to the 'Buy/Sell' market, then click the '+ Upload Item' button.";
-                } else if (check(["pass", "forgot", "recover"])) {
+                } else if (check(["pass", "forgot", "recover", "lost"])) {
                     reply = "If you forgot your password, " + name + ", click the 'Login' button at the top right, and then click 'Forgot your password?'. Enter your username and registration email to reset it.";
                 } else if (check(["log out", "logout", "sign out"])) {
                     reply = "To log out, click your name at the top right of the screen and select 'Logout' in red.";
@@ -909,16 +945,22 @@ document.addEventListener("DOMContentLoaded", function() {
                     reply = "To create an account, click the 'Login' button at the top right, then click 'Register here'. Registration allows you to buy, sell, and earn discounts!";
                 } else if (check(["log in", "login", "sign in"])) {
                     reply = "To log in, " + name + ", click the 'Login' button in the top right navigation bar.";
+                } else if (check(["product", "info", "item", "engine", "motor", "tire", "suspension", "paint", "armor", "light", "brake", "seat", "glass", "catalog", "piston", "wheel"])) {
+                    reply = "We offer top-tier tactical gear: Armored V8 Engines, Off-Road Tires, Reinforced Suspensions, Radar-Absorbent Paint, Door Armor, LED Lights, Ceramic Brakes, Recaro Seats, and Bulletproof Glass. Check the 'Buy/Sell' section to see everything!";
+                } else if (check(["how to use", "how this works", "what is this", "guide"])) {
+                    reply = "This is Tactical Reparations, " + name + ". You can Buy/Sell tactical vehicle parts, request Workshop repairs, upload photos to the Gallery, and earn Discounts by leveling up your account with purchases!";
                 } else if (check(["hello", "hi", "hey", "greetings"])) {
-                    reply = "Hello, " + name + "! I can help you with your order history, uploading photos, buying/selling, or password recovery. What do you need?";
+                    reply = "Hello, " + name + "! I can help you with your order history, uploading photos, buying/selling, catalog info or password recovery. What do you need?";
                 } else {
-                    reply = "I am your virtual assistant, " + name + ". I can guide you on how to check your history, buy, sell, upload photos, or manage claims. Could you rephrase your question?";
+                    reply = "I am your virtual assistant, " + name + ". I can guide you on how to check your history, buy, sell, upload photos, or manage claims. Could you rephrase your question using different keywords?";
                 }
 
+            // SI EL IDIOMA DE LA PÁGINA ES ESPAÑOL (NO MÁS ADIVINANZAS)
             } else {
+                
                 if (check(["gracia", "mersi"])) {
                     reply = "¡Gracias a ti por confiar en Tactical Reparations, " + name + "! Si necesitas algo mas, aqui me tienes.";
-                } else if (check(["historial", "pedidos", "compras hechas", "he comprado", "pasado", "mis compras", "mis ventas"])) {
+                } else if (check(["historial", "pedidos", "compras hechas", "he comprado", "pasado", "mis compras", "mis ventas", "ver mis pedidos", "mis pedidos"])) {
                     reply = "Para ver tu historial de compras y ventas, " + name + ", haz clic en tu nombre arriba a la derecha y selecciona 'Historial'. Alli veras tus tickets y codigos de pedido.";
                 } else if (check(["reclam", "recalam", "devolu", "queja", "sugeren", "problema", "roto", "mal"])) {
                     reply = "Siento mucho tu problema, " + name + ". Por favor rellena el formulario en nuestro <a href='reclamaciones.html' style='color:var(--primary-color); font-weight:bold; text-decoration:underline;'>Centro de Soporte Oficial</a>. Necesitaras el codigo de pedido que esta en tu Historial.";
@@ -930,25 +972,25 @@ document.addEventListener("DOMContentLoaded", function() {
                 } else if (check(["cupon", "codigo", "descuento", "promocion", "nivel", "rango"])) {
                     reply = "Al comprar subes de nivel y ganas descuentos. Abre tu perfil arriba a la derecha y haz clic en 'Mis Descuentos' para ver tu codigo. Recuerda que solo se pueden usar 1 vez cada 14 dias habiles.";
                 } else if (check(["comprar", "carrito", "pagar", "precio", "cuesta", "adquirir"])) {
-                    reply = "Para comprar, " + name + ", busca el articulo en el mercado y pulsa 'Añadir'. Luego ve al 'Carrito' arriba a la derecha para pagar. La tarjeta debe tener 12 digitos por motivos de seguridad del sistema.";
+                    reply = "Para comprar, " + name + ", busca el articulo en el mercado y pulsa 'Añadir'. Luego ve al 'Carrito' arriba a la derecha para pagar. La tarjeta debe tener 12 digitos exactos por motivos de seguridad del sistema.";
                 } else if (check(["vender", "subir articulo", "añadir articulo", "publicar"])) {
                     reply = "Para poner a la venta una pieza, " + name + ", inicia sesion, ve a 'Compra/Venta' y pulsa el boton '+ Subir Articulo'.";
-                } else if (check(["cerrar", "salir", "desconectar", "apagar", "sesion"])) {
-                    if (check(["iniciar", "entrar", "acceder", "loguear"])) {
-                        reply = "Para iniciar sesion, " + name + ", haz clic en el boton verde de 'Iniciar Sesion' situado en la barra superior derecha.";
-                    } else {
-                        reply = "Para cerrar tu sesion, " + name + ", haz clic en el boton de arriba a la derecha que dice tu nombre y pulsa en 'Cerrar Sesion' (en rojo).";
-                    }
+                } else if (check(["cerrar", "salir", "desconectar", "apagar"]) && check(["sesion", "cuenta"])) {
+                    reply = "Para cerrar tu sesion, " + name + ", haz clic en el boton de arriba a la derecha que dice tu nombre y pulsa en 'Cerrar Sesion' (en rojo).";
                 } else if (check(["olvida", "perdi", "recuperar", "contra"])) {
                     reply = "Para recuperar tu contraseña, " + name + ", ve al boton de Iniciar Sesion y pincha en '¿Has olvidado tu contraseña?'. Introduce tu usuario y correo de registro exactos para cambiarla.";
                 } else if (check(["registrar", "crear cuenta", "hacer cuenta", "ventaja", "beneficio"])) {
-                    reply = "Registrarte te permite subir de nivel, conseguir codigos de descuento, vender piezas, ver tu historial y usar la Galeria. Haz clic en 'Iniciar Sesion' y luego en 'Registrate aqui'.";
+                    reply = "Registrarte te permite subir de nivel, conseguir codigos de descuento de hasta el 25%, vender piezas, ver tu historial y usar la Galeria. Haz clic en 'Iniciar Sesion' y luego en 'Registrate aqui'.";
                 } else if (check(["iniciar", "entrar", "acceder", "loguear"])) {
                     reply = "Para iniciar sesion, " + name + ", haz clic en el boton verde de 'Iniciar Sesion' situado en la barra superior derecha.";
+                } else if (check(["producto", "info", "articulo", "motor", "neumatico", "rueda", "suspension", "pintura", "blindaje", "luce", "freno", "asiento", "cristal", "catalogo", "piston", "vende", "pieza"])) {
+                    reply = "Ofrecemos equipo tactico de elite: Motores V8 Blindados, Neumaticos Off-Road, Suspension Reforzada, Pintura Absorbe-Radar, Blindaje, Luces LED, Frenos Ceramicos, Asientos Recaro y Cristales Antibalas. ¡Visita la seccion 'Compra/Venta' para ver el catalogo completo!";
+                } else if (check(["como se usa", "como funciona", "que es esto", "guia"])) {
+                    reply = "Esto es Tactical Reparations, " + name + ". Aqui puedes Comprar/Vender piezas tacticas, pedir cita en el Taller, subir fotos a la Galeria y ganar Descuentos subiendo de nivel con tus compras a lo largo del tiempo.";
                 } else if(check(["hola", "buenas", "ey", "saludo", "que tal"])) {
-                    reply = "¡Hola, " + name + "! Preguntame como ver tu historial, subir una foto, usar codigos de descuento, recuperar contraseñas o hacer devoluciones.";
+                    reply = "¡Hola, " + name + "! Preguntame como ver tu historial, subir una foto, sobre nuestro catalogo de productos, recuperar contraseñas o hacer devoluciones.";
                 } else {
-                    reply = "Soy la IA de soporte, " + name + ". Entiendo preguntas sobre como ver tu historial, subir fotos a la galeria, aplicar cupones, el taller o reclamaciones. ¿Me lo dices de otra manera?";
+                    reply = "Soy la IA de soporte, " + name + ". Entiendo preguntas sobre como ver tu historial, subir fotos a la galeria, info de productos, el taller o reclamaciones. ¿Me lo dices de otra manera?";
                 }
             }
             
