@@ -26,19 +26,92 @@
                 <input type="password" id="password" placeholder="Contraseña" data-i18n-placeholder="passHolder" class="input-field">
                 <button id="btn-login" class="btn-primary" data-i18n="loginBtn">Iniciar Sesion</button>
                 <button class="btn-secondary btn-close-popup" style="width: 100%;" data-i18n="cancelBtn">Cancelar</button>
+                <p style="margin-top: 15px; font-size: 0.9rem; color: var(--text-muted);"><span data-i18n="noAccount">¿No tienes cuenta?</span> <a href="#" id="link-to-register-start" style="color: var(--primary-color);" data-i18n="registerHere">Registrate aqui</a></p>
+                <p style="margin-top: 5px; font-size: 0.9rem;"><a href="#" id="link-forgot-pass" style="color: var(--primary-color);" data-i18n="forgotPass">¿Has olvidado tu contraseña?</a></p>
+            </div>
+            <div id="forgot-form-container" style="display: none;">
+                <h2 style="margin-top: 10px;" data-i18n="forgotTitle">Recuperar Contraseña</h2>
+                <input type="text" id="forgot-username" placeholder="Usuario" data-i18n-placeholder="forgotUserHolder" class="input-field">
+                <input type="email" id="forgot-email" placeholder="Email de registro" data-i18n-placeholder="forgotEmailHolder" class="input-field">
+                <input type="password" id="forgot-new-pass" placeholder="Nueva Contraseña" data-i18n-placeholder="forgotNewPassHolder" class="input-field">
+                <button id="btn-reset-pass" class="btn-primary" data-i18n="resetBtn">Cambiar Contraseña</button>
+                <button class="btn-secondary btn-close-popup" style="width: 100%;" data-i18n="cancelBtn">Cancelar</button>
+                <p style="margin-top: 15px; font-size: 0.9rem;"><a href="#" id="link-back-login" style="color: var(--primary-color);" data-i18n="backLogin">Volver a Iniciar Sesion</a></p>
+            </div>
+            <div id="register-form-container" style="display: none;">
+                <h2 style="margin-top: 10px;" data-i18n="registerTitle">Nuevo Recluta</h2>
+                <input type="text" id="reg-username" placeholder="Usuario" data-i18n-placeholder="userHolder" class="input-field">
+                <input type="email" id="reg-email" placeholder="Email (Obligatorio)" data-i18n-placeholder="emailHolder" class="input-field" required>
+                <input type="password" id="reg-password" placeholder="Contraseña" data-i18n-placeholder="passHolder" class="input-field">
+                <button id="btn-register" class="btn-primary" data-i18n="registerBtn">Registrar Cuenta</button>
+                <button class="btn-secondary btn-close-popup" style="width: 100%;" data-i18n="cancelBtn">Cancelar</button>
+                <p style="margin-top: 15px; font-size: 0.9rem; color: var(--text-muted);"><span data-i18n="hasAccount">¿Ya tienes cuenta?</span> <a href="#" id="link-to-login" style="color: var(--primary-color);" data-i18n="loginBtn">Iniciar Sesion</a></p>
             </div>
         </div>
     </div>
 
-    <div id="cart-popup" class="overlay">
-        <div class="popup-box modal-box" style="max-width: 600px;">
-            <h2 data-i18n="cartTitle">Carrito</h2>
-            <div id="cart-items-container" style="max-height: 200px; overflow-y: auto; text-align: left; margin: 15px 0;"></div>
-            <div style="text-align: right; font-size: 1.3rem; margin-bottom: 20px; border-top: 1px solid #333; padding-top: 10px;">
-                <span data-i18n="cartTotalLabel">Total:</span> <span id="cart-total-price" style="color: var(--primary-color); font-weight: bold; transition: all 0.3s;">0€</span>
-            </div>
-            <button id="btn-checkout" class="btn-primary" style="display: none; margin-bottom: 10px;" data-i18n="checkoutBtn">Confirmar Transaccion</button>
-            <button class="btn-secondary btn-close-popup" data-i18n="continueBtn" style="width: 100%;">Cerrar</button>
+    <div id="account-benefits-popup" class="overlay">
+        <div class="popup-box">
+            <h2 data-i18n="benefitsTitle">Ventajas de Unirte</h2>
+            <ul style="text-align: left; color: var(--text-muted); margin-bottom: 20px; padding-left: 20px;">
+                <li data-i18n="benefit1" style="margin-bottom: 10px;">Vender tus propios articulos en el Mercado.</li>
+                <li data-i18n="benefit2" style="margin-bottom: 10px;">Comprar equipamiento exclusivo.</li>
+                <li data-i18n="benefit3" style="margin-bottom: 10px;">Subir fotos de tus modificaciones a la Galeria.</li>
+                <li data-i18n="benefit4" style="margin-bottom: 10px;">Acceso a descuentos exclusivos.</li>
+                <li data-i18n="benefit5" style="margin-bottom: 10px; color: var(--primary-color);">Bono exclusivo del 20% de bienvenida en tu primera compra.</li>
+            </ul>
+            <button id="btn-continue-register" class="btn-primary" data-i18n="continueRegisterBtn">Continuar al Registro</button>
+            <button class="btn-secondary btn-close-popup" style="width: 100%;" data-i18n="cancelBtn">Cancelar</button>
+        </div>
+    </div>
+
+    <div id="edit-profile-popup" class="overlay">
+        <div class="popup-box">
+            <h2 data-i18n="profileTitle">Editar Perfil</h2>
+            <p style="font-size: 0.9rem; color: var(--text-muted);" data-i18n="profileDesc">Actualiza tus credenciales.</p>
+            <label style="display:block; text-align:left; color:var(--primary-color); margin-bottom:5px;" data-i18n="newEmailLabel">Nuevo Email:</label>
+            <input type="email" id="edit-email" class="input-field">
+            <label style="display:block; text-align:left; color:var(--primary-color); margin-bottom:5px;" data-i18n="newPassLabel">Nueva Contraseña (Opcional):</label>
+            <input type="password" id="edit-new-pass" class="input-field">
+            <hr style="border: 0; border-top: 1px solid #333; margin: 20px 0;">
+            <label style="display:block; text-align:left; color:#ff4c4c; margin-bottom:5px;" data-i18n="currentPassLabel">* Contraseña ACTUAL (Requerida):</label>
+            <input type="password" id="edit-current-pass" class="input-field" style="border-color: #ff4c4c;">
+            <button id="btn-save-profile" class="btn-primary" data-i18n="saveChanges">Guardar Cambios</button>
+            <button class="btn-secondary btn-close-popup" style="width: 100%;" data-i18n="cancelBtn">Cancelar</button>
+        </div>
+    </div>
+
+    <div id="discounts-popup" class="overlay">
+        <div class="popup-box">
+            <h2 data-i18n="discountsMenu" style="margin-bottom: 5px;">Mis Descuentos</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;" data-i18n="discountsSubtitle">Aumenta tu nivel realizando compras.</p>
+            <div id="user-discounts-container" style="background: #111; padding: 20px; border-radius: 6px; border: 1px solid #333; text-align: left; line-height: 1.6; margin-bottom: 20px;"></div>
+            <button class="btn-secondary btn-close-popup" style="width: 100%;" data-i18n="closeBtn">Cerrar</button>
+        </div>
+    </div>
+
+    <div id="history-popup" class="overlay">
+        <div class="popup-box modal-box">
+            <h2 data-i18n="historyMenu" style="margin-bottom: 5px;">Historial</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;" data-i18n="historyDesc">Tus operaciones en Tactical Reparations.</p>
+            <h3 style="color:var(--primary-color); border-bottom: 1px solid #333; padding-bottom:5px; margin-bottom: 10px;" data-i18n="historyMyPurchases">Mis Compras</h3>
+            <div id="history-purchases" style="background: #111; padding: 15px; border-radius: 4px; color: var(--text-main); font-size: 0.9rem; max-height: 200px; overflow-y: auto; margin-bottom: 20px;"></div>
+            <h3 style="color:var(--primary-color); border-bottom: 1px solid #333; padding-bottom:5px; margin-bottom: 10px;" data-i18n="historyMySales">Mis Ventas (Mercado)</h3>
+            <div id="history-sales" style="background: #111; padding: 15px; border-radius: 4px; color: var(--text-main); font-size: 0.9rem; max-height: 200px; overflow-y: auto; margin-bottom: 20px;"></div>
+            <button class="btn-secondary btn-close-popup" style="width: 100%;" data-i18n="closeBtn">Cerrar</button>
+        </div>
+    </div>
+
+    <div id="config-popup" class="overlay">
+        <div class="popup-box">
+            <h2 data-i18n="configTitle">Configuracion</h2>
+            <p data-i18n="configDesc">Selecciona el idioma de la interfaz.</p>
+            <select id="language-selector" class="input-field" style="cursor: pointer; text-align: center;">
+                <option value="es">Español (ES)</option>
+                <option value="en">English (EN)</option>
+            </select>
+            <button id="btn-save-config" class="btn-primary" data-i18n="applyBtn">Aplicar</button>
+            <button class="btn-secondary btn-close-popup" style="width: 100%;" data-i18n="closeBtn">Cerrar</button>
         </div>
     </div>
 
@@ -47,11 +120,49 @@
             <h2 data-i18n="uploadItemTitle">Añadir al Mercado</h2>
             <input type="text" id="new-item-name" placeholder="Nombre" data-i18n-placeholder="itemNameHolder" class="input-field">
             <input type="text" id="new-item-type" placeholder="Categoría" data-i18n-placeholder="itemCatHolder" class="input-field">
-            <input type="number" id="new-item-price" placeholder="Precio Base (€)" data-i18n-placeholder="itemPriceHolder" class="input-field">
+            <input type="number" id="new-item-price" placeholder="Precio (€)" data-i18n-placeholder="itemPriceHolder" class="input-field">
             <input type="text" id="new-item-img" placeholder="URL Imagen" data-i18n-placeholder="itemImgHolder" class="input-field">
             <textarea id="new-item-desc" placeholder="Descripción del artículo..." data-i18n-placeholder="itemDescHolder" class="input-field" style="resize: vertical; min-height: 80px;"></textarea>
             <button id="btn-submit-item" class="btn-primary" data-i18n="publishBtn">Publicar</button>
             <button class="btn-secondary btn-close-popup" style="width: 100%;" data-i18n="cancelBtn">Cancelar</button>
+        </div>
+    </div>
+
+    <div id="cart-popup" class="overlay">
+        <div class="popup-box modal-box" style="max-width: 600px;">
+            <h2 data-i18n="cartTitle">Carrito</h2>
+            <div id="cart-items-container" style="max-height: 200px; overflow-y: auto; text-align: left; margin: 15px 0;"></div>
+            <div id="discount-section" style="display: flex; gap: 10px; margin-bottom: 15px;">
+                <input type="text" id="discount-code" placeholder="Codigo de descuento" data-i18n-placeholder="discountPlaceholder" class="input-field" style="margin-bottom: 0;">
+                <button id="btn-apply-discount" class="btn-secondary" style="margin-top: 0; padding: 10px 20px;" data-i18n="applyCodeBtn">Aplicar</button>
+            </div>
+            <div style="text-align: right; font-size: 1.3rem; margin-bottom: 20px; border-top: 1px solid #333; padding-top: 10px;">
+                <span data-i18n="cartTotalLabel">Total:</span> <span id="cart-total-price" style="color: var(--primary-color); font-weight: bold; transition: all 0.3s;">0€</span>
+                <span id="cart-discounted-price" style="color: #ff4c4c; font-weight: bold; margin-left:10px; display:none;">0€</span>
+            </div>
+            <div id="payment-section" style="text-align: left; margin-bottom: 20px; display: none;">
+                <h4 style="margin-bottom: 10px; color: var(--text-main);" data-i18n="payMethod">Metodo de Pago:</h4>
+                <select id="payment-method" class="input-field">
+                    <option value="tarjeta" data-i18n="payOptCard">Tarjeta de Credito/Debito</option>
+                    <option value="paypal" data-i18n="payOptPayPal">PayPal</option>
+                    <option value="cripto" data-i18n="payOptCrypto">Criptomonedas</option>
+                </select>
+                <div id="card-details" style="display: block; margin-top: 10px;">
+                    <input type="text" id="card-num" placeholder="Numero Tarjeta (12 digitos)" data-i18n-placeholder="cardNum" class="input-field" maxlength="14">
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="card-date" placeholder="MM/AA" class="input-field" style="width: 50%;" maxlength="5">
+                        <input type="password" id="card-cvc" placeholder="CVC" class="input-field" style="width: 50%;" maxlength="3">
+                    </div>
+                </div>
+                <div id="paypal-details" style="display: none; margin-top: 10px;">
+                    <input type="email" id="paypal-email" placeholder="Email de PayPal asociado" data-i18n-placeholder="paypalHolder" class="input-field">
+                </div>
+                <div id="cripto-details" style="display: none; margin-top: 10px;">
+                    <input type="text" id="cripto-wallet" placeholder="Direccion de tu Wallet (BTC/ETH)" data-i18n-placeholder="cryptoHolder" class="input-field">
+                </div>
+            </div>
+            <button id="btn-checkout" class="btn-primary" style="display: none; margin-bottom: 10px;" data-i18n="checkoutBtn">Confirmar Transaccion</button>
+            <button class="btn-secondary btn-close-popup" data-i18n="continueBtn" style="width: 100%;">Seguir Comprando</button>
         </div>
     </div>
 
@@ -70,6 +181,8 @@
                         <button id="btn-user-menu-trigger" class="btn-secondary" style="padding: 8px 15px; font-size: 0.9rem; border-color: var(--primary-color); color: var(--primary-color);">Agente</button>
                         <div id="user-dropdown-content" class="dropdown-content">
                             <a href="index.html" id="btn-menu-profile" data-i18n="profileBtn">Mi Perfil</a>
+                            <a href="#" id="btn-menu-history" data-i18n="historyMenu">Historial</a>
+                            <a href="#" id="btn-menu-discounts" data-i18n="discountsMenu">Mis Descuentos</a>
                             <a href="#" id="btn-menu-logout" style="color: #ff4c4c;" data-i18n="logoutBtn">Cerrar Sesion</a>
                         </div>
                     </div>
