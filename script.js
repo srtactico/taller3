@@ -1,17 +1,4 @@
-// --- FORMATEO DE MEMORIA SEGURO ---
-var usuariosGuardados = localStorage.getItem("tactical_users");
-var idiomaGuardado = localStorage.getItem("tactical_lang");
-var cookiesAceptadas = localStorage.getItem("tactical_cookies_accepted");
-var sesionActual = localStorage.getItem("tactical_current_user");
-
-localStorage.clear();
-
-if (usuariosGuardados) localStorage.setItem("tactical_users", usuariosGuardados);
-if (idiomaGuardado) localStorage.setItem("tactical_lang", idiomaGuardado);
-if (cookiesAceptadas) localStorage.setItem("tactical_cookies_accepted", cookiesAceptadas);
-if (sesionActual) localStorage.setItem("tactical_current_user", sesionActual);
-
-// Funciones Helper
+// Funciones Helper de Compatibilidad
 function bindEvent(id, ev, cb) {
     var el = document.getElementById(id);
     if (el) { el.addEventListener(ev, cb); }
@@ -48,7 +35,6 @@ var tacticalTranslator = function(text, targetLang) {
 
 document.addEventListener("DOMContentLoaded", function() {
     
-    var verTodosMercado = false; 
     var descuentoActual = 0; 
     var codigoAplicado = "";
     var currentLang = localStorage.getItem("tactical_lang") || "es";
@@ -168,9 +154,9 @@ document.addEventListener("DOMContentLoaded", function() {
         }
         var langSel = document.getElementById("language-selector");
         if(langSel) langSel.value = lang;
-        
-        renderizarMercado();
-        if(typeof window.actualizarCarritoUI === 'function') window.actualizarCarritoUI(); 
+        if(document.getElementById("productos-db")) renderizarMercado();
+        if(typeof window.renderizarMercadoFull === 'function') window.renderizarMercadoFull();
+        actualizarCarritoUI(); 
     };
 
     var closeAllPopups = function() {
@@ -406,12 +392,27 @@ document.addEventListener("DOMContentLoaded", function() {
 
     bindEvent("btn-register", "click", function() {
         var userVal = document.getElementById("reg-username").value.trim();
-        var emailVal = document.getElementById("reg-email").value.trim();
+        var emailVal = document.getElementById("reg-email").value.trim().toLowerCase();
         var passVal = document.getElementById("reg-password").value.trim();
         
-        if(emailVal === "" || emailVal.indexOf("@") === -1) { window.showAlert(currentLang === 'es' ? "Email invalido." : "Invalid email."); return; }
         if(userVal === "" || passVal === "") { window.showAlert(currentLang === 'es' ? "Usuario y contraseña obligatorios." : "Username and password required."); return; }
         
+        // VALIDACION DE DOMINIOS DE EMAIL ESTRICTA
+        var validDomains = ["@gmail.com", "@outlook.es", "@outlook.com", "@yahoo.es", "@yahoo.com"];
+        var isValidDomain = false;
+        for(var d=0; d<validDomains.length; d++) {
+            var domain = validDomains[d];
+            if(emailVal.indexOf(domain) !== -1 && emailVal.indexOf(domain) === emailVal.length - domain.length) {
+                isValidDomain = true;
+                break;
+            }
+        }
+        
+        if(!isValidDomain) {
+            window.showAlert(currentLang === 'es' ? "El correo debe terminar en @gmail.com, @outlook.com/.es o @yahoo.com/.es" : "Email must end in @gmail.com, @outlook.com/.es or @yahoo.com/.es");
+            return;
+        }
+
         var isUsed = false;
         for(var j=0; j<usuariosRegistrados.length; j++){
             if(usuariosRegistrados[j].user === userVal) isUsed = true;
@@ -500,7 +501,6 @@ document.addEventListener("DOMContentLoaded", function() {
     var mercadoActual = JSON.parse(localStorage.getItem("tactical_mercado_100")) || productosBase;
     if (!localStorage.getItem("tactical_mercado_100")) localStorage.setItem("tactical_mercado_100", JSON.stringify(productosBase));
     
-    // FUNCION DE FORMATEO DE PRECIO DINÁMICA
     var formatearPrecio = function(pBase) {
         if (currentLang === 'en') {
             return "$" + (pBase * EUR_TO_USD_RATE).toLocaleString("en-US", {minimumFractionDigits: 0, maximumFractionDigits: 0});
@@ -530,18 +530,24 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var renderizarMercado = function() {
         var contenedor = document.getElementById("productos-db");
-        var contenedorFull = document.getElementById("productos-db-full");
+        if(!contenedor) return; 
+        contenedor.innerHTML = "";
         
         var catLabel = currentLang === 'es' ? "Categoria" : "Category";
         var sellerLabel = currentLang === 'es' ? "Vendedor" : "Seller";
         var btnText = currentLang === 'es' ? "Añadir" : "Add";
 
-        var buildHTML = function(p) {
+        // LIMITADO A LOS 8 PRIMEROS (Quita el botón de expandir para obligar a usar el marketplace)
+        var itemsAMostrar = mercadoActual.slice(0, 8);
+
+        for(var i=0; i<itemsAMostrar.length; i++) {
+            var p = itemsAMostrar[i];
             var nombre = currentLang === 'en' && p.nombreEn ? p.nombreEn : p.nombre;
             var desc = currentLang === 'en' && p.descripcionEn ? p.descripcionEn : p.descripcion;
             var tipo = currentLang === 'en' && p.tipoEn ? p.tipoEn : p.tipo;
             
-            return '<div class="card">' +
+            contenedor.innerHTML += 
+            '<div class="card">' +
                 '<div class="img-container"><img src="'+p.imagen+'" alt="'+nombre+'" onerror="this.onerror=null;this.src=\''+fallbackImage+'\';"></div>' +
                 '<h3 style="margin-top:5px;">'+nombre+'</h3>' +
                 '<p style="color:#888;font-size:0.9rem;">'+catLabel+': '+tipo+'</p>' +
@@ -552,43 +558,12 @@ document.addEventListener("DOMContentLoaded", function() {
                     '<button class="btn-primary btn-add-cart" data-id="'+p.id+'" style="width:100%; padding:12px;">'+btnText+'</button>' +
                 '</div>' +
             '</div>';
-        };
-
-        if(contenedor) {
-            contenedor.innerHTML = "";
-            var itemsAMostrar = verTodosMercado ? mercadoActual : mercadoActual.slice(0, 8);
-            for(var i=0; i<itemsAMostrar.length; i++) {
-                contenedor.innerHTML += buildHTML(itemsAMostrar[i]);
-            }
-            if (mercadoActual.length > 8) {
-                var btnTextMore = verTodosMercado ? translations[currentLang].seeLessBtn : translations[currentLang].seeMoreBtn;
-                var btnClass = verTodosMercado ? 'btn-secondary' : 'btn-primary';
-                contenedor.innerHTML += 
-                '<div style="grid-column: 1 / -1; margin-top: 30px; text-align: center;">' +
-                    '<button id="btn-toggle-market" class="'+btnClass+'" style="display:inline-block; width:auto; padding:15px 30px; font-size:1rem;">' + btnTextMore + '</button>' +
-                '</div>';
-            }
-        }
-
-        if(contenedorFull) {
-            contenedorFull.innerHTML = "";
-            for(var j=0; j<mercadoActual.length; j++) {
-                contenedorFull.innerHTML += buildHTML(mercadoActual[j]);
-            }
         }
 
         var addBtns = getClass('btn-add-cart');
-        for(var k=0; k<addBtns.length; k++) {
-            addBtns[k].addEventListener('click', function(e) {
+        for(var j=0; j<addBtns.length; j++) {
+            addBtns[j].addEventListener('click', function(e) {
                 window.añadirAlCarrito(parseInt(e.target.dataset.id));
-            });
-        }
-        
-        var toggleBtn = document.getElementById("btn-toggle-market");
-        if(toggleBtn) {
-            toggleBtn.addEventListener('click', function() {
-                verTodosMercado = !verTodosMercado;
-                renderizarMercado();
             });
         }
     };
@@ -622,7 +597,9 @@ document.addEventListener("DOMContentLoaded", function() {
             });
             localStorage.setItem("tactical_mercado_100", JSON.stringify(mercadoActual));
             
-            renderizarMercado();
+            if(document.getElementById("productos-db")) renderizarMercado(); 
+            if(typeof window.renderizarMercadoFull === 'function') window.renderizarMercadoFull();
+            
             if(popups.uploadItem) popups.uploadItem.classList.remove("active");
             
             document.getElementById("new-item-name").value = "";
@@ -631,7 +608,7 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("new-item-img").value = "";
             document.getElementById("new-item-desc").value = "";
             
-            window.showAlert(currentLang === 'es' ? "Articulo publicado con exito. Se ha traducido automaticamente al ingles." : "Item published successfully. It will appear translated automatically.");
+            window.showAlert(currentLang === 'es' ? "Articulo publicado con exito. Se ha traducido automaticamente." : "Item published successfully. It will appear translated automatically.");
         } else { window.showAlert(currentLang === 'es' ? "Faltan campos obligatorios." : "Missing required fields."); }
     });
 
@@ -1069,6 +1046,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     applyLanguage(currentLang);
     renderizarGaleria();
-    renderizarMercado();
+    if(document.getElementById("productos-db")) renderizarMercado();
     if(typeof window.actualizarCarritoUI === 'function') window.actualizarCarritoUI();
 });
