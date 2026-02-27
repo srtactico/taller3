@@ -4,11 +4,10 @@ var idiomaGuardado = localStorage.getItem("tactical_lang");
 var cookiesAceptadas = localStorage.getItem("tactical_cookies_accepted");
 var sesionActual = localStorage.getItem("tactical_current_user");
 
-// NO hacemos localStorage.clear() aquí para no borrar los productos del mercado
+// Mantenemos los datos del mercado del usuario actual
 if (!localStorage.getItem("tactical_users") && usuariosGuardados) localStorage.setItem("tactical_users", usuariosGuardados);
 if (!localStorage.getItem("tactical_lang") && idiomaGuardado) localStorage.setItem("tactical_lang", idiomaGuardado);
 
-// Funciones Helper
 function bindEvent(id, ev, cb) {
     var el = document.getElementById(id);
     if (el) { el.addEventListener(ev, cb); }
@@ -18,6 +17,7 @@ function getClass(cls) {
     return document.querySelectorAll('.' + cls);
 }
 
+// SIMULADOR IA DE TRADUCCION AUTOMATICA (De ES a EN y EN a ES)
 var tacticalTranslator = function(text, targetLang) {
     if(!text) return "";
     var esToEn = {
@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var translations = {
         es: {
             navHome: "Inicio", navMarket: "Compra/Venta", navRepair: "Taller", navGallery: "Galeria", loginBtn: "Iniciar Sesion", registerBtn: "Registrar Cuenta", logoutBtn: "Cerrar Sesion", profileBtn: "Mi Perfil", configBtn: "Configuracion", privacyMenuBtn: "Condiciones de Privacidad", heroTitle: "Precision absoluta. Rendimiento tactico.", heroText: "Tu vehiculo no es solo un transporte; es tu mejor herramienta.", 
-            heroBtn: "Solicitar cita previa", marketTitle: "Catálogo de Equipamiento", uploadItemBtn: "+ Subir Articulo", repairTitle: "2. Unidad de Reparacion / Modificacion", sendBtn: "Enviar Solicitud", galleryTitle: "Operaciones (Galeria)", uploadPhotoBtn: "+ Añadir Foto", cookiesTitle: "Aviso Tactico (Cookies)", cookiesText: "Utilizamos cookies para mejorar la precision de nuestros servicios. ¿Aceptas?", cookiesAccept: "Afirmativo, aceptar", loginTitle: "Acceso Restringido", noAccount: "¿No tienes cuenta?", registerHere: "Registrate aqui", registerTitle: "Nuevo Recluta", hasAccount: "¿Ya tienes cuenta?", profileTitle: "Editar Perfil", profileDesc: "Actualiza tus credenciales.", saveChanges: "Guardar Cambios", configTitle: "Configuracion", configDesc: "Selecciona el idioma.", applyBtn: "Aplicar", closeBtn: "Cerrar", cancelBtn: "Cancelar", uploadItemTitle: "Añadir al Mercado", publishBtn: "Publicar", uploadPhotoTitle: "Añadir Foto", addBtn: "Añadir", cartTitle: "Carrito", checkoutBtn: "Confirmar Transaccion", continueBtn: "Seguir Comprando", privacyTitle: "Politica de Privacidad, Cookies y Aviso Legal", selectService: "-- Selecciona el Servicio --", optRepair: "Reparacion Tecnica", optMod: "Modificacion y Mejoras", payMethod: "Metodo de Pago:", newEmailLabel: "Nuevo Email:", newPassLabel: "Nueva Contraseña (Opcional):", currentPassLabel: "* Contraseña ACTUAL (Requerida):", sellerLabel: "Vendedor", catLabel: "Categoria", emptyCart: "El carrito esta vacio.", userHolder: "Usuario", passHolder: "Contraseña", emailHolder: "Email (Obligatorio)", itemNameHolder: "Nombre", itemCatHolder: "Categoria", itemPriceHolder: "Precio Base (€)", itemImgHolder: "URL Imagen", itemDescHolder: "Descripcion del articulo...", cardNum: "Numero Tarjeta (12 digitos)", vehicleHolder: "Vehiculo (Marca y Modelo)", descHolder: "Describe el daño o las modificaciones requeridas...", benefitsTitle: "Ventajas de Unirte", benefit1: "Vender tus propios articulos en el Mercado.", benefit2: "Comprar equipamiento exclusivo.", benefit3: "Subir fotos a la Galeria.", benefit4: "Acceso a descuentos exclusivos.", benefit5: "Bono exclusivo del 20% de bienvenida en tu primera compra.", continueRegisterBtn: "Continuar al Registro", footerPrivacy: "Protocolos de Privacidad y Terminos", footerCookiesTitle: "Uso de Cookies Activo", footerCookiesInfo: "Nota: Usamos cookies indispensables.", seeMoreBtn: "Ver todos los articulos", chatTitle: "Soporte Tactico", chatWelcome: "Agente en linea. ¿En que puedo ayudarte hoy?", chatInput: "Escribe tu mensaje...", chatSendBtn: "ENVIAR",
+            heroBtn: "Solicitar cita previa", marketTitle: "Catálogo de Equipamiento", uploadItemBtn: "+ Subir Articulo", repairTitle: "2. Unidad de Reparacion / Modificacion", sendBtn: "Enviar Solicitud", galleryTitle: "Operaciones (Galeria)", uploadPhotoBtn: "+ Añadir Foto", cookiesTitle: "Aviso Tactico (Cookies)", cookiesText: "Utilizamos cookies para mejorar la precision de nuestros servicios. ¿Aceptas?", cookiesAccept: "Afirmativo, aceptar", loginTitle: "Acceso Restringido", noAccount: "¿No tienes cuenta?", registerHere: "Registrate aqui", registerTitle: "Nuevo Recluta", hasAccount: "¿Ya tienes cuenta?", profileTitle: "Editar Perfil", profileDesc: "Actualiza tus credenciales.", saveChanges: "Guardar Cambios", configTitle: "Configuracion", configDesc: "Selecciona el idioma.", applyBtn: "Aplicar", closeBtn: "Cerrar", cancelBtn: "Cancelar", uploadItemTitle: "Añadir al Mercado", publishBtn: "Publicar", uploadPhotoTitle: "Añadir Foto", addBtn: "Añadir", cartTitle: "Carrito", checkoutBtn: "Confirmar Transaccion", continueBtn: "Seguir Comprando", privacyTitle: "Politica de Privacidad, Cookies y Aviso Legal", selectService: "-- Selecciona el Servicio --", optRepair: "Reparacion Tecnica", optMod: "Modificacion y Mejoras", payMethod: "Metodo de Pago:", newEmailLabel: "Nuevo Email:", newPassLabel: "Nueva Contraseña (Opcional):", currentPassLabel: "* Contraseña ACTUAL (Requerida):", sellerLabel: "Vendedor", catLabel: "Categoria", emptyCart: "El carrito esta vacio.", userHolder: "Usuario", passHolder: "Contraseña", emailHolder: "Email (Obligatorio)", itemNameHolder: "Nombre", itemCatHolder: "Categoria", itemPriceHolder: "Precio Base (€)", itemImgHolder: "URL Imagen", itemDescHolder: "Descripcion del articulo...", cardNum: "Numero Tarjeta (16 digitos)", vehicleHolder: "Vehiculo (Marca y Modelo)", descHolder: "Describe el daño o las modificaciones requeridas...", benefitsTitle: "Ventajas de Unirte", benefit1: "Vender tus propios articulos en el Mercado.", benefit2: "Comprar equipamiento exclusivo.", benefit3: "Subir fotos a la Galeria.", benefit4: "Acceso a descuentos exclusivos.", benefit5: "Bono exclusivo del 20% de bienvenida en tu primera compra.", continueRegisterBtn: "Continuar al Registro", footerPrivacy: "Protocolos de Privacidad y Terminos", footerCookiesTitle: "Uso de Cookies Activo", footerCookiesInfo: "Nota: Usamos cookies indispensables.", seeMoreBtn: "Ver todos los articulos", chatTitle: "Soporte Tactico", chatWelcome: "Agente en linea. ¿En que puedo ayudarte hoy?", chatInput: "Escribe tu mensaje...", chatSendBtn: "ENVIAR",
             discountsMenu: "Mis Descuentos", discountsSubtitle: "Aumenta tu rango realizando compras.", discountPlaceholder: "Codigo de descuento", applyCodeBtn: "Aplicar", noDiscounts: "Aun no tienes descuentos.",
             welcomeDiscount: "20% de descuento en tu primer pedido.", bronze: "10% de descuento en la tienda.", silver: "15% de descuento en la tienda.", gold: "20% de descuento en la tienda.", elite: "25% de descuento absoluto.", historyMenu: "Historial",
             forgotPass: "¿Has olvidado tu contraseña?", forgotTitle: "Recuperar Contraseña", resetBtn: "Cambiar Contraseña", backLogin: "Volver a Iniciar Sesion", forgotUserHolder: "Usuario", forgotEmailHolder: "Email de registro", forgotNewPassHolder: "Nueva Contraseña",
@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function() {
         },
         en: {
             navHome: "Home", navMarket: "Buy/Sell", navRepair: "Workshop", navGallery: "Gallery", loginBtn: "Login", registerBtn: "Register", logoutBtn: "Logout", profileBtn: "My Profile", configBtn: "Settings", heroTitle: "Absolute precision. Tactical performance.", heroText: "Your vehicle is a tool. We prepare it for any mission.", 
-            heroBtn: "Request appointment", marketTitle: "Equipment Catalog", uploadItemBtn: "+ Upload Item", repairTitle: "2. Repair / Modification Unit", sendBtn: "Send Request", galleryTitle: "Operations (Gallery)", uploadPhotoBtn: "+ Add Photo", cookiesTitle: "Tactical Notice (Cookies)", cookiesText: "We use cookies to improve our services accuracy. Accept?", cookiesAccept: "Affirmative, accept", loginTitle: "Restricted Access", noAccount: "No account?", registerHere: "Register here", registerTitle: "New Recruit", hasAccount: "Already have an account?", profileTitle: "Edit Profile", profileDesc: "Update your credentials.", saveChanges: "Save Changes", configTitle: "Settings", configDesc: "Select interface language.", applyBtn: "Apply", closeBtn: "Close", cancelBtn: "Cancel", uploadItemTitle: "Add to Market", publishBtn: "Publish", uploadPhotoTitle: "Add Photo", addBtn: "Add", cartTitle: "Cart", checkoutBtn: "Confirm Checkout", continueBtn: "Continue Shopping", privacyTitle: "Privacy Policy, Cookies & Legal Notice", selectService: "-- Select Service --", optRepair: "Technical Repair", optMod: "Modification & Upgrades", payMethod: "Payment Method:", newEmailLabel: "New Email:", newPassLabel: "New Password (Optional):", currentPassLabel: "* CURRENT Password (Required):", sellerLabel: "Seller", catLabel: "Category", emptyCart: "The cart is empty.", userHolder: "Username", passHolder: "Password", emailHolder: "Email (Required)", itemNameHolder: "Name", itemCatHolder: "Category", itemPriceHolder: "Base Price (€)", itemImgHolder: "Image URL", itemDescHolder: "Item description...", cardNum: "Card Number (12 digits)", vehicleHolder: "Vehicle (Brand & Model)", descHolder: "Describe the damage...", benefitsTitle: "Join Advantages", benefit1: "Sell your own items.", benefit2: "Buy exclusive equipment.", benefit3: "Upload photos.", benefit4: "Access to exclusive discounts.", benefit5: "Exclusive 20% welcome bonus on your first purchase.", continueRegisterBtn: "Continue to Registration", footerPrivacy: "Privacy Protocols & Terms", footerCookiesTitle: "Active Cookie Usage", footerCookiesInfo: "Note: We use essential cookies.", seeMoreBtn: "See all items", chatTitle: "Tactical Support", chatWelcome: "Agent online. How can I help you today?", chatInput: "Type your message...", chatSendBtn: "SEND",
+            heroBtn: "Request appointment", marketTitle: "Equipment Catalog", uploadItemBtn: "+ Upload Item", repairTitle: "2. Repair / Modification Unit", sendBtn: "Send Request", galleryTitle: "Operations (Gallery)", uploadPhotoBtn: "+ Add Photo", cookiesTitle: "Tactical Notice (Cookies)", cookiesText: "We use cookies to improve our services accuracy. Accept?", cookiesAccept: "Affirmative, accept", loginTitle: "Restricted Access", noAccount: "No account?", registerHere: "Register here", registerTitle: "New Recruit", hasAccount: "Already have an account?", profileTitle: "Edit Profile", profileDesc: "Update your credentials.", saveChanges: "Save Changes", configTitle: "Settings", configDesc: "Select interface language.", applyBtn: "Apply", closeBtn: "Close", cancelBtn: "Cancel", uploadItemTitle: "Add to Market", publishBtn: "Publish", uploadPhotoTitle: "Add Photo", addBtn: "Add", cartTitle: "Cart", checkoutBtn: "Confirm Checkout", continueBtn: "Continue Shopping", privacyTitle: "Privacy Policy, Cookies & Legal Notice", selectService: "-- Select Service --", optRepair: "Technical Repair", optMod: "Modification & Upgrades", payMethod: "Payment Method:", newEmailLabel: "New Email:", newPassLabel: "New Password (Optional):", currentPassLabel: "* CURRENT Password (Required):", sellerLabel: "Seller", catLabel: "Category", emptyCart: "The cart is empty.", userHolder: "Username", passHolder: "Password", emailHolder: "Email (Required)", itemNameHolder: "Name", itemCatHolder: "Category", itemPriceHolder: "Base Price (€)", itemImgHolder: "Image URL", itemDescHolder: "Item description...", cardNum: "Card Number (16 digits)", vehicleHolder: "Vehicle (Brand & Model)", descHolder: "Describe the damage...", benefitsTitle: "Join Advantages", benefit1: "Sell your own items.", benefit2: "Buy exclusive equipment.", benefit3: "Upload photos.", benefit4: "Access to exclusive discounts.", benefit5: "Exclusive 20% welcome bonus on your first purchase.", continueRegisterBtn: "Continue to Registration", footerPrivacy: "Privacy Protocols & Terms", footerCookiesTitle: "Active Cookie Usage", footerCookiesInfo: "Note: We use essential cookies.", seeMoreBtn: "See all items", chatTitle: "Tactical Support", chatWelcome: "Agent online. How can I help you today?", chatInput: "Type your message...", chatSendBtn: "SEND",
             discountsMenu: "My Discounts", discountsSubtitle: "Level up by making purchases.", discountPlaceholder: "Discount code", applyCodeBtn: "Apply", noDiscounts: "No discounts yet.",
             welcomeDiscount: "20% discount on your first order.", bronze: "10% store discount.", silver: "15% store discount.", gold: "20% store discount.", elite: "25% absolute discount.", historyMenu: "Order History",
             forgotPass: "Forgot your password?", forgotTitle: "Recover Password", resetBtn: "Reset Password", backLogin: "Back to Login", forgotUserHolder: "Username", forgotEmailHolder: "Registration Email", forgotNewPassHolder: "New Password",
@@ -164,7 +164,8 @@ document.addEventListener("DOMContentLoaded", function() {
         var langSel = document.getElementById("language-selector");
         if(langSel) langSel.value = lang;
         
-        renderizarMercado();
+        if(document.getElementById("productos-db")) renderizarMercado();
+        if(typeof window.renderizarMercadoFull === 'function') window.renderizarMercadoFull();
         actualizarCarritoUI(); 
     };
 
@@ -257,6 +258,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
+    // --- POPUP HISTORIAL DINÁMICO ARREGLADO (Nombres y Precios bilingües con Fallbacks) ---
     bindEvent("btn-menu-history", "click", function(e) {
         e.preventDefault();
         if(popups.history) popups.history.classList.add("active");
@@ -272,18 +274,28 @@ document.addEventListener("DOMContentLoaded", function() {
             } else {
                 boxCompras.innerHTML = usuarioActual.historialCompras.map(function(compra) {
                     var itemsText = "";
+                    // Si el pedido tiene el Cart original guardado
                     if (compra.cartOriginal) {
                         itemsText = compra.cartOriginal.map(function(item) {
-                            var n = lang === 'en' && item.nombreEn ? item.nombreEn : item.nombre;
+                            var n = item.nombre;
+                            if (lang === 'en') {
+                                n = item.nombreEn ? item.nombreEn : tacticalTranslator(item.nombre, 'en');
+                            }
                             return "<span style='color:#fff;'>" + n + " (x" + item.cantidad + ")</span>";
                         }).join(", ");
                     } else {
-                        itemsText = "<span style='color:#fff;'>" + compra.items + "</span>"; 
+                        // Fallback para pedidos muy antiguos en texto plano
+                        var itms = compra.items || "";
+                        if (lang === 'en') itms = tacticalTranslator(itms, 'en');
+                        itemsText = "<span style='color:#fff;'>" + itms + "</span>"; 
                     }
 
-                    var totalMostrado = compra.totalMostradoOriginal; 
+                    // Calcular el precio total dinamicamente según idioma 
+                    var totalMostrado = compra.total || "0€"; // Default legacy
                     if(compra.totalBase) {
                         totalMostrado = (lang === 'en') ? "$" + (compra.totalBase * EUR_TO_USD_RATE).toLocaleString("en-US", {maximumFractionDigits: 0}) : compra.totalBase.toLocaleString("es-ES") + "€";
+                    } else if (compra.totalMostradoOriginal) {
+                        totalMostrado = compra.totalMostradoOriginal;
                     }
 
                     return '<div style="border-bottom:1px solid #333; padding-bottom:10px; margin-bottom:10px;">' +
@@ -300,6 +312,7 @@ document.addEventListener("DOMContentLoaded", function() {
             } else {
                 boxVentas.innerHTML = misVentas.map(function(venta) {
                     var nombreItem = lang === 'en' && venta.nombreEn ? venta.nombreEn : venta.nombre;
+                    // Conversión dinámica en ventas
                     var precioVenta = (lang === 'en') ? "$" + (venta.precio * EUR_TO_USD_RATE).toLocaleString("en-US", {maximumFractionDigits: 0}) : venta.precio.toLocaleString("es-ES") + "€";
                     return '<div style="border-bottom:1px solid #333; padding-bottom:10px; margin-bottom:10px;">' +
                         '<strong style="color:#fff;">' + nombreItem + '</strong><br>' +
@@ -510,6 +523,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var mercadoActual = JSON.parse(localStorage.getItem("tactical_mercado_100")) || productosBase;
     if (!localStorage.getItem("tactical_mercado_100")) localStorage.setItem("tactical_mercado_100", JSON.stringify(productosBase));
     
+    // FUNCION DE FORMATEO CON CONVERSION DINAMICA (€ -> $)
     var formatearPrecio = function(pBase) {
         if (currentLang === 'en') {
             return "$" + (pBase * EUR_TO_USD_RATE).toLocaleString("en-US", {minimumFractionDigits: 0, maximumFractionDigits: 0});
@@ -539,18 +553,24 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var renderizarMercado = function() {
         var contenedor = document.getElementById("productos-db");
-        var contenedorFull = document.getElementById("productos-db-full");
+        if(!contenedor) return; 
+        contenedor.innerHTML = "";
         
         var catLabel = currentLang === 'es' ? "Categoria" : "Category";
         var sellerLabel = currentLang === 'es' ? "Vendedor" : "Seller";
         var btnText = currentLang === 'es' ? "Añadir" : "Add";
 
-        var buildHTML = function(p) {
+        // LIMITADO A LOS 8 PRIMEROS (Quita el botón de expandir para obligar a usar el marketplace)
+        var itemsAMostrar = mercadoActual.slice(0, 8);
+
+        for(var i=0; i<itemsAMostrar.length; i++) {
+            var p = itemsAMostrar[i];
             var nombre = currentLang === 'en' && p.nombreEn ? p.nombreEn : p.nombre;
             var desc = currentLang === 'en' && p.descripcionEn ? p.descripcionEn : p.descripcion;
             var tipo = currentLang === 'en' && p.tipoEn ? p.tipoEn : p.tipo;
             
-            return '<div class="card">' +
+            contenedor.innerHTML += 
+            '<div class="card">' +
                 '<div class="img-container"><img src="'+p.imagen+'" alt="'+nombre+'" onerror="this.onerror=null;this.src=\''+fallbackImage+'\';"></div>' +
                 '<h3 style="margin-top:5px;">'+nombre+'</h3>' +
                 '<p style="color:#888;font-size:0.9rem;">'+catLabel+': '+tipo+'</p>' +
@@ -561,26 +581,11 @@ document.addEventListener("DOMContentLoaded", function() {
                     '<button class="btn-primary btn-add-cart" data-id="'+p.id+'" style="width:100%; padding:12px;">'+btnText+'</button>' +
                 '</div>' +
             '</div>';
-        };
-
-        if(contenedor) {
-            contenedor.innerHTML = "";
-            var itemsAMostrar = mercadoActual.slice(0, 8); // EN EL INICIO SOLO LOS 8 PRIMEROS
-            for(var i=0; i<itemsAMostrar.length; i++) {
-                contenedor.innerHTML += buildHTML(itemsAMostrar[i]);
-            }
-        }
-
-        if(contenedorFull) {
-            contenedorFull.innerHTML = "";
-            for(var j=0; j<mercadoActual.length; j++) { // EN EL MARKETPLACE TODO EL MERCADO
-                contenedorFull.innerHTML += buildHTML(mercadoActual[j]);
-            }
         }
 
         var addBtns = getClass('btn-add-cart');
-        for(var k=0; k<addBtns.length; k++) {
-            addBtns[k].addEventListener('click', function(e) {
+        for(var j=0; j<addBtns.length; j++) {
+            addBtns[j].addEventListener('click', function(e) {
                 window.añadirAlCarrito(parseInt(e.target.dataset.id));
             });
         }
@@ -615,7 +620,8 @@ document.addEventListener("DOMContentLoaded", function() {
             });
             localStorage.setItem("tactical_mercado_100", JSON.stringify(mercadoActual));
             
-            renderizarMercado();
+            if(document.getElementById("productos-db")) renderizarMercado(); 
+            if(typeof window.renderizarMercadoFull === 'function') window.renderizarMercadoFull();
             
             if(popups.uploadItem) popups.uploadItem.classList.remove("active");
             
@@ -625,7 +631,7 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("new-item-img").value = "";
             document.getElementById("new-item-desc").value = "";
             
-            window.showAlert(currentLang === 'es' ? "Articulo publicado con exito en el Mercado." : "Item published successfully.");
+            window.showAlert(currentLang === 'es' ? "Articulo publicado con exito. Se ha traducido automaticamente." : "Item published successfully. It will appear translated automatically.");
         } else { window.showAlert(currentLang === 'es' ? "Faltan campos obligatorios." : "Missing required fields."); }
     });
 
@@ -751,7 +757,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     bindEvent("card-num", "input", function(e) {
         var v = e.target.value.replace(/\D/g, ''); 
-        if (v.length > 12) v = v.substring(0, 12); 
+        if (v.length > 16) v = v.substring(0, 16); 
         e.target.value = v.replace(/(\d{4})(?=\d)/g, '$1 ').trim();
     });
 
@@ -800,8 +806,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 var cNum = document.getElementById("card-num") ? document.getElementById("card-num").value.replace(/\s/g, '') : ""; 
                 var cDate = document.getElementById("card-date") ? document.getElementById("card-date").value.trim() : "";
                 var cCvc = document.getElementById("card-cvc") ? document.getElementById("card-cvc").value.trim() : "";
-                if(cNum.length < 12 || cDate.length < 5 || cCvc.length < 3) {
-                    window.showAlert(currentLang === 'es' ? "Faltan datos obligatorios de la Tarjeta (12 digitos, Fecha MM/AA, 3 digitos CVC)." : "Missing exact Card data (12 digits, Date MM/YY, 3-digit CVC)."); return;
+                if(cNum.length < 16 || cDate.length < 5 || cCvc.length < 3) {
+                    window.showAlert(currentLang === 'es' ? "Faltan datos obligatorios de la Tarjeta (16 digitos, Fecha MM/AA, 3 digitos CVC)." : "Missing exact Card data (16 digits, Date MM/YY, 3-digit CVC)."); return;
                 }
             } else if(method === "paypal") {
                 var pEmail = document.getElementById("paypal-email") ? document.getElementById("paypal-email").value.trim() : "";
@@ -869,7 +875,6 @@ document.addEventListener("DOMContentLoaded", function() {
         var wrapper = document.getElementById("gallery-wrapper"); if(!wrapper) return; 
         wrapper.innerHTML = "";
         
-        // TRUCO PARA BUCLE INFINITO SEGURO: Duplicar la galeria varias veces
         var galeriaRender = galeriaActual.concat(galeriaActual).concat(galeriaActual).concat(galeriaActual);
 
         for(var i=0; i<galeriaRender.length; i++){
@@ -885,7 +890,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     centeredSlides: true, 
                     slidesPerView: "auto", 
                     loop: true, 
-                    loopedSlides: galeriaActual.length, // Define la cantidad real para un loop perfecto
+                    loopedSlides: galeriaActual.length, 
                     coverflowEffect: { rotate: 50, stretch: 0, depth: 100, modifier: 1, slideShadows: false }, 
                     pagination: { el: ".swiper-pagination", clickable: true}, 
                     navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" } 
@@ -980,7 +985,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 } else if (check(["discount", "coupon", "code", "promo", "level", "rank"])) {
                     reply = "You earn discounts by leveling up through purchases, " + name + ". Click your name at the top right and select 'My Discounts' to see your rank and active codes. Note: Codes have a 14-day cooldown!";
                 } else if (check(["buy", "purchase", "pay", "cart", "cost", "price"])) {
-                    reply = "To buy items, browse our 'Buy/Sell' market, add products to your cart, and click the Cart button at the top right to checkout. Make sure your card is exactly 12 digits!";
+                    reply = "To buy items, browse our 'Buy/Sell' market, add products to your cart, and click the Cart button at the top right to checkout. Make sure your card is exactly 16 digits!";
                 } else if (check(["sell", "add item", "post item"])) {
                     reply = "To sell your own items, " + name + ", log in and go to the 'Buy/Sell' market, then click the '+ Upload Item' button.";
                 } else if (check(["pass", "forgot", "recover", "lost"])) {
@@ -1016,7 +1021,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 } else if (check(["cupon", "codigo", "descuento", "promocion", "nivel", "rango"])) {
                     reply = "Al comprar subes de nivel y ganas descuentos. Abre tu perfil arriba a la derecha y haz clic en 'Mis Descuentos' para ver tu codigo. Recuerda que solo se pueden usar 1 vez cada 14 dias habiles.";
                 } else if (check(["comprar", "carrito", "pagar", "precio", "cuesta", "adquirir", "tienda"])) {
-                    reply = "Para comprar, " + name + ", busca el articulo en el mercado y pulsa 'Añadir'. Luego ve al 'Carrito' arriba a la derecha para pagar. La tarjeta debe tener 12 digitos exactos por motivos de seguridad del sistema.";
+                    reply = "Para comprar, " + name + ", busca el articulo en el mercado y pulsa 'Añadir'. Luego ve al 'Carrito' arriba a la derecha para pagar. La tarjeta debe tener 16 digitos exactos por motivos de seguridad del sistema.";
                 } else if (check(["vender", "subir articulo", "añadir articulo", "publicar"])) {
                     reply = "Para poner a la venta una pieza, " + name + ", inicia sesion, ve a 'Compra/Venta' y pulsa el boton '+ Subir Articulo'.";
                 } else if (check(["cerrar", "salir", "desconectar", "apagar", "sesion"])) {
@@ -1062,7 +1067,10 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     applyLanguage(currentLang);
-    renderizarGaleria();
-    renderizarMercado();
+    
+    if(document.getElementById("productos-db")) renderizarMercado();
+    if(typeof window.renderizarMercadoFull === 'function') window.renderizarMercadoFull();
+    if(document.getElementById("gallery-wrapper")) renderizarGaleria();
+    
     if(typeof window.actualizarCarritoUI === 'function') window.actualizarCarritoUI();
 });
