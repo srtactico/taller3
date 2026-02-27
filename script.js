@@ -11,6 +11,7 @@ if (idiomaGuardado) localStorage.setItem("tactical_lang", idiomaGuardado);
 if (cookiesAceptadas) localStorage.setItem("tactical_cookies_accepted", cookiesAceptadas);
 if (sesionActual) localStorage.setItem("tactical_current_user", sesionActual);
 
+// Funciones Helper
 function bindEvent(id, ev, cb) {
     var el = document.getElementById(id);
     if (el) { el.addEventListener(ev, cb); }
@@ -31,7 +32,7 @@ var tacticalTranslator = function(text, targetLang) {
         "pistones": "pistons", "juego de": "set of", "para": "for", "tactico": "tactical",
         "coche": "car", "vehiculo": "vehicle", "pieza": "part", "modificacion": "modification",
         "turbo": "turbocharger", "aceite": "oil", "bateria": "battery", "escape": "exhaust",
-        "paragolpes": "bumper", "faro": "headlight", "puerta": "door"
+        "paragolpes": "bumper", "faro": "headlight", "puerta": "door", "de ": "of ", " y ": " and "
     };
     var enToEs = {};
     for(var key in esToEn) enToEs[esToEn[key]] = key;
@@ -51,8 +52,6 @@ document.addEventListener("DOMContentLoaded", function() {
     var descuentoActual = 0; 
     var codigoAplicado = "";
     var currentLang = localStorage.getItem("tactical_lang") || "es";
-    
-    // Tasa de cambio 1€ = 1.18125$
     var EUR_TO_USD_RATE = 1.18125;
 
     if (!document.getElementById("custom-alert-box")) {
@@ -169,9 +168,9 @@ document.addEventListener("DOMContentLoaded", function() {
         }
         var langSel = document.getElementById("language-selector");
         if(langSel) langSel.value = lang;
-        if(document.getElementById("productos-db")) renderizarMercado();
-        if(typeof window.renderizarMercadoFull === 'function') window.renderizarMercadoFull();
-        actualizarCarritoUI(); 
+        
+        renderizarMercado();
+        if(typeof window.actualizarCarritoUI === 'function') window.actualizarCarritoUI(); 
     };
 
     var closeAllPopups = function() {
@@ -206,7 +205,7 @@ document.addEventListener("DOMContentLoaded", function() {
         localStorage.setItem("tactical_cookies_accepted", "true");
         if(popups.cookie) popups.cookie.classList.remove("active");
         if(mainContent) mainContent.style.display = "block";
-        if(typeof swiper !== 'undefined') swiper.update();
+        if(typeof swiper !== 'undefined' && swiper) swiper.update();
     });
 
     bindEvent("btn-nav-login", "click", function() {
@@ -306,7 +305,6 @@ document.addEventListener("DOMContentLoaded", function() {
             } else {
                 boxVentas.innerHTML = misVentas.map(function(venta) {
                     var nombreItem = lang === 'en' && venta.nombreEn ? venta.nombreEn : venta.nombre;
-                    // Conversión dinámica en ventas del historial
                     var precioVenta = (lang === 'en') ? "$" + (venta.precio * EUR_TO_USD_RATE).toLocaleString("en-US", {maximumFractionDigits: 0}) : venta.precio.toLocaleString("es-ES") + "€";
                     return '<div style="border-bottom:1px solid #333; padding-bottom:10px; margin-bottom:10px;">' +
                         '<strong style="color:#fff;">' + nombreItem + '</strong><br>' +
@@ -502,7 +500,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var mercadoActual = JSON.parse(localStorage.getItem("tactical_mercado_100")) || productosBase;
     if (!localStorage.getItem("tactical_mercado_100")) localStorage.setItem("tactical_mercado_100", JSON.stringify(productosBase));
     
-    // FUNCION DE FORMATEO CON CONVERSION DINAMICA (€ -> $)
+    // FUNCION DE FORMATEO DE PRECIO DINÁMICA
     var formatearPrecio = function(pBase) {
         if (currentLang === 'en') {
             return "$" + (pBase * EUR_TO_USD_RATE).toLocaleString("en-US", {minimumFractionDigits: 0, maximumFractionDigits: 0});
@@ -527,28 +525,23 @@ document.addEventListener("DOMContentLoaded", function() {
             nP.cantidad = 1;
             carrito.push(nP); 
         } 
-        actualizarCarritoUI();
+        window.actualizarCarritoUI();
     };
 
     var renderizarMercado = function() {
         var contenedor = document.getElementById("productos-db");
-        if(!contenedor) return; 
-        contenedor.innerHTML = "";
+        var contenedorFull = document.getElementById("productos-db-full");
         
         var catLabel = currentLang === 'es' ? "Categoria" : "Category";
         var sellerLabel = currentLang === 'es' ? "Vendedor" : "Seller";
         var btnText = currentLang === 'es' ? "Añadir" : "Add";
 
-        var itemsAMostrar = mercadoActual.slice(0, 8);
-
-        for(var i=0; i<itemsAMostrar.length; i++) {
-            var p = itemsAMostrar[i];
+        var buildHTML = function(p) {
             var nombre = currentLang === 'en' && p.nombreEn ? p.nombreEn : p.nombre;
             var desc = currentLang === 'en' && p.descripcionEn ? p.descripcionEn : p.descripcion;
             var tipo = currentLang === 'en' && p.tipoEn ? p.tipoEn : p.tipo;
             
-            contenedor.innerHTML += 
-            '<div class="card">' +
+            return '<div class="card">' +
                 '<div class="img-container"><img src="'+p.imagen+'" alt="'+nombre+'" onerror="this.onerror=null;this.src=\''+fallbackImage+'\';"></div>' +
                 '<h3 style="margin-top:5px;">'+nombre+'</h3>' +
                 '<p style="color:#888;font-size:0.9rem;">'+catLabel+': '+tipo+'</p>' +
@@ -559,12 +552,43 @@ document.addEventListener("DOMContentLoaded", function() {
                     '<button class="btn-primary btn-add-cart" data-id="'+p.id+'" style="width:100%; padding:12px;">'+btnText+'</button>' +
                 '</div>' +
             '</div>';
+        };
+
+        if(contenedor) {
+            contenedor.innerHTML = "";
+            var itemsAMostrar = verTodosMercado ? mercadoActual : mercadoActual.slice(0, 8);
+            for(var i=0; i<itemsAMostrar.length; i++) {
+                contenedor.innerHTML += buildHTML(itemsAMostrar[i]);
+            }
+            if (mercadoActual.length > 8) {
+                var btnTextMore = verTodosMercado ? translations[currentLang].seeLessBtn : translations[currentLang].seeMoreBtn;
+                var btnClass = verTodosMercado ? 'btn-secondary' : 'btn-primary';
+                contenedor.innerHTML += 
+                '<div style="grid-column: 1 / -1; margin-top: 30px; text-align: center;">' +
+                    '<button id="btn-toggle-market" class="'+btnClass+'" style="display:inline-block; width:auto; padding:15px 30px; font-size:1rem;">' + btnTextMore + '</button>' +
+                '</div>';
+            }
+        }
+
+        if(contenedorFull) {
+            contenedorFull.innerHTML = "";
+            for(var j=0; j<mercadoActual.length; j++) {
+                contenedorFull.innerHTML += buildHTML(mercadoActual[j]);
+            }
         }
 
         var addBtns = getClass('btn-add-cart');
-        for(var j=0; j<addBtns.length; j++) {
-            addBtns[j].addEventListener('click', function(e) {
+        for(var k=0; k<addBtns.length; k++) {
+            addBtns[k].addEventListener('click', function(e) {
                 window.añadirAlCarrito(parseInt(e.target.dataset.id));
+            });
+        }
+        
+        var toggleBtn = document.getElementById("btn-toggle-market");
+        if(toggleBtn) {
+            toggleBtn.addEventListener('click', function() {
+                verTodosMercado = !verTodosMercado;
+                renderizarMercado();
             });
         }
     };
@@ -598,9 +622,7 @@ document.addEventListener("DOMContentLoaded", function() {
             });
             localStorage.setItem("tactical_mercado_100", JSON.stringify(mercadoActual));
             
-            if(document.getElementById("productos-db")) renderizarMercado(); 
-            if(typeof window.renderizarMercadoFull === 'function') window.renderizarMercadoFull();
-            
+            renderizarMercado();
             if(popups.uploadItem) popups.uploadItem.classList.remove("active");
             
             document.getElementById("new-item-name").value = "";
@@ -609,7 +631,7 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("new-item-img").value = "";
             document.getElementById("new-item-desc").value = "";
             
-            window.showAlert(currentLang === 'es' ? "Articulo publicado con exito. Se ha traducido automaticamente." : "Item published successfully. It will appear translated automatically.");
+            window.showAlert(currentLang === 'es' ? "Articulo publicado con exito. Se ha traducido automaticamente al ingles." : "Item published successfully. It will appear translated automatically.");
         } else { window.showAlert(currentLang === 'es' ? "Faltan campos obligatorios." : "Missing required fields."); }
     });
 
@@ -844,7 +866,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    // --- GALERÍA INFINITA HACIA AMBOS LADOS ---
+    // --- GALERÍA INFINITA REPARADA ---
     var galeriaBase = ["https://espirituracer.com/archivos/2017/11/Ringbrothers-Ford-Mustang-Mach-1-Patriarc-15.webp","https://i.ytimg.com/vi/uIIaNGFAy6o/sddefault.jpg","https://www.schairerklassiker.de/wp-content/gallery/mb-220-seb-coupe-w111/MB_220SEbC_Fahrerseite.jpg","https://i.pinimg.com/736x/a1/44/1b/a1441b9424550332aa4c96c7b1d2b9b9.jpg","https://d1gl66oyi6i593.cloudfront.net/wp-content/uploads/2022/10/subasta-replica-DeLorean-DMC-12-7.jpg","https://hips.hearstapps.com/hmg-prod/images/porsche-911-gt3-r-101-1659114035.jpg?crop=1xw:0.920416250624064xh;center,top&resize=1200:*"];
     var galeriaActual = JSON.parse(localStorage.getItem("tactical_galeria_100")) || galeriaBase;
     
@@ -852,9 +874,9 @@ document.addEventListener("DOMContentLoaded", function() {
     var renderizarGaleria = function() {
         var wrapper = document.getElementById("gallery-wrapper"); if(!wrapper) return; 
         wrapper.innerHTML = "";
-
-        // TRUCO PARA BUCLE INFINITO: Duplicar las imagenes para que nunca falten slides al mover a la derecha
-        var galeriaRender = galeriaActual.concat(galeriaActual).concat(galeriaActual);
+        
+        // TRUCO PARA BUCLE INFINITO SEGURO: Duplicar la galeria varias veces
+        var galeriaRender = galeriaActual.concat(galeriaActual).concat(galeriaActual).concat(galeriaActual);
 
         for(var i=0; i<galeriaRender.length; i++){
             wrapper.innerHTML += '<div class="swiper-slide"><img src="'+galeriaRender[i]+'" onerror="this.src=\''+fallbackImage+'\';"></div>';
@@ -869,7 +891,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     centeredSlides: true, 
                     slidesPerView: "auto", 
                     loop: true, 
-                    loopedSlides: galeriaActual.length, // Clave del loop infinito
+                    loopedSlides: galeriaActual.length, // Define la cantidad real para un loop perfecto
                     coverflowEffect: { rotate: 50, stretch: 0, depth: 100, modifier: 1, slideShadows: false }, 
                     pagination: { el: ".swiper-pagination", clickable: true}, 
                     navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" } 
@@ -973,7 +995,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     reply = "To log out, click your name at the top right of the screen and select 'Logout' in red.";
                 } else if (check(["sign up", "register", "create account", "join"])) {
                     reply = "To create an account, click the 'Login' button at the top right, then click 'Register here'. Registration allows you to buy, sell, and earn discounts!";
-                } else if (check(["log in", "login", "sign in"])) {
+                } else if (check(["log in", "login", "sign in", "enter"])) {
                     reply = "To log in, " + name + ", click the 'Login' button in the top right navigation bar.";
                 } else if (check(["product", "info", "item", "engine", "motor", "tire", "suspension", "paint", "armor", "light", "brake", "seat", "glass", "catalog", "piston", "wheel"])) {
                     reply = "We offer top-tier tactical gear: Armored V8 Engines, Off-Road Tires, Reinforced Suspensions, Radar-Absorbent Paint, Door Armor, LED Lights, Ceramic Brakes, Recaro Seats, and Bulletproof Glass. Check the 'Buy/Sell' section to see everything!";
@@ -1047,6 +1069,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     applyLanguage(currentLang);
     renderizarGaleria();
-    if(document.getElementById("productos-db")) renderizarMercado();
+    renderizarMercado();
     if(typeof window.actualizarCarritoUI === 'function') window.actualizarCarritoUI();
 });
