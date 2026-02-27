@@ -39,20 +39,17 @@
             <button class="btn-secondary btn-close-popup" data-i18n="continueBtn" style="width: 100%;">Cerrar</button>
         </div>
     </div>
+
     <div id="main-content" style="display: block;">
         
         <header>
             <div class="container header-content">
                 <div class="logo-text clickable-logo" style="cursor: pointer;">TACTICAL <span>REPARATIONS</span></div>
-                
                 <button id="mobile-menu-btn" class="menu-toggle">☰</button>
-
                 <nav id="nav-menu" class="nav-menu">
                     <a href="index.html" class="nav-link" data-i18n="navHome">Inicio</a>
                     <a href="index.html#reparacion" class="nav-link" data-i18n="navRepair">Taller</a>
-                    
                     <button id="btn-nav-login" class="btn-secondary" style="padding: 8px 15px; font-size: 0.9rem;" data-i18n="loginBtn">Iniciar Sesion</button>
-                    
                     <div id="user-controls" style="display: none; position: relative;" class="user-controls">
                         <button id="btn-user-menu-trigger" class="btn-secondary" style="padding: 8px 15px; font-size: 0.9rem; border-color: var(--primary-color); color: var(--primary-color);">Agente</button>
                         <div id="user-dropdown-content" class="dropdown-content">
@@ -60,7 +57,6 @@
                             <a href="#" id="btn-menu-logout" style="color: #ff4c4c;" data-i18n="logoutBtn">Cerrar Sesion</a>
                         </div>
                     </div>
-
                     <button id="btn-open-cart" class="btn-secondary" style="padding: 8px 15px; font-size: 0.9rem; background: var(--primary-color); color: #000; border: none;">
                         <span data-i18n="cartTitle">Carrito</span> (<span id="cart-count" style="font-weight: bold;">0</span>)
                     </button>
@@ -71,10 +67,15 @@
         <div class="container main-sections-container" style="padding-top: 120px;">
             <section id="mercado-full">
                 <h1 data-i18n="marketTitle" style="color:var(--primary-color); margin-bottom: 20px;">Catálogo Completo de Equipamiento</h1>
-                <p style="color:var(--text-muted); margin-bottom: 40px;">Explora nuestra base de datos entera de componentes tácticos y mecánicos de élite.</p>
+                
+                <div class="controls" style="margin-bottom: 30px; display: flex; justify-content: center;">
+                    <button class="btn-secondary" id="btn-open-upload-item" data-i18n="uploadItemBtn">+ Subir Articulo</button>
+                </div>
+                
                 <div class="grid" id="productos-db-full"></div>
+                
                 <div style="margin-top: 40px;">
-                    <a href="index.html" class="btn-secondary" style="display:inline-block; width:auto; text-decoration: none;">Volver al Inicio</a>
+                    <a href="index.html" class="btn-secondary" style="display:inline-block; width:auto; text-decoration: none;" data-i18n="claimBack">Volver al Inicio</a>
                 </div>
             </section>
         </div>
@@ -82,21 +83,47 @@
         <footer>
             <div class="container">
                 <p data-i18n="copyrightText">&copy; 2026 Tactical Reparations. Todos los derechos reservados.</p>
+                <p style="margin-top: 10px; font-size: 0.9rem; color: var(--text-muted);">
+                    <span data-i18n="footerContact">Contacto:</span> <span style="color: var(--primary-color); font-weight: bold;">639 12 75 28</span> | Email: <a href="mailto:tacticalreparations@gmail.com" style="color: var(--primary-color); text-decoration: none;">tacticalreparations@gmail.com</a>
+                </p>
+                <div style="margin-top: 15px; display: flex; justify-content: center; align-items: center; gap: 8px;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                    <a href="https://instagram.com/tacticalreparations" target="_blank" style="color: var(--primary-color); text-decoration: none; font-weight: bold;">@tacticalreparations</a>
+                </div>
             </div>
         </footer>
 
     </div>
 
-    <script src="script.js"></script> <script>
-        // Lógica para renderizar TODO el mercado en esta página con bilingüismo inteligente
-        document.addEventListener("DOMContentLoaded", function() {
+    <div id="tactical-chat-widget">
+        <div id="chat-window">
+            <div id="chat-header">
+                <span id="chat-title" data-i18n="chatTitle">Soporte Tactico</span>
+                <span id="close-chat" style="cursor:pointer; font-size:18px;">X</span>
+            </div>
+            <div id="chat-messages">
+                <div class="msg-bot" id="chat-welcome" data-i18n="chatWelcome">Agente en linea. ¿En que puedo ayudarte hoy?</div>
+            </div>
+            <div id="chat-input-area">
+                <input type="text" id="chat-input" placeholder="..." data-i18n-placeholder="chatInput">
+                <button id="chat-send" data-i18n="chatSendBtn">ENVIAR</button>
+            </div>
+        </div>
+        <button id="chat-toggle" style="font-size: 28px;">💬</button>
+    </div>
+
+    <script src="script.js"></script> 
+    <script>
+        window.renderizarMercadoFull = function() {
             var currentLang = localStorage.getItem("tactical_lang") || "es";
-            
-            // Función helper copiar/pegar de script.js para formatear precio € <-> $ numerico dinamico
             var EUR_TO_USD_RATE = 1.18125;
+            
             var formatearPrecioMkt = function(pBase) {
-                var lang = localStorage.getItem("tactical_lang") || "es";
-                if (lang === 'en') {
+                if (currentLang === 'en') {
                     var precioConvertido = pBase * EUR_TO_USD_RATE;
                     return "$" + precioConvertido.toLocaleString("en-US", {minimumFractionDigits: 0, maximumFractionDigits: 0});
                 } else {
@@ -104,8 +131,6 @@
                 }
             };
 
-            // Volver a declarar o acceder al translator si fuera necesario, pero el script.js base ya lo hace al cargar.
-            // Aquí simplemente renderizamos el mercado completo guardado en localStorage.
             var mercadoActualMkt = JSON.parse(localStorage.getItem("tactical_mercado_100"));
             var contenedorFull = document.getElementById("productos-db-full");
             
@@ -118,7 +143,6 @@
 
                 for(var i=0; i<mercadoActualMkt.length; i++) {
                     var p = mercadoActualMkt[i];
-                    // TRADUCCION INTELIGENTE: Priorizar versión traducida guardada dinamicamente al subir
                     var nombre = currentLang === 'en' && p.nombreEn ? p.nombreEn : p.nombre;
                     var desc = currentLang === 'en' && p.descripcionEn ? p.descripcionEn : p.descripcion;
                     var tipo = currentLang === 'en' && p.tipoEn ? p.tipoEn : p.tipo;
@@ -131,24 +155,25 @@
                         '<div class="card-details-hidden">' +
                             '<p style="font-size:0.8rem; margin-bottom:10px; color:#aaa;">'+sellerLabel+': <span style="color:var(--primary-color);">'+p.vendedor+'</span></p>' +
                             '<p style="font-size:0.95rem; color:#fff; margin-bottom:15px; line-height:1.4; text-align: left;">'+desc+'</p>' +
-                            // PRECIO CON CONVERSION DINÁMICA € <-> $
                             '<p class="price" style="font-size: 1.8rem; font-weight: bold; margin-bottom: 15px; color: white;">'+formatearPrecioMkt(p.precio)+'</p>' +
                             '<button class="btn-primary btn-add-cart-full" data-id="'+p.id+'" style="width:100%; padding:12px;">'+btnText+'</button>' +
                         '</div>' +
                     '</div>';
                 }
 
-                // Activar botones de añadir al carrito en esta página
                 var addBtnsFull = document.querySelectorAll('.btn-add-cart-full');
                 for(var j=0; j<addBtnsFull.length; j++) {
                     addBtnsFull[j].addEventListener('click', function(e) {
-                        // Usar la función añadirAlCarrito global declarada en script.js base
                         if(typeof añadirAlCarrito === 'function') {
                             añadirAlCarrito(parseInt(e.target.dataset.id));
                         }
                     });
                 }
             }
+        };
+
+        document.addEventListener("DOMContentLoaded", function() {
+            window.renderizarMercadoFull();
         });
     </script>
 </body>

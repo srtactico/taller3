@@ -32,10 +32,8 @@
             <div style="text-align: left; color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">
                 <h3 style="color: var(--primary-color);" data-i18n="policyLegalTitle">1. Aviso Legal</h3>
                 <p data-i18n="policyLegalText">Tactical Reparations es una plataforma virtual dedicada a la prestacion de servicios automotrices avanzados. Todos los derechos reservados.</p>
-                
                 <h3 style="color: var(--primary-color); margin-top: 15px;" data-i18n="policyDataTitle">2. Uso de Datos (Privacidad)</h3>
                 <p data-i18n="policyDataText">Recopilamos la informacion estrictamente necesaria para gestionar tu cuenta de Agente, procesar tus pedidos y ofrecer soporte tecnico. Tus credenciales se procesan de forma segura. No vendemos informacion a terceros.</p>
-                
                 <h3 style="color: var(--primary-color); margin-top: 15px;" data-i18n="policyCookiesTitle">3. Politica de Cookies</h3>
                 <p data-i18n="policyCookiesText">Utilizamos cookies tecnicas y de sesion (Local Storage) indispensables para mantener tu inventario en el carrito, aplicar descuentos, conservar tu historial y recordar tu idioma. No usamos rastreadores publicitarios externos.</p>
             </div>
@@ -46,7 +44,6 @@
     <div id="login-popup" class="overlay">
         <div class="popup-box">
             <div class="logo-text clickable-logo">TACTICAL <span>REPARATIONS</span></div>
-            
             <div id="login-form-container">
                 <h2 style="margin-top: 10px;" data-i18n="loginTitle">Acceso Restringido</h2>
                 <input type="text" id="username" placeholder="Usuario" data-i18n-placeholder="userHolder" class="input-field">
@@ -56,7 +53,6 @@
                 <p style="margin-top: 15px; font-size: 0.9rem; color: var(--text-muted);"><span data-i18n="noAccount">¿No tienes cuenta?</span> <a href="#" id="link-to-register-start" style="color: var(--primary-color);" data-i18n="registerHere">Registrate aqui</a></p>
                 <p style="margin-top: 5px; font-size: 0.9rem;"><a href="#" id="link-forgot-pass" style="color: var(--primary-color);" data-i18n="forgotPass">¿Has olvidado tu contraseña?</a></p>
             </div>
-
             <div id="forgot-form-container" style="display: none;">
                 <h2 style="margin-top: 10px;" data-i18n="forgotTitle">Recuperar Contraseña</h2>
                 <input type="text" id="forgot-username" placeholder="Usuario" data-i18n-placeholder="forgotUserHolder" class="input-field">
@@ -66,7 +62,6 @@
                 <button class="btn-secondary btn-close-popup" style="width: 100%;" data-i18n="cancelBtn">Cancelar</button>
                 <p style="margin-top: 15px; font-size: 0.9rem;"><a href="#" id="link-back-login" style="color: var(--primary-color);" data-i18n="backLogin">Volver a Iniciar Sesion</a></p>
             </div>
-
             <div id="register-form-container" style="display: none;">
                 <h2 style="margin-top: 10px;" data-i18n="registerTitle">Nuevo Recluta</h2>
                 <input type="text" id="reg-username" placeholder="Usuario" data-i18n-placeholder="userHolder" class="input-field">
@@ -114,8 +109,7 @@
         <div class="popup-box">
             <h2 data-i18n="discountsMenu" style="margin-bottom: 5px;">Mis Descuentos</h2>
             <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;" data-i18n="discountsSubtitle">Aumenta tu nivel realizando compras.</p>
-            <div id="user-discounts-container" style="background: #111; padding: 20px; border-radius: 6px; border: 1px solid #333; text-align: left; line-height: 1.6; margin-bottom: 20px;">
-            </div>
+            <div id="user-discounts-container" style="background: #111; padding: 20px; border-radius: 6px; border: 1px solid #333; text-align: left; line-height: 1.6; margin-bottom: 20px;"></div>
             <button class="btn-secondary btn-close-popup" style="width: 100%;" data-i18n="closeBtn">Cerrar</button>
         </div>
     </div>
@@ -124,15 +118,10 @@
         <div class="popup-box modal-box">
             <h2 data-i18n="historyMenu" style="margin-bottom: 5px;">Historial</h2>
             <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;" data-i18n="historyDesc">Tus operaciones en Tactical Reparations.</p>
-            
             <h3 style="color:var(--primary-color); border-bottom: 1px solid #333; padding-bottom:5px; margin-bottom: 10px;" data-i18n="historyMyPurchases">Mis Compras</h3>
-            <div id="history-purchases" style="background: #111; padding: 15px; border-radius: 4px; color: var(--text-main); font-size: 0.9rem; max-height: 200px; overflow-y: auto; margin-bottom: 20px;">
-                </div>
-            
+            <div id="history-purchases" style="background: #111; padding: 15px; border-radius: 4px; color: var(--text-main); font-size: 0.9rem; max-height: 200px; overflow-y: auto; margin-bottom: 20px;"></div>
             <h3 style="color:var(--primary-color); border-bottom: 1px solid #333; padding-bottom:5px; margin-bottom: 10px;" data-i18n="historyMySales">Mis Ventas (Mercado)</h3>
-            <div id="history-sales" style="background: #111; padding: 15px; border-radius: 4px; color: var(--text-main); font-size: 0.9rem; max-height: 200px; overflow-y: auto; margin-bottom: 20px;">
-                </div>
-
+            <div id="history-sales" style="background: #111; padding: 15px; border-radius: 4px; color: var(--text-main); font-size: 0.9rem; max-height: 200px; overflow-y: auto; margin-bottom: 20px;"></div>
             <button class="btn-secondary btn-close-popup" style="width: 100%;" data-i18n="closeBtn">Cerrar</button>
         </div>
     </div>
@@ -176,17 +165,14 @@
         <div class="popup-box modal-box" style="max-width: 600px;">
             <h2 data-i18n="cartTitle">Carrito</h2>
             <div id="cart-items-container" style="max-height: 200px; overflow-y: auto; text-align: left; margin: 15px 0;"></div>
-            
             <div id="discount-section" style="display: flex; gap: 10px; margin-bottom: 15px;">
                 <input type="text" id="discount-code" placeholder="Codigo de descuento" data-i18n-placeholder="discountPlaceholder" class="input-field" style="margin-bottom: 0;">
                 <button id="btn-apply-discount" class="btn-secondary" style="margin-top: 0; padding: 10px 20px;" data-i18n="applyCodeBtn">Aplicar</button>
             </div>
-
             <div style="text-align: right; font-size: 1.3rem; margin-bottom: 20px; border-top: 1px solid #333; padding-top: 10px;">
                 <span data-i18n="cartTotalLabel">Total:</span> <span id="cart-total-price" style="color: var(--primary-color); font-weight: bold; transition: all 0.3s;">0€</span>
                 <span id="cart-discounted-price" style="color: #ff4c4c; font-weight: bold; margin-left:10px; display:none;">0€</span>
             </div>
-            
             <div id="payment-section" style="text-align: left; margin-bottom: 20px; display: none;">
                 <h4 style="margin-bottom: 10px; color: var(--text-main);" data-i18n="payMethod">Metodo de Pago:</h4>
                 <select id="payment-method" class="input-field">
@@ -194,7 +180,6 @@
                     <option value="paypal" data-i18n="payOptPayPal">PayPal</option>
                     <option value="cripto" data-i18n="payOptCrypto">Criptomonedas</option>
                 </select>
-                
                 <div id="card-details" style="display: block; margin-top: 10px;">
                     <input type="text" id="card-num" placeholder="Numero Tarjeta (12 digitos)" data-i18n-placeholder="cardNum" class="input-field" maxlength="14">
                     <div style="display: flex; gap: 10px;">
@@ -202,16 +187,13 @@
                         <input type="password" id="card-cvc" placeholder="CVC" class="input-field" style="width: 50%;" maxlength="3">
                     </div>
                 </div>
-
                 <div id="paypal-details" style="display: none; margin-top: 10px;">
                     <input type="email" id="paypal-email" placeholder="Email de PayPal asociado" data-i18n-placeholder="paypalHolder" class="input-field">
                 </div>
-
                 <div id="cripto-details" style="display: none; margin-top: 10px;">
                     <input type="text" id="cripto-wallet" placeholder="Direccion de tu Wallet (BTC/ETH)" data-i18n-placeholder="cryptoHolder" class="input-field">
                 </div>
             </div>
-
             <button id="btn-checkout" class="btn-primary" style="display: none; margin-bottom: 10px;" data-i18n="checkoutBtn">Confirmar Transaccion</button>
             <button class="btn-secondary btn-close-popup" data-i18n="continueBtn" style="width: 100%;">Seguir Comprando</button>
         </div>
@@ -222,17 +204,13 @@
         <header>
             <div class="container header-content">
                 <div class="logo-text clickable-logo" style="cursor: pointer;">TACTICAL <span>REPARATIONS</span></div>
-                
                 <button id="mobile-menu-btn" class="menu-toggle">☰</button>
-
                 <nav id="nav-menu" class="nav-menu">
                     <a href="#hero" class="nav-link" data-i18n="navHome">Inicio</a>
                     <a href="#mercado" class="nav-link" data-i18n="navMarket">Compra/Venta</a>
                     <a href="#reparacion" class="nav-link" data-i18n="navRepair">Taller</a>
                     <a href="#galeria" class="nav-link" data-i18n="navGallery">Galeria</a>
-                    
                     <button id="btn-nav-login" class="btn-secondary" style="padding: 8px 15px; font-size: 0.9rem;" data-i18n="loginBtn">Iniciar Sesion</button>
-                    
                     <div id="user-controls" style="display: none; position: relative;" class="user-controls">
                         <button id="btn-user-menu-trigger" class="btn-secondary" style="padding: 8px 15px; font-size: 0.9rem; border-color: var(--primary-color); color: var(--primary-color);">Agente</button>
                         <div id="user-dropdown-content" class="dropdown-content">
@@ -244,7 +222,6 @@
                             <a href="#" id="btn-menu-logout" style="color: #ff4c4c;" data-i18n="logoutBtn">Cerrar Sesion</a>
                         </div>
                     </div>
-
                     <button id="btn-open-cart" class="btn-secondary" style="padding: 8px 15px; font-size: 0.9rem; background: var(--primary-color); color: #000; border: none;">
                         <span data-i18n="cartTitle">Carrito</span> (<span id="cart-count" style="font-weight: bold;">0</span>)
                     </button>
@@ -306,6 +283,14 @@
                 <p style="margin-top: 10px; font-size: 0.9rem; color: var(--text-muted);">
                     <span data-i18n="footerContact">Contacto:</span> <span style="color: var(--primary-color); font-weight: bold;">639 12 75 28</span> | Email: <a href="mailto:tacticalreparations@gmail.com" style="color: var(--primary-color); text-decoration: none;">tacticalreparations@gmail.com</a>
                 </p>
+                <div style="margin-top: 15px; display: flex; justify-content: center; align-items: center; gap: 8px;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                    <a href="https://instagram.com/tacticalreparations" target="_blank" style="color: var(--primary-color); text-decoration: none; font-weight: bold;">@tacticalreparations</a>
+                </div>
                 <div style="margin-top: 15px;">
                     <a href="#" id="link-footer-privacy" style="color: var(--text-muted); text-decoration: none; font-size: 0.9rem;" data-i18n="footerPrivacy">Protocolos de Privacidad y Terminos</a>
                 </div>
