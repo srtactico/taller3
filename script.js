@@ -1,4 +1,14 @@
-// Funciones Helper de Compatibilidad
+// --- FORMATEO DE MEMORIA SEGURO ---
+var usuariosGuardados = localStorage.getItem("tactical_users");
+var idiomaGuardado = localStorage.getItem("tactical_lang");
+var cookiesAceptadas = localStorage.getItem("tactical_cookies_accepted");
+var sesionActual = localStorage.getItem("tactical_current_user");
+
+// NO hacemos localStorage.clear() aquí para no borrar los productos del mercado
+if (!localStorage.getItem("tactical_users") && usuariosGuardados) localStorage.setItem("tactical_users", usuariosGuardados);
+if (!localStorage.getItem("tactical_lang") && idiomaGuardado) localStorage.setItem("tactical_lang", idiomaGuardado);
+
+// Funciones Helper
 function bindEvent(id, ev, cb) {
     var el = document.getElementById(id);
     if (el) { el.addEventListener(ev, cb); }
@@ -8,7 +18,6 @@ function getClass(cls) {
     return document.querySelectorAll('.' + cls);
 }
 
-// SIMULADOR IA DE TRADUCCION AUTOMATICA PARA ARTICULOS DE USUARIO
 var tacticalTranslator = function(text, targetLang) {
     if(!text) return "";
     var esToEn = {
@@ -121,7 +130,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var translations = {
         es: {
             navHome: "Inicio", navMarket: "Compra/Venta", navRepair: "Taller", navGallery: "Galeria", loginBtn: "Iniciar Sesion", registerBtn: "Registrar Cuenta", logoutBtn: "Cerrar Sesion", profileBtn: "Mi Perfil", configBtn: "Configuracion", privacyMenuBtn: "Condiciones de Privacidad", heroTitle: "Precision absoluta. Rendimiento tactico.", heroText: "Tu vehiculo no es solo un transporte; es tu mejor herramienta.", 
-            heroBtn: "Solicitar cita previa", marketTitle: "1. Compra/Venta", uploadItemBtn: "+ Subir Articulo", repairTitle: "2. Unidad de Reparacion / Modificacion", sendBtn: "Enviar Solicitud", galleryTitle: "Operaciones (Galeria)", uploadPhotoBtn: "+ Añadir Foto", cookiesTitle: "Aviso Tactico (Cookies)", cookiesText: "Utilizamos cookies para mejorar la precision de nuestros servicios. ¿Aceptas?", cookiesAccept: "Afirmativo, aceptar", loginTitle: "Acceso Restringido", noAccount: "¿No tienes cuenta?", registerHere: "Registrate aqui", registerTitle: "Nuevo Recluta", hasAccount: "¿Ya tienes cuenta?", profileTitle: "Editar Perfil", profileDesc: "Actualiza tus credenciales.", saveChanges: "Guardar Cambios", configTitle: "Configuracion", configDesc: "Selecciona el idioma.", applyBtn: "Aplicar", closeBtn: "Cerrar", cancelBtn: "Cancelar", uploadItemTitle: "Añadir al Mercado", publishBtn: "Publicar", uploadPhotoTitle: "Añadir Foto", addBtn: "Añadir", cartTitle: "Carrito", checkoutBtn: "Confirmar Transaccion", continueBtn: "Seguir Comprando", privacyTitle: "Politica de Privacidad, Cookies y Aviso Legal", selectService: "-- Selecciona el Servicio --", optRepair: "Reparacion Tecnica", optMod: "Modificacion y Mejoras", payMethod: "Metodo de Pago:", newEmailLabel: "Nuevo Email:", newPassLabel: "Nueva Contraseña (Opcional):", currentPassLabel: "* Contraseña ACTUAL (Requerida):", sellerLabel: "Vendedor", catLabel: "Categoria", emptyCart: "El carrito esta vacio.", userHolder: "Usuario", passHolder: "Contraseña", emailHolder: "Email (Obligatorio)", itemNameHolder: "Nombre", itemCatHolder: "Categoria", itemPriceHolder: "Precio Base (€)", itemImgHolder: "URL Imagen", itemDescHolder: "Descripcion del articulo...", cardNum: "Numero Tarjeta (12 digitos)", vehicleHolder: "Vehiculo (Marca y Modelo)", descHolder: "Describe el daño o las modificaciones requeridas...", benefitsTitle: "Ventajas de Unirte", benefit1: "Vender tus propios articulos en el Mercado.", benefit2: "Comprar equipamiento exclusivo.", benefit3: "Subir fotos a la Galeria.", benefit4: "Acceso a descuentos exclusivos.", benefit5: "Bono exclusivo del 20% de bienvenida en tu primera compra.", continueRegisterBtn: "Continuar al Registro", footerPrivacy: "Protocolos de Privacidad y Terminos", footerCookiesTitle: "Uso de Cookies Activo", footerCookiesInfo: "Nota: Usamos cookies indispensables.", seeMoreBtn: "Ver todos los articulos", seeLessBtn: "Ver menos", chatTitle: "Soporte Tactico", chatWelcome: "Agente en linea. ¿En que puedo ayudarte hoy?", chatInput: "Escribe tu mensaje...", chatSendBtn: "ENVIAR",
+            heroBtn: "Solicitar cita previa", marketTitle: "Catálogo de Equipamiento", uploadItemBtn: "+ Subir Articulo", repairTitle: "2. Unidad de Reparacion / Modificacion", sendBtn: "Enviar Solicitud", galleryTitle: "Operaciones (Galeria)", uploadPhotoBtn: "+ Añadir Foto", cookiesTitle: "Aviso Tactico (Cookies)", cookiesText: "Utilizamos cookies para mejorar la precision de nuestros servicios. ¿Aceptas?", cookiesAccept: "Afirmativo, aceptar", loginTitle: "Acceso Restringido", noAccount: "¿No tienes cuenta?", registerHere: "Registrate aqui", registerTitle: "Nuevo Recluta", hasAccount: "¿Ya tienes cuenta?", profileTitle: "Editar Perfil", profileDesc: "Actualiza tus credenciales.", saveChanges: "Guardar Cambios", configTitle: "Configuracion", configDesc: "Selecciona el idioma.", applyBtn: "Aplicar", closeBtn: "Cerrar", cancelBtn: "Cancelar", uploadItemTitle: "Añadir al Mercado", publishBtn: "Publicar", uploadPhotoTitle: "Añadir Foto", addBtn: "Añadir", cartTitle: "Carrito", checkoutBtn: "Confirmar Transaccion", continueBtn: "Seguir Comprando", privacyTitle: "Politica de Privacidad, Cookies y Aviso Legal", selectService: "-- Selecciona el Servicio --", optRepair: "Reparacion Tecnica", optMod: "Modificacion y Mejoras", payMethod: "Metodo de Pago:", newEmailLabel: "Nuevo Email:", newPassLabel: "Nueva Contraseña (Opcional):", currentPassLabel: "* Contraseña ACTUAL (Requerida):", sellerLabel: "Vendedor", catLabel: "Categoria", emptyCart: "El carrito esta vacio.", userHolder: "Usuario", passHolder: "Contraseña", emailHolder: "Email (Obligatorio)", itemNameHolder: "Nombre", itemCatHolder: "Categoria", itemPriceHolder: "Precio Base (€)", itemImgHolder: "URL Imagen", itemDescHolder: "Descripcion del articulo...", cardNum: "Numero Tarjeta (12 digitos)", vehicleHolder: "Vehiculo (Marca y Modelo)", descHolder: "Describe el daño o las modificaciones requeridas...", benefitsTitle: "Ventajas de Unirte", benefit1: "Vender tus propios articulos en el Mercado.", benefit2: "Comprar equipamiento exclusivo.", benefit3: "Subir fotos a la Galeria.", benefit4: "Acceso a descuentos exclusivos.", benefit5: "Bono exclusivo del 20% de bienvenida en tu primera compra.", continueRegisterBtn: "Continuar al Registro", footerPrivacy: "Protocolos de Privacidad y Terminos", footerCookiesTitle: "Uso de Cookies Activo", footerCookiesInfo: "Nota: Usamos cookies indispensables.", seeMoreBtn: "Ver todos los articulos", chatTitle: "Soporte Tactico", chatWelcome: "Agente en linea. ¿En que puedo ayudarte hoy?", chatInput: "Escribe tu mensaje...", chatSendBtn: "ENVIAR",
             discountsMenu: "Mis Descuentos", discountsSubtitle: "Aumenta tu rango realizando compras.", discountPlaceholder: "Codigo de descuento", applyCodeBtn: "Aplicar", noDiscounts: "Aun no tienes descuentos.",
             welcomeDiscount: "20% de descuento en tu primer pedido.", bronze: "10% de descuento en la tienda.", silver: "15% de descuento en la tienda.", gold: "20% de descuento en la tienda.", elite: "25% de descuento absoluto.", historyMenu: "Historial",
             forgotPass: "¿Has olvidado tu contraseña?", forgotTitle: "Recuperar Contraseña", resetBtn: "Cambiar Contraseña", backLogin: "Volver a Iniciar Sesion", forgotUserHolder: "Usuario", forgotEmailHolder: "Email de registro", forgotNewPassHolder: "Nueva Contraseña",
@@ -131,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function() {
         },
         en: {
             navHome: "Home", navMarket: "Buy/Sell", navRepair: "Workshop", navGallery: "Gallery", loginBtn: "Login", registerBtn: "Register", logoutBtn: "Logout", profileBtn: "My Profile", configBtn: "Settings", heroTitle: "Absolute precision. Tactical performance.", heroText: "Your vehicle is a tool. We prepare it for any mission.", 
-            heroBtn: "Request appointment", marketTitle: "1. Buy/Sell", uploadItemBtn: "+ Upload Item", repairTitle: "2. Repair / Modification Unit", sendBtn: "Send Request", galleryTitle: "Operations (Gallery)", uploadPhotoBtn: "+ Add Photo", cookiesTitle: "Tactical Notice (Cookies)", cookiesText: "We use cookies to improve our services accuracy. Accept?", cookiesAccept: "Affirmative, accept", loginTitle: "Restricted Access", noAccount: "No account?", registerHere: "Register here", registerTitle: "New Recruit", hasAccount: "Already have an account?", profileTitle: "Edit Profile", profileDesc: "Update your credentials.", saveChanges: "Save Changes", configTitle: "Settings", configDesc: "Select interface language.", applyBtn: "Apply", closeBtn: "Close", cancelBtn: "Cancel", uploadItemTitle: "Add to Market", publishBtn: "Publish", uploadPhotoTitle: "Add Photo", addBtn: "Add", cartTitle: "Cart", checkoutBtn: "Confirm Checkout", continueBtn: "Continue Shopping", privacyTitle: "Privacy Policy, Cookies & Legal Notice", selectService: "-- Select Service --", optRepair: "Technical Repair", optMod: "Modification & Upgrades", payMethod: "Payment Method:", newEmailLabel: "New Email:", newPassLabel: "New Password (Optional):", currentPassLabel: "* CURRENT Password (Required):", sellerLabel: "Seller", catLabel: "Category", emptyCart: "The cart is empty.", userHolder: "Username", passHolder: "Password", emailHolder: "Email (Required)", itemNameHolder: "Name", itemCatHolder: "Category", itemPriceHolder: "Base Price (€)", itemImgHolder: "Image URL", itemDescHolder: "Item description...", cardNum: "Card Number (12 digits)", vehicleHolder: "Vehicle (Brand & Model)", descHolder: "Describe the damage...", benefitsTitle: "Join Advantages", benefit1: "Sell your own items.", benefit2: "Buy exclusive equipment.", benefit3: "Upload photos.", benefit4: "Access to exclusive discounts.", benefit5: "Exclusive 20% welcome bonus on your first purchase.", continueRegisterBtn: "Continue to Registration", footerPrivacy: "Privacy Protocols & Terms", footerCookiesTitle: "Active Cookie Usage", footerCookiesInfo: "Note: We use essential cookies.", seeMoreBtn: "See all items", seeLessBtn: "See less", chatTitle: "Tactical Support", chatWelcome: "Agent online. How can I help you today?", chatInput: "Type your message...", chatSendBtn: "SEND",
+            heroBtn: "Request appointment", marketTitle: "Equipment Catalog", uploadItemBtn: "+ Upload Item", repairTitle: "2. Repair / Modification Unit", sendBtn: "Send Request", galleryTitle: "Operations (Gallery)", uploadPhotoBtn: "+ Add Photo", cookiesTitle: "Tactical Notice (Cookies)", cookiesText: "We use cookies to improve our services accuracy. Accept?", cookiesAccept: "Affirmative, accept", loginTitle: "Restricted Access", noAccount: "No account?", registerHere: "Register here", registerTitle: "New Recruit", hasAccount: "Already have an account?", profileTitle: "Edit Profile", profileDesc: "Update your credentials.", saveChanges: "Save Changes", configTitle: "Settings", configDesc: "Select interface language.", applyBtn: "Apply", closeBtn: "Close", cancelBtn: "Cancel", uploadItemTitle: "Add to Market", publishBtn: "Publish", uploadPhotoTitle: "Add Photo", addBtn: "Add", cartTitle: "Cart", checkoutBtn: "Confirm Checkout", continueBtn: "Continue Shopping", privacyTitle: "Privacy Policy, Cookies & Legal Notice", selectService: "-- Select Service --", optRepair: "Technical Repair", optMod: "Modification & Upgrades", payMethod: "Payment Method:", newEmailLabel: "New Email:", newPassLabel: "New Password (Optional):", currentPassLabel: "* CURRENT Password (Required):", sellerLabel: "Seller", catLabel: "Category", emptyCart: "The cart is empty.", userHolder: "Username", passHolder: "Password", emailHolder: "Email (Required)", itemNameHolder: "Name", itemCatHolder: "Category", itemPriceHolder: "Base Price (€)", itemImgHolder: "Image URL", itemDescHolder: "Item description...", cardNum: "Card Number (12 digits)", vehicleHolder: "Vehicle (Brand & Model)", descHolder: "Describe the damage...", benefitsTitle: "Join Advantages", benefit1: "Sell your own items.", benefit2: "Buy exclusive equipment.", benefit3: "Upload photos.", benefit4: "Access to exclusive discounts.", benefit5: "Exclusive 20% welcome bonus on your first purchase.", continueRegisterBtn: "Continue to Registration", footerPrivacy: "Privacy Protocols & Terms", footerCookiesTitle: "Active Cookie Usage", footerCookiesInfo: "Note: We use essential cookies.", seeMoreBtn: "See all items", chatTitle: "Tactical Support", chatWelcome: "Agent online. How can I help you today?", chatInput: "Type your message...", chatSendBtn: "SEND",
             discountsMenu: "My Discounts", discountsSubtitle: "Level up by making purchases.", discountPlaceholder: "Discount code", applyCodeBtn: "Apply", noDiscounts: "No discounts yet.",
             welcomeDiscount: "20% discount on your first order.", bronze: "10% store discount.", silver: "15% store discount.", gold: "20% store discount.", elite: "25% absolute discount.", historyMenu: "Order History",
             forgotPass: "Forgot your password?", forgotTitle: "Recover Password", resetBtn: "Reset Password", backLogin: "Back to Login", forgotUserHolder: "Username", forgotEmailHolder: "Registration Email", forgotNewPassHolder: "New Password",
@@ -154,8 +163,8 @@ document.addEventListener("DOMContentLoaded", function() {
         }
         var langSel = document.getElementById("language-selector");
         if(langSel) langSel.value = lang;
-        if(document.getElementById("productos-db")) renderizarMercado();
-        if(typeof window.renderizarMercadoFull === 'function') window.renderizarMercadoFull();
+        
+        renderizarMercado();
         actualizarCarritoUI(); 
     };
 
@@ -397,7 +406,7 @@ document.addEventListener("DOMContentLoaded", function() {
         
         if(userVal === "" || passVal === "") { window.showAlert(currentLang === 'es' ? "Usuario y contraseña obligatorios." : "Username and password required."); return; }
         
-        // VALIDACION DE DOMINIOS DE EMAIL ESTRICTA
+        // VALIDACION ESTRICTA DE CORREO ELECTRONICO
         var validDomains = ["@gmail.com", "@outlook.es", "@outlook.com", "@yahoo.es", "@yahoo.com"];
         var isValidDomain = false;
         for(var d=0; d<validDomains.length; d++) {
@@ -409,7 +418,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
         
         if(!isValidDomain) {
-            window.showAlert(currentLang === 'es' ? "El correo debe terminar en @gmail.com, @outlook.com/.es o @yahoo.com/.es" : "Email must end in @gmail.com, @outlook.com/.es or @yahoo.com/.es");
+            window.showAlert(currentLang === 'es' ? "El correo debe terminar obligatoriamente en @gmail.com, @outlook.com, @outlook.es, @yahoo.com o @yahoo.es" : "Email must end exactly in @gmail.com, @outlook.com/.es or @yahoo.com/.es");
             return;
         }
 
@@ -530,24 +539,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var renderizarMercado = function() {
         var contenedor = document.getElementById("productos-db");
-        if(!contenedor) return; 
-        contenedor.innerHTML = "";
+        var contenedorFull = document.getElementById("productos-db-full");
         
         var catLabel = currentLang === 'es' ? "Categoria" : "Category";
         var sellerLabel = currentLang === 'es' ? "Vendedor" : "Seller";
         var btnText = currentLang === 'es' ? "Añadir" : "Add";
 
-        // LIMITADO A LOS 8 PRIMEROS (Quita el botón de expandir para obligar a usar el marketplace)
-        var itemsAMostrar = mercadoActual.slice(0, 8);
-
-        for(var i=0; i<itemsAMostrar.length; i++) {
-            var p = itemsAMostrar[i];
+        var buildHTML = function(p) {
             var nombre = currentLang === 'en' && p.nombreEn ? p.nombreEn : p.nombre;
             var desc = currentLang === 'en' && p.descripcionEn ? p.descripcionEn : p.descripcion;
             var tipo = currentLang === 'en' && p.tipoEn ? p.tipoEn : p.tipo;
             
-            contenedor.innerHTML += 
-            '<div class="card">' +
+            return '<div class="card">' +
                 '<div class="img-container"><img src="'+p.imagen+'" alt="'+nombre+'" onerror="this.onerror=null;this.src=\''+fallbackImage+'\';"></div>' +
                 '<h3 style="margin-top:5px;">'+nombre+'</h3>' +
                 '<p style="color:#888;font-size:0.9rem;">'+catLabel+': '+tipo+'</p>' +
@@ -558,11 +561,26 @@ document.addEventListener("DOMContentLoaded", function() {
                     '<button class="btn-primary btn-add-cart" data-id="'+p.id+'" style="width:100%; padding:12px;">'+btnText+'</button>' +
                 '</div>' +
             '</div>';
+        };
+
+        if(contenedor) {
+            contenedor.innerHTML = "";
+            var itemsAMostrar = mercadoActual.slice(0, 8); // EN EL INICIO SOLO LOS 8 PRIMEROS
+            for(var i=0; i<itemsAMostrar.length; i++) {
+                contenedor.innerHTML += buildHTML(itemsAMostrar[i]);
+            }
+        }
+
+        if(contenedorFull) {
+            contenedorFull.innerHTML = "";
+            for(var j=0; j<mercadoActual.length; j++) { // EN EL MARKETPLACE TODO EL MERCADO
+                contenedorFull.innerHTML += buildHTML(mercadoActual[j]);
+            }
         }
 
         var addBtns = getClass('btn-add-cart');
-        for(var j=0; j<addBtns.length; j++) {
-            addBtns[j].addEventListener('click', function(e) {
+        for(var k=0; k<addBtns.length; k++) {
+            addBtns[k].addEventListener('click', function(e) {
                 window.añadirAlCarrito(parseInt(e.target.dataset.id));
             });
         }
@@ -597,8 +615,7 @@ document.addEventListener("DOMContentLoaded", function() {
             });
             localStorage.setItem("tactical_mercado_100", JSON.stringify(mercadoActual));
             
-            if(document.getElementById("productos-db")) renderizarMercado(); 
-            if(typeof window.renderizarMercadoFull === 'function') window.renderizarMercadoFull();
+            renderizarMercado();
             
             if(popups.uploadItem) popups.uploadItem.classList.remove("active");
             
@@ -608,7 +625,7 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("new-item-img").value = "";
             document.getElementById("new-item-desc").value = "";
             
-            window.showAlert(currentLang === 'es' ? "Articulo publicado con exito. Se ha traducido automaticamente." : "Item published successfully. It will appear translated automatically.");
+            window.showAlert(currentLang === 'es' ? "Articulo publicado con exito en el Mercado." : "Item published successfully.");
         } else { window.showAlert(currentLang === 'es' ? "Faltan campos obligatorios." : "Missing required fields."); }
     });
 
@@ -1046,6 +1063,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     applyLanguage(currentLang);
     renderizarGaleria();
-    if(document.getElementById("productos-db")) renderizarMercado();
+    renderizarMercado();
     if(typeof window.actualizarCarritoUI === 'function') window.actualizarCarritoUI();
 });
