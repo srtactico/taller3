@@ -2,28 +2,34 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Soporte y Reclamaciones - Tactical Reparations</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        .claims-container { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 140px 20px 40px 20px; }
-        .claims-box { background: var(--bg-panel); padding: 40px; border: 1px solid #333; border-radius: 8px; max-width: 600px; width: 100%; border-top: 4px solid var(--primary-color); box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .claims-container { min-height: 100vh; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; padding: 140px 20px 40px 20px; }
+        .claims-box { background: var(--bg-panel); padding: 40px; border: 1px solid #333; border-radius: 8px; max-width: 600px; width: 100%; border-top: 4px solid var(--primary-color); -webkit-box-shadow: 0 10px 30px rgba(0,0,0,0.8); box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .claims-box h1 { margin-bottom: 10px; color: var(--primary-color); }
         .claims-box p { color: var(--text-muted); margin-bottom: 25px; line-height: 1.5; }
+        
+        @media screen and (max-width: 900px) {
+            .claims-box { padding: 25px 15px; }
+            .claims-box h1 { font-size: 1.6rem; }
+        }
     </style>
 </head>
 <body>
 
     <div id="custom-alert" class="overlay">
         <div class="popup-box" style="max-width: 400px; padding: 30px; border-top: 4px solid var(--primary-color);">
-            <h3 style="color: var(--primary-color); margin-bottom: 15px; font-size: 1.3rem;" data-i18n="alertTitle">Soporte Táctico</h3>
+            <h3 style="color: var(--primary-color); margin-bottom: 15px; font-size: 1.3rem;" data-i18n="alertTitle">Soporte Tactico</h3>
             <p id="custom-alert-message" style="color: #fff; margin-bottom: 20px; font-size: 1rem; line-height: 1.4;"></p>
             <button id="btn-close-alert" class="btn-primary" data-i18n="alertBtn">ENTENDIDO</button>
         </div>
     </div>
 
     <header style="position: absolute; top: 40px; background: transparent; border: none; width: 100%;">
-        <div class="container header-content" style="justify-content: center;">
+        <div class="container header-content" style="-webkit-box-pack: center; -ms-flex-pack: center; justify-content: center;">
             <div class="logo-text">TACTICAL <span>REPARATIONS</span></div>
         </div>
     </header>
@@ -65,11 +71,11 @@
     </footer>
 
     <script>
-        // TRADUCTOR DE LA PÁGINA DE RECLAMACIONES
-        const currentLang = localStorage.getItem("tactical_lang") || "es";
-        const translations = {
+        var currentLang = localStorage.getItem("tactical_lang") || "es";
+        
+        var translations = {
             es: {
-                claimsTitle: "Centro de Soporte Oficial", claimsDesc: "Utiliza este formulario para solicitar devoluciones, poner una reclamacion formal o enviarnos sugerencias para mejorar la plataforma. Un agente superior revisara tu caso en menos de 24 horas.", claimOpt0: "-- Selecciona el tipo de tramite --", claimOpt1: "Solicitud de Devolucion", claimOpt2: "Reclamacion / Queja", claimOpt3: "Sugerencia de Mejora", claimOpt4: "Otro problema tecnico", claimSend: "Enviar Informe al Cuartel General", claimBack: "Volver al Inicio", footerContact: "Contacto:", alertTitle: "Soporte Táctico", alertBtn: "ENTENDIDO",
+                claimsTitle: "Centro de Soporte Oficial", claimsDesc: "Utiliza este formulario para solicitar devoluciones, poner una reclamacion formal o enviarnos sugerencias para mejorar la plataforma. Un agente superior revisara tu caso en menos de 24 horas.", claimOpt0: "-- Selecciona el tipo de tramite --", claimOpt1: "Solicitud de Devolucion", claimOpt2: "Reclamacion / Queja", claimOpt3: "Sugerencia de Mejora", claimOpt4: "Otro problema tecnico", claimSend: "Enviar Informe al Cuartel General", claimBack: "Volver al Inicio", footerContact: "Contacto:", alertTitle: "Soporte Tactico", alertBtn: "ENTENDIDO",
                 claimName: "Nombre / Identificacion de Agente", claimEmail: "Email de contacto", claimOrder: "Numero de pedido (Ej: TR-123456)", claimMessage: "Describe tu situacion con el mayor detalle posible...", successMsg: "Formulario enviado con exito. El equipo de Tactical Reparations se pondra en contacto contigo pronto.", copyrightText: "© 2026 Tactical Reparations. Todos los derechos reservados."
             },
             en: {
@@ -78,41 +84,45 @@
             }
         };
 
-        const applyLanguage = () => {
-            document.querySelectorAll("[data-i18n]").forEach(el => {
-                const key = el.getAttribute("data-i18n");
-                if(translations[currentLang][key]) el.textContent = translations[currentLang][key];
-            });
-            document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
-                const key = el.getAttribute("data-i18n-placeholder");
-                if(translations[currentLang][key]) el.placeholder = translations[currentLang][key];
-            });
+        var applyLanguage = function() {
+            var els = document.querySelectorAll("[data-i18n]");
+            for(var i=0; i<els.length; i++) {
+                var key = els[i].getAttribute("data-i18n");
+                if(translations[currentLang][key]) els[i].textContent = translations[currentLang][key];
+            }
+            var elsPl = document.querySelectorAll("[data-i18n-placeholder]");
+            for(var j=0; j<elsPl.length; j++) {
+                var keyPl = elsPl[j].getAttribute("data-i18n-placeholder");
+                if(translations[currentLang][keyPl]) elsPl[j].placeholder = translations[currentLang][keyPl];
+            }
         };
         applyLanguage();
 
-        // SISTEMA DE ALERTAS PERSONALIZADO
-        const showAlert = (msg, callback) => {
+        var showAlert = function(msg, callback) {
             document.getElementById("custom-alert-message").textContent = msg;
-            const alertBox = document.getElementById("custom-alert");
+            var alertBox = document.getElementById("custom-alert");
             alertBox.classList.add("active");
             
-            const closeBtn = document.getElementById("btn-close-alert");
-            const newCloseBtn = closeBtn.cloneNode(true);
+            var closeBtn = document.getElementById("btn-close-alert");
+            var newCloseBtn = closeBtn.cloneNode(true);
             closeBtn.parentNode.replaceChild(newCloseBtn, closeBtn);
             
-            newCloseBtn.addEventListener("click", () => {
+            newCloseBtn.addEventListener("click", function() {
                 alertBox.classList.remove("active");
                 if(callback) callback();
             });
         };
 
-        document.getElementById("form-reclamaciones").addEventListener("submit", (e) => {
-            e.preventDefault();
-            const msg = translations[currentLang].successMsg;
-            showAlert(msg, () => {
-                window.location.href = "index.html#reparacion"; 
+        var formReclamaciones = document.getElementById("form-reclamaciones");
+        if(formReclamaciones) {
+            formReclamaciones.addEventListener("submit", function(e) {
+                e.preventDefault();
+                var msg = translations[currentLang].successMsg;
+                showAlert(msg, function() {
+                    window.location.href = "index.html#reparacion"; 
+                });
             });
-        });
+        }
     </script>
 </body>
 </html>
